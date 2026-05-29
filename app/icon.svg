@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <rect width="32" height="32" rx="8" fill="#0F2A47"/>
+  <!-- Bottom serif of I-beam cursor -->
+  <line x1="10" y1="25" x2="22" y2="25" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+  <!-- Vertical beam -->
+  <line x1="16" y1="25" x2="16" y2="9" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+  <!-- Upward arrow head (replaces top serif — represents Boost/Profit) -->
+  <path d="M11 14 L16 8 L21 14" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Side text lines (represent copy/words) -->
+  <line x1="7" y1="17" x2="11" y2="17" stroke="white" stroke-width="1.4" stroke-linecap="round" opacity="0.35"/>
+  <line x1="21" y1="17" x2="25" y2="17" stroke="white" stroke-width="1.4" stroke-linecap="round" opacity="0.35"/>
+  <line x1="7" y1="21" x2="11" y2="21" stroke="white" stroke-width="1.4" stroke-linecap="round" opacity="0.2"/>
+  <line x1="21" y1="21" x2="25" y2="21" stroke="white" stroke-width="1.4" stroke-linecap="round" opacity="0.2"/>
+</svg>
