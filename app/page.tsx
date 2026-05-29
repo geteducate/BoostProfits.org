@@ -9,10 +9,12 @@ import Pricing from '@/components/sections/Pricing'
 import UrgencyCTA from '@/components/sections/UrgencyCTA'
 import FAQ from '@/components/sections/FAQ'
 import Footer from '@/components/sections/Footer'
+import PageTracker from '@/components/ui/PageTracker'
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-cream">
+      <PageTracker />
       <Navigation />
       <Hero />
       <Proof />
