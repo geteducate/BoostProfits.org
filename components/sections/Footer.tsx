@@ -1,21 +1,5 @@
 import { Instagram, Twitter, Mail } from 'lucide-react'
 
-const companyLinks = [
-  { label: 'About', href: '#' },
-  { label: 'Contact', href: 'mailto:hello@boostprofits.com' },
-]
-
-const legalLinks = [
-  { label: 'Privacy', href: '#' },
-  { label: 'Terms', href: '#' },
-]
-
-const socialLinks = [
-  { label: 'Instagram', href: '#', Icon: Instagram },
-  { label: 'X / Twitter', href: '#', Icon: Twitter },
-  { label: 'Email', href: 'mailto:hello@boostprofits.com', Icon: Mail },
-]
-
 export default function Footer() {
   return (
     <footer className="py-16 px-6 lg:px-12 border-t border-warm-border bg-cream">
@@ -27,58 +11,40 @@ export default function Footer() {
             <p className="text-sm text-charcoal/45">Copy that earns its place on the page.</p>
           </div>
 
-          {/* Link columns */}
           <div className="flex flex-wrap gap-12 lg:gap-16">
             <div>
-              <p className="text-[10px] font-semibold tracking-[0.15em] text-charcoal/35 uppercase mb-4">
-                Company
-              </p>
+              <p className="text-[10px] font-semibold tracking-[0.15em] text-charcoal/35 uppercase mb-4">Company</p>
               <ul className="space-y-2.5">
-                {companyLinks.map(({ label, href }) => (
+                {[['About', '#'], ['Contact', 'mailto:hello@boostprofits.com']].map(([label, href]) => (
                   <li key={label}>
-                    <a
-                      href={href}
-                      className="text-sm text-charcoal/55 hover:text-charcoal transition-colors"
-                    >
-                      {label}
-                    </a>
+                    <a href={href} className="text-sm text-charcoal/55 hover:text-charcoal transition-colors">{label}</a>
                   </li>
                 ))}
               </ul>
             </div>
 
             <div>
-              <p className="text-[10px] font-semibold tracking-[0.15em] text-charcoal/35 uppercase mb-4">
-                Legal
-              </p>
+              <p className="text-[10px] font-semibold tracking-[0.15em] text-charcoal/35 uppercase mb-4">Legal</p>
               <ul className="space-y-2.5">
-                {legalLinks.map(({ label, href }) => (
+                {[['Privacy Policy', '/privacy'], ['Terms of Service', '/terms']].map(([label, href]) => (
                   <li key={label}>
-                    <a
-                      href={href}
-                      className="text-sm text-charcoal/55 hover:text-charcoal transition-colors"
-                    >
-                      {label}
-                    </a>
+                    <a href={href} className="text-sm text-charcoal/55 hover:text-charcoal transition-colors">{label}</a>
                   </li>
                 ))}
               </ul>
             </div>
 
             <div>
-              <p className="text-[10px] font-semibold tracking-[0.15em] text-charcoal/35 uppercase mb-4">
-                Social
-              </p>
+              <p className="text-[10px] font-semibold tracking-[0.15em] text-charcoal/35 uppercase mb-4">Social</p>
               <ul className="space-y-2.5">
-                {socialLinks.map(({ label, href, Icon }) => (
+                {[
+                  { label: 'Instagram', href: '#', Icon: Instagram },
+                  { label: 'X / Twitter', href: '#', Icon: Twitter },
+                  { label: 'Email', href: 'mailto:hello@boostprofits.com', Icon: Mail },
+                ].map(({ label, href, Icon }) => (
                   <li key={label}>
-                    <a
-                      href={href}
-                      className="flex items-center gap-2 text-sm text-charcoal/55 hover:text-charcoal transition-colors"
-                      aria-label={label}
-                    >
-                      <Icon size={13} />
-                      {label}
+                    <a href={href} className="flex items-center gap-2 text-sm text-charcoal/55 hover:text-charcoal transition-colors" aria-label={label}>
+                      <Icon size={13} />{label}
                     </a>
                   </li>
                 ))}
@@ -87,8 +53,16 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-warm-border pt-8">
+        <div className="border-t border-warm-border pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <p className="text-xs text-charcoal/30">© 2026 BoostProfits. All rights reserved.</p>
+          {/* Admin access — discreet */}
+          <a
+            href="/admin"
+            className="text-[10px] text-charcoal/15 hover:text-charcoal/40 transition-colors tracking-widest uppercase"
+            aria-label="Admin"
+          >
+            ·
+          </a>
         </div>
       </div>
     </footer>

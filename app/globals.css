@@ -19,8 +19,50 @@ body {
   box-sizing: border-box;
 }
 
-/* Focus ring for accessibility */
 :focus-visible {
   outline: 2px solid #0F2A47;
   outline-offset: 2px;
 }
+
+/* ── Page transition ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.page-enter {
+  animation: fadeInUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── 3D card tilt utility ── */
+.tilt-card {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+}
+.tilt-card:hover {
+  box-shadow: 0 24px 60px -12px rgba(15, 42, 71, 0.18);
+}
+
+/* ── Ambient glow ── */
+.glow-navy {
+  background: radial-gradient(ellipse at center, rgba(15, 42, 71, 0.07) 0%, transparent 70%);
+}
+
+/* ── Prose styles for legal pages ── */
+.prose h2 { @apply font-serif text-xl font-semibold text-charcoal mb-3 mt-8; }
+.prose p  { @apply text-charcoal/70 leading-relaxed; }
+.prose ul { @apply list-disc pl-5 space-y-1 text-charcoal/70; }
+.prose a  { @apply text-navy underline; }
+
+/* ── Blur lock ── */
+.blur-lock {
+  position: relative;
+  user-select: none;
+  pointer-events: none;
+}
+.blur-lock > * {
+  filter: blur(4px);
+}
+
+/* ── Admin bg ── */
+.bg-warm-border { background-color: #E8E3DA; }

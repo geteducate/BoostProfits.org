@@ -15,25 +15,20 @@ const fraunces = Fraunces({
 })
 
 export const metadata: Metadata = {
-  title: 'BoostProfits — Turn Attention Into Paying Customers',
+  title: 'BoostProfits — Your Words Are Costing You $200 Every Hour',
   description:
-    'Sharper copy. Cleaner offers. Faster buying decisions. Built for businesses tired of getting views without conversions.',
+    'Not your product. Not your price. The words. We fix them in 7 days. For founders doing $10k–$100k/month who want more of it.',
   openGraph: {
-    title: 'BoostProfits — Turn Attention Into Paying Customers',
-    description:
-      'Sharper copy. Cleaner offers. Faster buying decisions.',
+    title: 'BoostProfits — Your Words Are Costing You $200 Every Hour',
+    description: 'We fix the copy. 7 days. You feel the difference.',
     type: 'website',
   },
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${fraunces.variable}`}>
-      <body className="font-sans">{children}</body>
+      <body className="font-sans page-enter">{children}</body>
     </html>
   )
 }

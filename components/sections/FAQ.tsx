@@ -8,23 +8,27 @@ import { motion, AnimatePresence } from 'framer-motion'
 const faqs = [
   {
     q: 'I already run ads. Why do I need this?',
-    a: "Good ads fail with weak messaging. The click is only half the job. If people land on your page and don't immediately understand what you're offering — or why they should care — they leave. Better copy turns existing traffic into actual buyers.",
+    a: "Because the click is the easy part. They land on your page, read the first line, and decide if they stay. Bad words — they leave. Every hour. Better copy doesn't get you more clicks. It turns the clicks you already have into money.",
   },
   {
     q: 'My business is different.',
-    a: "Clear communication works in every market. Specifics change. Principles don't. Whether you sell software, services, or physical products, the fundamental rules of comprehension and trust are the same.",
+    a: "Your product is different. Human attention isn't. The same thing that made someone buy the last thing they bought is the same thing we write to. The specifics change. The psychology doesn't.",
   },
   {
-    q: "Can't I just do this myself?",
-    a: "You can. Most owners don't have the time or outside perspective to see what's costing them sales. It's hard to read the label from inside the jar.",
+    q: "Can't I just write it myself?",
+    a: "You can. You also cut your own hair sometimes. For when it matters — when money's on the line — you probably call someone. The hard part isn't writing. It's seeing your own blind spots. We do.",
   },
   {
-    q: 'How long does it take?',
-    a: "Most rewrites ship in 7 days. Audits in 48 hours. If you need it faster, reach out and we'll see what we can do.",
+    q: 'How fast does this happen?',
+    a: "Audit: 48 hours. Full rewrite: 7 days. We don't do 'when it's ready.' You get a date. We hit it.",
   },
   {
-    q: "What if it doesn't work?",
-    a: "If the first round doesn't move the needle, we rework it free. No questions, no drama.",
+    q: "What if it doesn't move the needle?",
+    a: "We rewrite it again. Free. No invoices, no excuses. It either works or we keep going until it does. That's the deal.",
+  },
+  {
+    q: 'Do I need a big audience or lots of traffic?',
+    a: "No. Better words work on 100 visitors the same way they work on 100,000. You see the difference faster with more traffic, but the copy change matters at any scale.",
   },
 ]
 
@@ -36,13 +40,13 @@ export default function FAQ() {
       <div className="max-w-2xl mx-auto">
         <AnimatedSection className="mb-12">
           <h2 className="font-serif text-[clamp(1.75rem,4vw,3rem)] font-semibold tracking-tight text-charcoal">
-            Common Questions.
+            Things people ask before they book.
           </h2>
         </AnimatedSection>
 
         <div className="divide-y divide-warm-border">
           {faqs.map((faq, i) => (
-            <AnimatedSection key={i} delay={i * 0.06}>
+            <AnimatedSection key={i} delay={i * 0.05}>
               <div>
                 <button
                   className="w-full flex items-center justify-between py-5 text-left group"
@@ -66,9 +70,7 @@ export default function FAQ() {
                       transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
                       className="overflow-hidden"
                     >
-                      <p className="pb-5 text-[15px] text-charcoal/60 leading-relaxed">
-                        {faq.a}
-                      </p>
+                      <p className="pb-5 text-[15px] text-charcoal/60 leading-relaxed">{faq.a}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
