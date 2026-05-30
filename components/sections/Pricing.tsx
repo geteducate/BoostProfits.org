@@ -1,7 +1,19 @@
 import AnimatedSection from '@/components/ui/AnimatedSection'
-import { Check, ArrowRight, Zap, Star, Crown } from 'lucide-react'
+import { Check, ArrowRight, Zap, Star, Crown, LucideIcon } from 'lucide-react'
 
-const plans = [
+type Plan = {
+  name: string
+  price: string
+  oldPrice?: string
+  period: string
+  description: string
+  Icon: LucideIcon
+  features: string[]
+  cta: string
+  popular: boolean
+}
+
+const plans: Plan[] = [
   {
     name: 'Starter',
     price: '$19',
@@ -21,7 +33,8 @@ const plans = [
   },
   {
     name: 'Pro',
-    price: '$59',
+    price: '$49',
+    oldPrice: '$69',
     period: '/mo',
     description: 'The full rewrite. The real results.',
     Icon: Star,
@@ -110,21 +123,31 @@ export default function Pricing() {
                 </div>
 
                 {/* Price */}
-                <div className="flex items-end gap-1 mb-7">
-                  <span
-                    className={`font-serif text-5xl font-semibold tracking-tight ${
-                      plan.popular ? 'text-white' : 'text-charcoal'
-                    }`}
-                  >
-                    {plan.price}
-                  </span>
-                  {plan.period && (
-                    <span
-                      className={`mb-2 text-sm ${plan.popular ? 'text-white/50' : 'text-charcoal/40'}`}
-                    >
-                      {plan.period}
-                    </span>
+                <div className="mb-7">
+                  {plan.oldPrice && (
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className={`text-lg line-through ${plan.popular ? 'text-white/40' : 'text-charcoal/35'}`}>
+                        {plan.oldPrice}
+                      </span>
+                      <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${plan.popular ? 'bg-white/15 text-white' : 'bg-navy/10 text-navy'}`}>
+                        Save $20
+                      </span>
+                    </div>
                   )}
+                  <div className="flex items-end gap-1">
+                    <span
+                      className={`font-serif text-5xl font-semibold tracking-tight ${
+                        plan.popular ? 'text-white' : 'text-charcoal'
+                      }`}
+                    >
+                      {plan.price}
+                    </span>
+                    {plan.period && (
+                      <span className={`mb-2 text-sm ${plan.popular ? 'text-white/50' : 'text-charcoal/40'}`}>
+                        {plan.period}
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 {/* Features */}
