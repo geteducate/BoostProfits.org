@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BoostProfits — Your Words Are Costing You $200 Every Hour</title>
+<meta name="description" content="Not your product. Not your price. The words. We fix them in 7 days. For founders who want more buyers from the traffic they already have." />
+<meta property="og:title" content="BoostProfits — Turn Attention Into Paying Customers" />
+<meta property="og:description" content="We fix the copy. 7 days. You feel the difference." />
+<meta property="og:type" content="website" />
+
+<!-- Favicon: gear logo -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3CradialGradient id='g' cx='32%25' cy='26%25' r='74%25'%3E%3Cstop offset='0%25' stop-color='%23FEF08A'/%3E%3Cstop offset='20%25' stop-color='%23FB923C'/%3E%3Cstop offset='58%25' stop-color='%23F97316'/%3E%3Cstop offset='100%25' stop-color='%2392400E'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpath fill-rule='evenodd' fill='url(%23g)' d='M43.7 17.6 L43.9 6.4 A44 44 0 0 1 56.1 6.4 L56.3 17.6 A33 33 0 0 1 68.5 22.6 L76.5 14.9 A44 44 0 0 1 85.1 23.5 L77.4 31.6 A33 33 0 0 1 82.4 43.7 L93.6 43.9 A44 44 0 0 1 93.6 56.1 L82.4 56.3 A33 33 0 0 1 77.4 68.5 L85.1 76.5 A44 44 0 0 1 76.5 85.1 L68.5 77.4 A33 33 0 0 1 56.3 82.4 L56.1 93.6 A44 44 0 0 1 43.9 93.6 L43.7 82.4 A33 33 0 0 1 31.5 77.4 L23.5 85.1 A44 44 0 0 1 14.9 76.5 L22.6 68.5 A33 33 0 0 1 17.6 56.3 L6.4 56.1 A44 44 0 0 1 6.4 43.9 L17.6 43.7 A33 33 0 0 1 22.6 31.5 L14.9 23.5 A44 44 0 0 1 23.5 14.9 L31.5 22.6 A33 33 0 0 1 43.7 17.6 Z M64 50 A14 14 0 1 0 36 50 A14 14 0 1 0 64 50 Z'/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --cream:#FAF8F4; --charcoal:#1A1A1A; --navy:#0F2A47;
+    --border:#E8E3DA; --muted:#6B6560; --orange:#F97316;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--cream); color:var(--charcoal);
+    font-family:'Inter',system-ui,sans-serif; line-height:1.6;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  ::selection{background:var(--navy); color:#fff}
+  h1,h2,h3,.serif{font-family:'Fraunces',Georgia,serif; letter-spacing:-.02em}
+  a{color:inherit; text-decoration:none}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px}
+  .eyebrow{font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:rgba(15,42,71,.5)}
+
+  /* Buttons */
+  .btn{display:inline-flex; align-items:center; gap:8px; padding:14px 26px; border-radius:12px;
+    font-weight:500; font-size:15px; cursor:pointer; border:none; transition:all .25s ease}
+  .btn-primary{background:var(--navy); color:#fff}
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 10px 30px -10px rgba(15,42,71,.5)}
+  .btn-ghost{color:rgba(26,26,26,.6)}
+  .btn-ghost:hover{color:var(--charcoal)}
+  .btn-white{background:#fff; color:var(--navy)}
+  .btn-white:hover{transform:translateY(-2px); box-shadow:0 10px 30px -10px rgba(0,0,0,.3)}
+  .btn-outline{background:transparent; border:1px solid rgba(15,42,71,.2); color:var(--navy)}
+  .btn-outline:hover{background:rgba(15,42,71,.05)}
+
+  /* Header */
+  header{position:fixed; top:0; left:0; right:0; z-index:50; transition:transform .35s ease, background .3s ease, box-shadow .3s ease, border-color .3s}
+  header.hide{transform:translateY(-100%)}
+  header.scrolled{background:rgba(250,248,244,.92); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); box-shadow:0 1px 20px -10px rgba(0,0,0,.1)}
+  .nav{display:flex; align-items:center; justify-content:space-between; height:68px}
+  .logo{display:flex; align-items:center; gap:10px; font-family:'Fraunces',serif; font-weight:600; font-size:19px}
+  .logo svg{width:32px; height:32px; transition:transform .4s cubic-bezier(.22,1,.36,1)}
+  .logo:hover svg{transform:rotate(30deg) scale(1.08)}
+  .nav-links{display:flex; gap:30px}
+  .nav-links a{font-size:14px; color:rgba(26,26,26,.6); transition:color .2s}
+  .nav-links a:hover{color:var(--charcoal)}
+  .nav-cta{display:flex; align-items:center; gap:8px}
+  .nav-cta a.signin{font-size:14px; font-weight:500; color:rgba(26,26,26,.6); padding:8px 14px}
+  .nav-cta a.signin:hover{color:var(--charcoal)}
+  .nav-cta a.signup{font-size:14px; font-weight:500; padding:9px 16px; border:1px solid rgba(15,42,71,.2); color:var(--navy); border-radius:10px}
+  .nav-cta a.signup:hover{background:rgba(15,42,71,.05)}
+  .nav-cta a.book{font-size:14px; font-weight:500; padding:9px 16px; background:var(--navy); color:#fff; border-radius:10px}
+  .burger{display:none; background:none; border:none; cursor:pointer; padding:8px}
+  .mobile-menu{display:none; flex-direction:column; gap:12px; padding:20px 24px; background:var(--cream); border-bottom:1px solid var(--border)}
+  .mobile-menu.open{display:flex}
+  .mobile-menu a{font-size:15px; color:rgba(26,26,26,.7); padding:4px 0}
+
+  /* Sections */
+  section{padding:110px 0; border-top:1px solid var(--border)}
+  section.hero{border-top:none; padding-top:160px}
+  .h2{font-size:clamp(28px,4vw,48px); font-weight:600; line-height:1.1}
+  .lead{font-size:18px; color:rgba(26,26,26,.65); line-height:1.65}
+
+  /* Hero */
+  .hero-grid{display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center}
+  .hero h1{font-size:clamp(40px,5.5vw,72px); font-weight:600; line-height:1.03; margin:20px 0 24px}
+  .hero .lead{max-width:500px; margin-bottom:32px}
+  .hero-cta{display:flex; gap:16px; align-items:center; flex-wrap:wrap; margin-bottom:30px}
+  .trust{font-size:12px; color:rgba(26,26,26,.35)}
+  .ambient{position:absolute; top:-160px; left:50%; transform:translateX(-50%); width:800px; height:480px; border-radius:50%; background:rgba(15,42,71,.05); filter:blur(120px); pointer-events:none; z-index:-1}
+
+  /* Browser mockup */
+  .mock{border-radius:18px; border:1px solid var(--border); background:#fff; box-shadow:0 40px 80px -30px rgba(15,42,71,.25); overflow:hidden; transition:transform .4s ease}
+  .mock:hover{transform:translateY(-6px)}
+  .mock-bar{background:#F0EDE8; border-bottom:1px solid var(--border); padding:13px 16px; display:flex; align-items:center; gap:12px}
+  .dots{display:flex; gap:6px}
+  .dots span{width:11px; height:11px; border-radius:50%; background:var(--border)}
+  .mock-url{flex:1; background:rgba(232,227,218,.6); border-radius:6px; padding:5px 12px; font-size:12px; color:rgba(26,26,26,.3)}
+  .mock-body{padding:24px}
+  .before{border-radius:10px; border:1px solid #FECACA; background:rgba(254,242,242,.5); padding:16px; margin-bottom:14px}
+  .after{border-radius:10px; border:1px solid rgba(15,42,71,.1); background:rgba(15,42,71,.04); padding:16px}
+  .tag{font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; margin-bottom:8px}
+  .tag.red{color:rgba(248,113,113,.7)} .tag.blue{color:rgba(15,42,71,.55)}
+  .before p{font-size:14px; color:rgba(26,26,26,.4); text-decoration:line-through}
+  .after p{font-size:14px; font-weight:600; color:var(--charcoal)}
+  .mock-arrow{display:flex; justify-content:center; margin:6px 0}
+  .mock-arrow div{width:24px; height:24px; border-radius:50%; background:var(--navy); color:#fff; display:flex; align-items:center; justify-content:center; font-size:12px}
+  .mock-btn{margin-top:14px; background:var(--navy); color:#fff; text-align:center; border-radius:10px; padding:11px; font-size:12px; font-weight:500}
+
+  /* Cards */
+  .cards3{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
+  .card{border-radius:16px; border:1px solid var(--border); background:#fff; padding:22px; transition:all .3s ease}
+  .card:hover{transform:translateY(-4px); box-shadow:0 20px 40px -20px rgba(15,42,71,.2)}
+  .ctx{font-size:10px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:rgba(26,26,26,.35); margin-bottom:12px}
+  .mini-before{border-radius:10px; background:rgba(254,242,242,.5); border:1px solid #FECACA; padding:12px; margin-bottom:10px}
+  .mini-after{border-radius:10px; background:rgba(15,42,71,.04); border:1px solid rgba(15,42,71,.1); padding:12px}
+  .mini-before p{font-size:13px; color:rgba(26,26,26,.45)}
+  .mini-after p{font-size:13px; font-weight:600}
+  .mid-arrow{text-align:center; color:rgba(26,26,26,.25); margin:8px 0}
+
+  /* Problem / Future lists */
+  .narrow{max-width:760px; margin:0 auto}
+  .painlist,.winlist{margin-top:36px; display:flex; flex-direction:column; gap:14px}
+  .pain{display:flex; align-items:center; gap:16px; padding:16px; border-radius:16px; border:1px solid var(--border); background:rgba(255,255,255,.7); transition:all .3s}
+  .pain:hover{background:#fff; box-shadow:0 8px 20px -12px rgba(0,0,0,.15)}
+  .pain .ico{width:44px; height:44px; flex-shrink:0; border-radius:12px; display:flex; align-items:center; justify-content:center}
+  .pain p{font-size:16px; color:rgba(26,26,26,.75); font-weight:500}
+  .win{display:flex; align-items:center; gap:14px}
+  .win .chk{width:22px; height:22px; flex-shrink:0; border-radius:50%; background:rgba(15,42,71,.1); display:flex; align-items:center; justify-content:center; color:var(--navy); font-size:12px; font-weight:700}
+  .win p{font-size:17px; color:rgba(26,26,26,.78)}
+  .quote-line{font-family:'Fraunces',serif; font-size:20px; font-style:italic; font-weight:500; border-left:2px solid rgba(15,42,71,.2); padding-left:20px; margin-top:48px}
+
+  /* Process */
+  .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:24px; position:relative; margin-top:56px}
+  .steps:before{content:''; position:absolute; top:32px; left:12.5%; right:12.5%; height:1px; background:var(--border)}
+  .step{text-align:center; position:relative}
+  .step .num{width:64px; height:64px; margin:0 auto 22px; border-radius:50%; border:1px solid var(--border); background:var(--cream); display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:600; font-size:18px; color:var(--navy); position:relative; z-index:2}
+  .step.locked .num{border-style:dashed; border-color:rgba(15,42,71,.25)}
+  .step h3{font-size:19px; margin-bottom:8px}
+  .step p{font-size:14px; color:rgba(26,26,26,.55)}
+  .step.locked .blurwrap{position:relative}
+  .step.locked .blurwrap .content{filter:blur(5px); user-select:none}
+  .step.locked .unlock{position:absolute; inset:0; display:flex; align-items:center; justify-content:center}
+  .step.locked .unlock span{font-size:12px; font-weight:600; color:rgba(15,42,71,.65); background:rgba(250,248,244,.92); padding:5px 12px; border-radius:99px; border:1px solid rgba(15,42,71,.12)}
+  .process-cta{text-align:center; margin-top:48px}
+
+  /* VSL */
+  .vsl{max-width:760px; margin:0 auto; text-align:center}
+  .vsl .video{position:relative; border-radius:18px; overflow:hidden; border:1px solid var(--border); box-shadow:0 30px 60px -30px rgba(15,42,71,.3); aspect-ratio:16/9; background:rgba(15,42,71,.04); margin:36px 0 32px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:18px}
+  .vsl .grid-bg{position:absolute; inset:0; opacity:.05; background-image:linear-gradient(var(--navy) 1px,transparent 1px),linear-gradient(90deg,var(--navy) 1px,transparent 1px); background-size:40px 40px}
+  .play{width:80px; height:80px; border-radius:50%; background:var(--navy); color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:2; transition:transform .3s; box-shadow:0 20px 40px -15px rgba(15,42,71,.5)}
+  .play:hover{transform:scale(1.1)}
+  .vsl .cap{font-size:14px; color:rgba(26,26,26,.5); z-index:2}
+
+  /* Pricing */
+  .plans{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; align-items:start; margin-top:48px}
+  .plan{border-radius:18px; border:1px solid var(--border); background:#fff; padding:28px; display:flex; flex-direction:column; transition:all .3s}
+  .plan:hover{transform:translateY(-4px); box-shadow:0 24px 50px -25px rgba(15,42,71,.25)}
+  .plan.pop{background:var(--navy); color:#fff; box-shadow:0 30px 60px -25px rgba(15,42,71,.6); transform:translateY(-16px)}
+  .plan.pop:hover{transform:translateY(-20px)}
+  .plan-head{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px}
+  .plan h3{font-size:24px}
+  .plan .desc{font-size:14px; margin-top:2px}
+  .plan .desc.d{color:rgba(255,255,255,.55)} .plan .desc.l{color:rgba(26,26,26,.45)}
+  .plan-ico{width:36px; height:36px; border-radius:11px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:18px}
+  .pop-tag{font-size:10px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.5); margin-bottom:8px}
+  .price-old{font-size:18px; text-decoration:line-through; color:rgba(26,26,26,.35)}
+  .plan.pop .price-old{color:rgba(255,255,255,.4)}
+  .save{font-size:10px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:2px 8px; border-radius:99px; background:rgba(15,42,71,.1); color:var(--navy); margin-left:8px}
+  .plan.pop .save{background:rgba(255,255,255,.15); color:#fff}
+  .price{font-family:'Fraunces',serif; font-size:48px; font-weight:600; margin:4px 0}
+  .price small{font-size:14px; font-weight:400; color:rgba(26,26,26,.4)}
+  .plan.pop .price small{color:rgba(255,255,255,.5)}
+  .feats{list-style:none; flex:1; margin:24px 0; display:flex; flex-direction:column; gap:12px}
+  .feats li{display:flex; gap:10px; font-size:14px; align-items:flex-start}
+  .feats li b{color:var(--navy); flex-shrink:0} .plan.pop .feats li b{color:rgba(255,255,255,.6)}
+  .feats li span{color:rgba(26,26,26,.65)} .plan.pop .feats li span{color:rgba(255,255,255,.75)}
+
+  /* Urgency */
+  .urgency{background:var(--navy); color:#fff; text-align:center; position:relative; overflow:hidden}
+  .urgency .glow{position:absolute; inset:0; background:radial-gradient(ellipse at center,rgba(255,255,255,.05) 0%,transparent 70%)}
+  .urgency .narrow{position:relative}
+  .countdown{display:flex; justify-content:center; gap:18px; margin:30px 0}
+  .cd-unit{display:flex; flex-direction:column; align-items:center}
+  .cd-unit .v{font-size:44px; font-weight:700; font-variant-numeric:tabular-nums; font-family:'Inter',monospace}
+  .cd-unit .l{font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.35); margin-top:4px}
+  .cd-sep{font-size:32px; color:rgba(255,255,255,.2); margin-top:6px}
+  .booking-form{display:flex; gap:12px; max-width:520px; margin:32px auto 0}
+  .booking-form input{flex:1; min-width:0; padding:13px 16px; border-radius:12px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.15); color:#fff; font-size:14px; font-family:inherit}
+  .booking-form input::placeholder{color:rgba(255,255,255,.35)}
+  .booking-form input:focus{outline:none; border-color:rgba(255,255,255,.4); background:rgba(255,255,255,.15)}
+  .urgency .lead{color:rgba(255,255,255,.65); max-width:680px; margin:0 auto}
+  .small-note{font-size:12px; color:rgba(255,255,255,.25); margin-top:16px}
+
+  /* FAQ */
+  .faq{max-width:680px; margin:0 auto}
+  .faq-item{border-bottom:1px solid var(--border)}
+  .faq-q{width:100%; background:none; border:none; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:24px; padding:20px 0; text-align:left; font-size:16px; font-weight:500; color:var(--charcoal); font-family:inherit; transition:color .2s}
+  .faq-q:hover{color:var(--navy)}
+  .faq-q .pm{flex-shrink:0; color:rgba(26,26,26,.35); font-size:20px; transition:transform .25s}
+  .faq-a{max-height:0; overflow:hidden; transition:max-height .3s ease}
+  .faq-a p{padding-bottom:20px; font-size:15px; color:rgba(26,26,26,.6)}
+  .faq-item.open .pm{transform:rotate(45deg)}
+
+  /* Footer */
+  footer{background:var(--cream); border-top:1px solid var(--border); padding:64px 0 48px}
+  .foot-grid{display:flex; justify-content:space-between; gap:48px; flex-wrap:wrap; margin-bottom:48px}
+  .foot-brand{max-width:280px}
+  .foot-brand p{font-size:14px; color:rgba(26,26,26,.45); margin-top:12px}
+  .foot-cols{display:flex; gap:64px; flex-wrap:wrap}
+  .foot-col h4{font-size:10px; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:rgba(26,26,26,.35); margin-bottom:16px}
+  .foot-col a{display:block; font-size:14px; color:rgba(26,26,26,.55); margin-bottom:10px; transition:color .2s}
+  .foot-col a:hover{color:var(--charcoal)}
+  .foot-bottom{border-top:1px solid var(--border); padding-top:32px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px}
+  .foot-bottom p{font-size:12px; color:rgba(26,26,26,.3)}
+  .admin-btn{display:inline-flex; align-items:center; gap:6px; font-size:12px; color:rgba(26,26,26,.4); border:1px solid rgba(26,26,26,.15); padding:6px 12px; border-radius:10px; transition:all .2s}
+  .admin-btn:hover{color:rgba(26,26,26,.7); border-color:rgba(26,26,26,.3)}
+
+  /* Reveal animation */
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1)}
+  .reveal.in{opacity:1; transform:translateY(0)}
+
+  /* Responsive */
+  @media(max-width:900px){
+    .hero-grid{grid-template-columns:1fr; gap:40px}
+    .hero .mock{max-width:440px}
+    .cards3{grid-template-columns:1fr}
+    .steps{grid-template-columns:1fr; gap:32px}
+    .steps:before{display:none}
+    .plans{grid-template-columns:1fr}
+    .plan.pop{transform:none} .plan.pop:hover{transform:translateY(-4px)}
+    .nav-links,.nav-cta{display:none}
+    .burger{display:block}
+    .foot-grid{flex-direction:column}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header id="header">
+  <div class="wrap nav">
+    <a href="#" class="logo">
+      <svg viewBox="0 0 100 100"><defs><radialGradient id="gear1" cx="32%" cy="26%" r="74%"><stop offset="0%" stop-color="#FEF08A"/><stop offset="20%" stop-color="#FB923C"/><stop offset="58%" stop-color="#F97316"/><stop offset="100%" stop-color="#92400E"/></radialGradient></defs><path fill-rule="evenodd" fill="url(#gear1)" d="M43.7 17.6 L43.9 6.4 A44 44 0 0 1 56.1 6.4 L56.3 17.6 A33 33 0 0 1 68.5 22.6 L76.5 14.9 A44 44 0 0 1 85.1 23.5 L77.4 31.6 A33 33 0 0 1 82.4 43.7 L93.6 43.9 A44 44 0 0 1 93.6 56.1 L82.4 56.3 A33 33 0 0 1 77.4 68.5 L85.1 76.5 A44 44 0 0 1 76.5 85.1 L68.5 77.4 A33 33 0 0 1 56.3 82.4 L56.1 93.6 A44 44 0 0 1 43.9 93.6 L43.7 82.4 A33 33 0 0 1 31.5 77.4 L23.5 85.1 A44 44 0 0 1 14.9 76.5 L22.6 68.5 A33 33 0 0 1 17.6 56.3 L6.4 56.1 A44 44 0 0 1 6.4 43.9 L17.6 43.7 A33 33 0 0 1 22.6 31.5 L14.9 23.5 A44 44 0 0 1 23.5 14.9 L31.5 22.6 A33 33 0 0 1 43.7 17.6 Z M64 50 A14 14 0 1 0 36 50 A14 14 0 1 0 64 50 Z"/></svg>
+      BoostProfits
+    </a>
+    <nav class="nav-links">
+      <a href="#process">Process</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#booking" class="signin">Sign In</a>
+      <a href="#booking" class="signup">Sign Up</a>
+      <a href="#booking" class="book">Book a Free Audit</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Menu">
+      <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><path d="M3 6h14M3 10h14M3 14h14" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#process">Process</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+    <a href="#booking" class="book" style="background:var(--navy);color:#fff;text-align:center;padding:11px;border-radius:10px">Book a Free Audit</a>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero" style="position:relative">
+  <div class="ambient"></div>
+  <div class="wrap hero-grid">
+    <div class="reveal">
+      <p class="eyebrow">If you're getting views but not sales — keep reading.</p>
+      <h1>Your words are costing you $200 every hour.</h1>
+      <p class="lead">Not your product. Not your price. The words. We've watched great offers bleed money for years because the copy wasn't doing its job. We fix the words. In 7 days, you feel the difference.</p>
+      <div class="hero-cta">
+        <a href="#booking" class="btn btn-primary">Book a Free Audit</a>
+        <a href="#process" class="btn btn-ghost">See how it works →</a>
+      </div>
+      <p class="trust">For founders and operators who want more buyers from the traffic they already have.</p>
+    </div>
+    <div class="reveal mock">
+      <div class="mock-bar"><div class="dots"><span></span><span></span><span></span></div><div class="mock-url">yoursite.com</div></div>
+      <div class="mock-body">
+        <div class="before"><p class="tag red">Before</p><p>We help businesses scale with innovative marketing solutions tailored to your unique needs.</p></div>
+        <div class="mock-arrow"><div>↓</div></div>
+        <div class="after"><p class="tag blue">After</p><p>Get more paying customers without touching your ad spend.</p></div>
+        <div class="mock-btn">Book a Free Audit →</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROOF ===== -->
+<section>
+  <div class="wrap">
+    <h2 class="h2 reveal" style="text-align:center;margin-bottom:56px">Same offer. Different words. Different bank balance.</h2>
+    <div class="cards3">
+      <div class="card reveal">
+        <p class="ctx">Landing page hero</p>
+        <div class="mini-before"><p class="tag red">Before</p><p>We help businesses scale with innovative marketing solutions.</p></div>
+        <div class="mid-arrow">↓</div>
+        <div class="mini-after"><p class="tag blue">After</p><p>Get more paying customers without touching your ad spend.</p></div>
+      </div>
+      <div class="card reveal">
+        <p class="ctx">Cold DM opener</p>
+        <div class="mini-before"><p class="tag red">Before</p><p>Hey, hope you're doing well! I wanted to reach out about something...</p></div>
+        <div class="mid-arrow">↓</div>
+        <div class="mini-after"><p class="tag blue">After</p><p>Saw your post on X. One quick thought — worth 30 seconds.</p></div>
+      </div>
+      <div class="card reveal">
+        <p class="ctx">Email subject line</p>
+        <div class="mini-before"><p class="tag red">Before</p><p>Following up on our previous conversation</p></div>
+        <div class="mid-arrow">↓</div>
+        <div class="mini-after"><p class="tag blue">After</p><p>The sentence killing your checkout page</p></div>
+      </div>
+    </div>
+    <div class="reveal" style="text-align:center;max-width:520px;margin:56px auto 0">
+      <p style="font-family:'Fraunces',serif;font-size:19px;font-style:italic;color:rgba(26,26,26,.7)">"Went from 4% to 11% conversion in 8 days. Nothing else changed except the words."</p>
+      <p style="font-size:14px;color:rgba(26,26,26,.35);margin-top:12px">— Marcus D., e-commerce founder</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROBLEM ===== -->
+<section style="background:rgba(245,241,235,.4)">
+  <div class="wrap narrow">
+    <h2 class="h2 reveal" style="margin-bottom:24px">You're not losing sales. You're bleeding them.</h2>
+    <p class="lead reveal">Every visitor who found you, read your page, and left without buying — that was a buyer. They had money. They had the problem. Something in the words gave them a reason to hesitate. And hesitation online means gone. That's not a traffic problem. That's a words problem.</p>
+    <div class="painlist">
+      <div class="pain reveal"><div class="ico" style="background:rgba(239,68,68,.1)">💬</div><p>Words that inform people but never make them want to buy</p></div>
+      <div class="pain reveal"><div class="ico" style="background:rgba(245,158,11,.12)">📩</div><p>DMs and ads that get seen but not acted on</p></div>
+      <div class="pain reveal"><div class="ico" style="background:rgba(59,130,246,.1)">👁️</div><p>Traffic that reads everything, remembers nothing, buys nothing</p></div>
+      <div class="pain reveal"><div class="ico" style="background:rgba(124,58,237,.1)">🌫️</div><p>An offer that makes sense to you but confuses everyone else</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FUTURE ===== -->
+<section>
+  <div class="wrap narrow">
+    <p class="eyebrow reveal" style="margin-bottom:20px">Now picture the other version</p>
+    <h2 class="h2 reveal" style="margin-bottom:24px">It's a Tuesday. You check your phone. Two people bought while you slept.</h2>
+    <p class="lead reveal">Same product. Same traffic. Same you. The only thing that changed was the words. They land. People get it. They don't think — they buy. And you wake up to money that wasn't there last night. No new ads. No grind. Just words finally pulling their weight.</p>
+    <div class="winlist">
+      <div class="win reveal"><div class="chk">✓</div><p>A stranger lands on your page and gets it in three seconds flat</p></div>
+      <div class="win reveal"><div class="chk">✓</div><p>Your DMs fill up with "how do I pay you?" instead of silence</p></div>
+      <div class="win reveal"><div class="chk">✓</div><p>You make $200 in the time it takes to drink your coffee</p></div>
+      <div class="win reveal"><div class="chk">✓</div><p>Selling stops feeling like begging and starts feeling like taking orders</p></div>
+    </div>
+    <p class="quote-line reveal">That's the whole gap between where you are and where you want to be. It's just words.</p>
+  </div>
+</section>
+
+<!-- ===== PROCESS ===== -->
+<section id="process" style="background:rgba(245,241,235,.4)">
+  <div class="wrap">
+    <h2 class="h2 reveal" style="text-align:center;margin-bottom:8px">How we do it.</h2>
+    <p class="reveal" style="text-align:center;color:rgba(26,26,26,.5);font-size:16px">We show you the start and the end. <span style="color:rgba(15,42,71,.7);font-weight:500">The middle stays ours.</span></p>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="num">01</div>
+        <h3>We read everything.</h3>
+        <p>Your page, your DMs, your competitor's copy. We find the exact line where buyers stop reading and start leaving.</p>
+      </div>
+      <div class="step locked reveal">
+        <div class="num">🔒</div>
+        <div class="blurwrap">
+          <div class="content"><h3>The diagnosis.</h3><p>We map exactly where your funnel leaks money and why. Most clients are shocked.</p></div>
+          <div class="unlock"><span>Unlock with sign-up</span></div>
+        </div>
+      </div>
+      <div class="step locked reveal">
+        <div class="num">🔒</div>
+        <div class="blurwrap">
+          <div class="content"><h3>The rewrite.</h3><p>Every word replaced with something that earns its place. Built for one job: make them act.</p></div>
+          <div class="unlock"><span>Unlock with sign-up</span></div>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="num">04</div>
+        <h3>You get results.</h3>
+        <p>Better replies. Higher conversions. Copy that makes people move instead of wonder. You'll know within days.</p>
+      </div>
+    </div>
+    <div class="process-cta reveal">
+      <a href="#booking" class="btn btn-outline">🔒 Sign up free to see the full process</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== VSL ===== -->
+<section>
+  <div class="wrap vsl">
+    <h2 class="h2 reveal">7 minutes. I'll show you the sentence that's costing you buyers.</h2>
+    <p class="lead reveal" style="max-width:600px;margin:16px auto 0">In the next 7 minutes I'm going to show you: why 94% of good offers get ignored, what buyers actually read on your page, and the one shift that changes how much you make per hour.</p>
+    <div class="video reveal">
+      <div class="grid-bg"></div>
+      <div class="play" onclick="alert('Video coming soon — book your free audit below in the meantime.')">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+      <p class="cap">Why Most Offers Fail — 7 min</p>
+    </div>
+    <a href="#booking" class="btn btn-primary reveal">Book Your Free Audit</a>
+  </div>
+</section>
+
+<!-- ===== PRICING ===== -->
+<section id="pricing" style="background:rgba(245,241,235,.4)">
+  <div class="wrap">
+    <h2 class="h2 reveal" style="text-align:center;margin-bottom:8px">Pick your level.</h2>
+    <p class="reveal" style="text-align:center;color:rgba(26,26,26,.55);font-size:17px">No contracts. Start tonight. Change your mind tomorrow.</p>
+    <div class="plans">
+      <div class="plan reveal">
+        <div class="plan-head">
+          <div><h3>Starter</h3><p class="desc l">Try it. See what changes.</p></div>
+          <div class="plan-ico" style="background:rgba(15,42,71,.08)">⚡</div>
+        </div>
+        <div class="price">$19 <small>/mo</small></div>
+        <ul class="feats">
+          <li><b>✓</b><span>1 landing page audit</span></li>
+          <li><b>✓</b><span>5 headline rewrites</span></li>
+          <li><b>✓</b><span>Offer clarity check</span></li>
+          <li><b>✓</b><span>CTA review</span></li>
+          <li><b>✓</b><span>48-hour delivery</span></li>
+          <li><b>✓</b><span>Email support</span></li>
+        </ul>
+        <a href="#booking" class="btn btn-primary" style="width:100%;justify-content:center">Start for $19</a>
+      </div>
+      <div class="plan pop reveal">
+        <p class="pop-tag">Most Popular</p>
+        <div class="plan-head">
+          <div><h3>Pro</h3><p class="desc d">The full rewrite. The real results.</p></div>
+          <div class="plan-ico" style="background:rgba(255,255,255,.15)">⭐</div>
+        </div>
+        <div><span class="price-old">$69</span><span class="save">Save $20</span></div>
+        <div class="price">$49 <small>/mo</small></div>
+        <ul class="feats">
+          <li><b>✓</b><span>Everything in Starter</span></li>
+          <li><b>✓</b><span>Full page rewrite</span></li>
+          <li><b>✓</b><span>Offer restructuring + positioning</span></li>
+          <li><b>✓</b><span>CTA and funnel optimization</span></li>
+          <li><b>✓</b><span>3 email sequences</span></li>
+          <li><b>✓</b><span>7-day delivery</span></li>
+          <li><b>✓</b><span>Priority response</span></li>
+        </ul>
+        <a href="#booking" class="btn btn-white" style="width:100%;justify-content:center">Go Pro</a>
+      </div>
+      <div class="plan reveal">
+        <div class="plan-head">
+          <div><h3>Elite</h3><p class="desc l">For serious operators. We talk numbers.</p></div>
+          <div class="plan-ico" style="background:rgba(15,42,71,.08)">👑</div>
+        </div>
+        <div class="price">Custom</div>
+        <ul class="feats">
+          <li><b>✓</b><span>Full funnel — pages, emails, DMs</span></li>
+          <li><b>✓</b><span>Monthly strategy sessions</span></li>
+          <li><b>✓</b><span>Dedicated conversion writer</span></li>
+          <li><b>✓</b><span>Positioning system</span></li>
+          <li><b>✓</b><span>Ongoing optimization</span></li>
+          <li><b>✓</b><span>No contracts</span></li>
+        </ul>
+        <a href="#booking" class="btn btn-primary" style="width:100%;justify-content:center">Talk to Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== URGENCY ===== -->
+<section id="booking" class="urgency">
+  <div class="glow"></div>
+  <div class="wrap narrow">
+    <h2 class="h2 reveal" style="margin-bottom:16px">We take three people a week. Then we shut the door.</h2>
+    <p class="lead reveal">Not a trick. We write every word by hand. Take on more than three and somebody gets rushed, sloppy work — and that's not what you're paying for. So we cap it. One seat is open this week. After the timer hits zero, it's gone.</p>
+    <p class="eyebrow reveal" style="color:rgba(255,255,255,.35);margin-top:30px">This seat closes in:</p>
+    <div class="countdown reveal" id="countdown">
+      <div class="cd-unit"><span class="v" id="cd-h">00</span><span class="l">hrs</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit"><span class="v" id="cd-m">00</span><span class="l">min</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit"><span class="v" id="cd-s">00</span><span class="l">sec</span></div>
+    </div>
+    <form class="booking-form reveal" id="bookingForm">
+      <input type="text" placeholder="Your name" required />
+      <input type="email" placeholder="Your email" required />
+      <button type="submit" class="btn btn-white" style="white-space:nowrap">Grab the Seat →</button>
+    </form>
+    <p class="small-note reveal">No spam. No pitch. Just a straight talk about your copy.</p>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section id="faq">
+  <div class="wrap">
+    <h2 class="h2 reveal" style="text-align:center;margin-bottom:48px">Things people ask before they book.</h2>
+    <div class="faq">
+      <div class="faq-item reveal">
+        <button class="faq-q">I already run ads. Why do I need this? <span class="pm">+</span></button>
+        <div class="faq-a"><p>Because the click is the easy part. They land on your page, read the first line, and decide if they stay. Bad words — they leave. Every hour. Better copy doesn't get you more clicks. It turns the clicks you already have into money.</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q">My business is different. <span class="pm">+</span></button>
+        <div class="faq-a"><p>Your product is different. Human attention isn't. The same thing that made someone buy the last thing they bought is the same thing we write to. The specifics change. The psychology doesn't.</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q">Can't I just write it myself? <span class="pm">+</span></button>
+        <div class="faq-a"><p>You can. You also cut your own hair sometimes. For when it matters — when money's on the line — you probably call someone. The hard part isn't writing. It's seeing your own blind spots. We do.</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q">How fast does this happen? <span class="pm">+</span></button>
+        <div class="faq-a"><p>Audit: 48 hours. Full rewrite: 7 days. We don't do "when it's ready." You get a date. We hit it.</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q">What if it doesn't move the needle? <span class="pm">+</span></button>
+        <div class="faq-a"><p>We rewrite it again. Free. No invoices, no excuses. It either works or we keep going until it does. That's the deal.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#" class="logo">
+          <svg viewBox="0 0 100 100"><defs><radialGradient id="gear2" cx="32%" cy="26%" r="74%"><stop offset="0%" stop-color="#FEF08A"/><stop offset="20%" stop-color="#FB923C"/><stop offset="58%" stop-color="#F97316"/><stop offset="100%" stop-color="#92400E"/></radialGradient></defs><path fill-rule="evenodd" fill="url(#gear2)" d="M43.7 17.6 L43.9 6.4 A44 44 0 0 1 56.1 6.4 L56.3 17.6 A33 33 0 0 1 68.5 22.6 L76.5 14.9 A44 44 0 0 1 85.1 23.5 L77.4 31.6 A33 33 0 0 1 82.4 43.7 L93.6 43.9 A44 44 0 0 1 93.6 56.1 L82.4 56.3 A33 33 0 0 1 77.4 68.5 L85.1 76.5 A44 44 0 0 1 76.5 85.1 L68.5 77.4 A33 33 0 0 1 56.3 82.4 L56.1 93.6 A44 44 0 0 1 43.9 93.6 L43.7 82.4 A33 33 0 0 1 31.5 77.4 L23.5 85.1 A44 44 0 0 1 14.9 76.5 L22.6 68.5 A33 33 0 0 1 17.6 56.3 L6.4 56.1 A44 44 0 0 1 6.4 43.9 L17.6 43.7 A33 33 0 0 1 22.6 31.5 L14.9 23.5 A44 44 0 0 1 23.5 14.9 L31.5 22.6 A33 33 0 0 1 43.7 17.6 Z M64 50 A14 14 0 1 0 36 50 A14 14 0 1 0 64 50 Z"/></svg>
+          BoostProfits
+        </a>
+        <p>Copy that earns its place on the page.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h4>Company</h4>
+          <a href="#">About</a>
+          <a href="mailto:hello@boostprofits.org">Contact</a>
+        </div>
+        <div class="foot-col">
+          <h4>Legal</h4>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+        <div class="foot-col">
+          <h4>Connect</h4>
+          <a href="#">Instagram</a>
+          <a href="#">X / Twitter</a>
+          <a href="mailto:hello@boostprofits.org">Email</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2026 BoostProfits. All rights reserved.</p>
+      <a href="#" class="admin-btn">🛡️ Admin Panel</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ===== Smart header: hide on scroll down, show on scroll up =====
+  const header = document.getElementById('header');
+  let lastY = 0;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    header.classList.toggle('scrolled', y > 20);
+    if (y > lastY && y > 140) header.classList.add('hide');
+    else header.classList.remove('hide');
+    lastY = y;
+  }, { passive: true });
+
+  // ===== Mobile menu =====
+  document.getElementById('burger').addEventListener('click', () => {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  });
+  document.querySelectorAll('#mobileMenu a').forEach(a =>
+    a.addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open'))
+  );
+
+  // ===== Scroll reveal =====
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '-40px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ===== Countdown to midnight tonight =====
+  function tick() {
+    const now = new Date();
+    const end = new Date(now); end.setHours(23, 59, 59, 0);
+    if (now >= end) end.setDate(end.getDate() + 1);
+    let diff = Math.max(0, end - now);
+    const h = Math.floor(diff / 3.6e6);
+    const m = Math.floor((diff % 3.6e6) / 6e4);
+    const s = Math.floor((diff % 6e4) / 1000);
+    document.getElementById('cd-h').textContent = String(h).padStart(2, '0');
+    document.getElementById('cd-m').textContent = String(m).padStart(2, '0');
+    document.getElementById('cd-s').textContent = String(s).padStart(2, '0');
+  }
+  tick(); setInterval(tick, 1000);
+
+  // ===== FAQ accordion =====
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      const ans = btn.nextElementSibling;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('open'); i.querySelector('.faq-a').style.maxHeight = null;
+      });
+      if (!isOpen) { item.classList.add('open'); ans.style.maxHeight = ans.scrollHeight + 'px'; }
+    });
+  });
+
+  // ===== Booking form =====
+  document.getElementById('bookingForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    e.target.innerHTML = '<p style="color:#fff;font-weight:600;width:100%;text-align:center;padding:8px">✓ Seat\'s yours. We\'ll be in touch within 24 hours.</p>';
+  });
+</script>
+
+</body>
+</html>
