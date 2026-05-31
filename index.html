@@ -1047,48 +1047,29 @@
 
     setBusy('vf-btn', true);
 
-    // Try our custom OTP table first
-    const hasCustom = !!(window.BP_CONFIG || {}).RESEND_API_KEY;
-    let verified = false;
-    let user = null;
+    // Call the secure DB function: verifies OTP + confirms email atomically
+    const { data: rpcData, error: rpcErr } = await sb.rpc('verify_and_confirm_email', {
+      p_email: pendingEmail,
+      p_code:  token
+    });
 
-    if (hasCustom) {
-      // Verify against our own table
-      const check = await verifyOTPCode(pendingEmail, token);
-      if (!check.ok) { setBusy('vf-btn', false); return setErr('vf-err', check.reason); }
-      // Code correct — now confirm via Supabase signIn (account was created in signUp step)
-      const { data: loginData, error: loginErr } = await sb.auth.signInWithPassword({
-        email: pendingEmail, password: pendingPass
-      });
+    if (rpcErr || !rpcData?.success) {
       setBusy('vf-btn', false);
-      if (loginErr) {
-        // Account may need email confirmation — try verifyOtp as fallback
-        const { data: otpData, error: otpErr } = await sb.auth.verifyOtp({
-          email: pendingEmail, token, type: 'signup'
-        });
-        if (otpErr) return setErr('vf-err', 'Verification failed. Please try signing up again.');
-        user = otpData.user;
-      } else {
-        user = loginData.user;
-      }
-      verified = true;
-    } else {
-      // No Resend key — use Supabase's built-in OTP verification
-      const { data: otpData, error: otpErr } = await sb.auth.verifyOtp({
-        email: pendingEmail, token, type: 'signup'
-      });
-      setBusy('vf-btn', false);
-      if (otpErr) {
-        const msg = otpErr.message.includes('expired')
-          ? 'Code expired — click "Resend code" to get a new one.'
-          : otpErr.message.includes('invalid') || otpErr.message.includes('Invalid')
-          ? 'Incorrect code — please check and try again.'
-          : otpErr.message;
-        return setErr('vf-err', msg);
-      }
-      user = otpData.user;
-      verified = true;
+      return setErr('vf-err', rpcData?.error || rpcErr?.message || 'Verification failed. Please try again.');
     }
+
+    // Email confirmed — sign in
+    const { data: loginData, error: loginErr } = await sb.auth.signInWithPassword({
+      email: pendingEmail, password: pendingPass
+    });
+    setBusy('vf-btn', false);
+
+    if (loginErr) {
+      return setErr('vf-err', 'Could not sign in: ' + loginErr.message + '. Try using the Sign In button.');
+    }
+
+    const user = loginData.user;
+    const verified = !!user;
 
     if (verified && user) {
       await upsertProfile(user);
