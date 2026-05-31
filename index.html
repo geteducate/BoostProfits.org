@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>BoostProfits — Your Words Are Costing You $200 Every Hour</title>
 <meta name="description" content="Not your product. Not your price. The words. We fix them in 7 days. For founders who want more buyers from the traffic they already have." />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
 <meta property="og:title" content="BoostProfits — Turn Attention Into Paying Customers" />
 <meta property="og:description" content="We fix the copy. 7 days. You feel the difference." />
 <meta property="og:type" content="website" />
@@ -33,7 +36,8 @@
     EMAILJS_GUEST_TMPL:   ''    // template that emails THE VISITOR after booking
   };
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Supabase: primary CDN → unpkg fallback if primary fails -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js" onerror="this.onerror=null;this.src='https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js'"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <style>
@@ -803,12 +807,28 @@
   //  SUPABASE  ·  Auth, process unlock, leads, activity heatmap
   // ═══════════════════════════════════════════════════════════════
   const cfg = window.BP_CONFIG || {};
-  const CONFIGURED = !!(cfg.SUPABASE_URL && !cfg.SUPABASE_URL.includes('YOUR-PROJECT')
-                        && cfg.SUPABASE_ANON_KEY && !cfg.SUPABASE_ANON_KEY.includes('YOUR-ANON'));
-  const sb = (CONFIGURED && window.supabase)
-    ? window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY,
-        { auth: { persistSession: true, autoRefreshToken: true } })
-    : null;
+  const CONFIGURED = !!(
+    cfg.SUPABASE_URL && cfg.SUPABASE_URL.startsWith('https://') &&
+    !cfg.SUPABASE_URL.includes('YOUR-PROJECT') &&
+    cfg.SUPABASE_ANON_KEY && cfg.SUPABASE_ANON_KEY.length > 10 &&
+    !cfg.SUPABASE_ANON_KEY.includes('YOUR-ANON')
+  );
+
+  let sb = null;
+  let _sbInitError = '';
+
+  function _initSb() {
+    if (!CONFIGURED) { _sbInitError = 'keys_missing'; return null; }
+    const lib = window.supabase || window.Supabase;
+    if (!lib || typeof lib.createClient !== 'function') {
+      _sbInitError = 'lib_missing'; return null;
+    }
+    try {
+      return lib.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY,
+        { auth: { persistSession: true, autoRefreshToken: true } });
+    } catch(e) { _sbInitError = 'init_error:' + e.message; return null; }
+  }
+  sb = _initSb();
 
   // ── Toast ────────────────────────────────────────────────────
   let toastTimer;
@@ -842,7 +862,14 @@
     else     { b.innerHTML = b._orig || ''; b.disabled = false; }
   }
   function needConfig() {
-    toast('Keys not set yet — add your Supabase URL and anon key in BP_CONFIG.');
+    // retry once in case CDN loaded after the initial check
+    if (!sb) sb = _initSb();
+    if (sb) return false;  // recovered — caller can proceed
+    const msgs = {
+      keys_missing: 'Connection not configured — contact support.',
+      lib_missing:  'Page error — please hard-refresh (Ctrl+Shift+R).',
+    };
+    toast(msgs[_sbInitError] || 'Connection error — please refresh and try again.');
     return true;
   }
 
@@ -858,7 +885,7 @@
     const ref   = document.getElementById('su-ref').value;
     if (!name || !email || !pass) return setErr('su-err', 'Name, email and password are required.');
     if (pass.length < 6) return setErr('su-err', 'Password must be at least 6 characters.');
-    if (!sb) return needConfig();
+    if (!sb && needConfig()) return;
     setBusy('su-btn', true);
     const { error } = await sb.auth.signUp({
       email, password: pass,
@@ -878,7 +905,7 @@
     document.getElementById('vf-ok').classList.remove('show');
     const token = document.getElementById('vf-code').value.trim();
     if (token.length < 6) return setErr('vf-err', 'Enter the 6-digit code from your email.');
-    if (!sb) return needConfig();
+    if (!sb && needConfig()) return;
     setBusy('vf-btn', true);
     const { data, error } = await sb.auth.verifyOtp({ email: pendingEmail, token, type: 'signup' });
     setBusy('vf-btn', false);
@@ -889,7 +916,7 @@
   }
 
   async function resendCode() {
-    if (!sb) return needConfig();
+    if (!sb && needConfig()) return;
     const { error } = await sb.auth.resend({ type: 'signup', email: pendingEmail });
     const ok = document.getElementById('vf-ok');
     if (error) setErr('vf-err', error.message);
@@ -902,7 +929,7 @@
     const email = document.getElementById('li-email').value.trim();
     const pass  = document.getElementById('li-pass').value;
     if (!email || !pass) return setErr('li-err', 'Email and password are required.');
-    if (!sb) return needConfig();
+    if (!sb && needConfig()) return;
     setBusy('li-btn', true);
     const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
     setBusy('li-btn', false);
