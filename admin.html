@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BoostProfits — Admin</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3CradialGradient id='g' cx='32%25' cy='26%25' r='74%25'%3E%3Cstop offset='0%25' stop-color='%23FEF08A'/%3E%3Cstop offset='20%25' stop-color='%23FB923C'/%3E%3Cstop offset='58%25' stop-color='%23F97316'/%3E%3Cstop offset='100%25' stop-color='%2392400E'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='42' fill='url(%23g)'/%3E%3Ccircle cx='50' cy='50' r='14' fill='%23FAF8F4'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<!-- Same config as the site. Keep these two values in sync with index.html. -->
+<script>
+  window.BP_CONFIG = {
+    SUPABASE_URL:      'https://YOUR-PROJECT-REF.supabase.co',
+    SUPABASE_ANON_KEY: 'YOUR-ANON-PUBLIC-KEY',
+    ADMIN_EMAIL:       'contact@boostprofits.org'
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+  :root{ --cream:#FAF8F4; --charcoal:#1A1A1A; --navy:#0F2A47; --border:#E8E3DA; --muted:#6B6560; --orange:#F97316; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--cream); color:var(--charcoal); font-family:'Inter',system-ui,sans-serif; -webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif; letter-spacing:-.02em}
+  a{color:var(--navy)}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 24px}
+
+  /* Login */
+  .login-bg{min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px}
+  .login{width:100%; max-width:380px; background:#fff; border:1px solid var(--border); border-radius:20px; padding:36px 30px; box-shadow:0 30px 70px -30px rgba(15,42,71,.35)}
+  .login .logo{display:flex; align-items:center; gap:10px; font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin-bottom:6px}
+  .login .logo svg{width:30px; height:30px}
+  .login p.sub{font-size:14px; color:var(--muted); margin-bottom:22px}
+  .login label{display:block; font-size:12px; font-weight:600; color:var(--muted); margin:14px 0 6px}
+  .login input{width:100%; padding:12px 14px; border-radius:11px; border:1px solid var(--border); font-size:14px; font-family:inherit}
+  .login input:focus{outline:none; border-color:var(--navy)}
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:13px 22px; border-radius:12px; font-weight:500; font-size:15px; cursor:pointer; border:none; font-family:inherit; background:var(--navy); color:#fff; transition:all .2s}
+  .btn:hover{transform:translateY(-1px); box-shadow:0 10px 24px -10px rgba(15,42,71,.5)}
+  .btn.full{width:100%; margin-top:22px}
+  .err{font-size:13px; color:#dc2626; margin-top:14px; display:none}
+  .err.show{display:block}
+  .spinner{display:inline-block; width:15px; height:15px; border:2px solid rgba(255,255,255,.4); border-top-color:#fff; border-radius:50%; animation:spin .7s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* Dashboard */
+  #dash{display:none}
+  .top{background:#fff; border-bottom:1px solid var(--border); padding:18px 0; position:sticky; top:0; z-index:10}
+  .top .wrap{display:flex; align-items:center; justify-content:space-between}
+  .top .logo{display:flex; align-items:center; gap:10px; font-family:'Fraunces',serif; font-weight:600; font-size:18px}
+  .top .logo svg{width:26px; height:26px}
+  .top .right{display:flex; align-items:center; gap:14px; font-size:13px; color:var(--muted)}
+  .top .right button{font-size:13px; border:1px solid var(--border); background:none; padding:7px 13px; border-radius:9px; cursor:pointer; font-family:inherit; color:var(--charcoal)}
+
+  .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin:30px 0}
+  .stat{background:#fff; border:1px solid var(--border); border-radius:16px; padding:20px}
+  .stat .v{font-family:'Fraunces',serif; font-size:34px; font-weight:600; color:var(--navy)}
+  .stat .l{font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-top:4px}
+
+  .tabs{display:flex; gap:6px; margin:24px 0 18px}
+  .tab{font-size:14px; font-weight:500; padding:9px 16px; border-radius:10px; cursor:pointer; border:1px solid var(--border); background:#fff; color:var(--muted)}
+  .tab.active{background:var(--navy); color:#fff; border-color:var(--navy)}
+  .panel{display:none} .panel.active{display:block}
+
+  table{width:100%; border-collapse:collapse; background:#fff; border:1px solid var(--border); border-radius:14px; overflow:hidden}
+  th,td{text-align:left; padding:13px 16px; font-size:14px; border-bottom:1px solid var(--border)}
+  th{font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); background:rgba(245,241,235,.6)}
+  tr:last-child td{border-bottom:none}
+  td.email{color:var(--navy)}
+  .muted{color:var(--muted); font-size:13px}
+  .empty{padding:40px; text-align:center; color:var(--muted); background:#fff; border:1px solid var(--border); border-radius:14px}
+
+  /* Heatmap bars */
+  .heat-row{display:flex; align-items:center; gap:14px; margin-bottom:10px}
+  .heat-label{width:230px; font-size:13px; color:var(--charcoal); flex-shrink:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .heat-track{flex:1; background:rgba(15,42,71,.06); border-radius:8px; height:30px; position:relative; overflow:hidden}
+  .heat-fill{height:100%; border-radius:8px; background:linear-gradient(90deg, #FB923C, #F97316); display:flex; align-items:center; padding:0 10px; color:#fff; font-size:12px; font-weight:600; min-width:42px; transition:width .6s cubic-bezier(.22,1,.36,1)}
+  .heat-meta{font-size:12px; color:var(--muted); width:90px; text-align:right; flex-shrink:0}
+  .section-card{background:#fff; border:1px solid var(--border); border-radius:16px; padding:24px; margin-bottom:20px}
+  .section-card h3{font-size:18px; margin-bottom:4px}
+  .section-card .hint{font-size:13px; color:var(--muted); margin-bottom:20px}
+
+  @media(max-width:760px){ .stats{grid-template-columns:repeat(2,1fr)} .heat-label{width:120px} }
+</style>
+</head>
+<body>
+
+<!-- ===== LOGIN ===== -->
+<div class="login-bg" id="loginScreen">
+  <div class="login">
+    <div class="logo">
+      <svg viewBox="0 0 100 100"><defs><radialGradient id="lg" cx="32%" cy="26%" r="74%"><stop offset="0%" stop-color="#FEF08A"/><stop offset="20%" stop-color="#FB923C"/><stop offset="58%" stop-color="#F97316"/><stop offset="100%" stop-color="#92400E"/></radialGradient></defs><circle cx="50" cy="50" r="42" fill="url(#lg)"/><circle cx="50" cy="50" r="14" fill="#FAF8F4"/></svg>
+      BoostProfits
+    </div>
+    <p class="sub">Admin access — sign in with the owner account.</p>
+    <label>Email</label>
+    <input type="email" id="email" placeholder="contact@boostprofits.org" autocomplete="email" />
+    <label>Password</label>
+    <input type="password" id="pass" placeholder="Your password" autocomplete="current-password" />
+    <div class="err" id="loginErr"></div>
+    <button class="btn full" id="loginBtn" onclick="login()">Enter dashboard</button>
+  </div>
+</div>
+
+<!-- ===== DASHBOARD ===== -->
+<div id="dash">
+  <div class="top">
+    <div class="wrap">
+      <div class="logo">
+        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="url(#lg)"/><circle cx="50" cy="50" r="14" fill="#FAF8F4"/></svg>
+        BoostProfits · Admin
+      </div>
+      <div class="right">
+        <span id="who"></span>
+        <button onclick="refresh()">Refresh</button>
+        <button onclick="logout()">Sign out</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat"><div class="v" id="s-total">—</div><div class="l">Total leads</div></div>
+      <div class="stat"><div class="v" id="s-week">—</div><div class="l">This week</div></div>
+      <div class="stat"><div class="v" id="s-today">—</div><div class="l">Today</div></div>
+      <div class="stat"><div class="v" id="s-events">—</div><div class="l">Tracked events</div></div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" data-tab="leads" onclick="tab('leads')">Leads</div>
+      <div class="tab" data-tab="heat" onclick="tab('heat')">Heatmap &amp; activity</div>
+    </div>
+
+    <div class="panel active" id="panel-leads">
+      <div id="leadsBox"><div class="empty">Loading…</div></div>
+    </div>
+
+    <div class="panel" id="panel-heat">
+      <div class="section-card">
+        <h3>Time spent per section</h3>
+        <p class="hint">How long visitors dwell on each part of the page (total seconds across all sessions). Longer bars = more attention.</p>
+        <div id="heatBox"><div class="empty">Loading…</div></div>
+      </div>
+      <div class="section-card">
+        <h3>Page views &amp; actions</h3>
+        <p class="hint">Raw event counts captured from the live site.</p>
+        <div id="actBox"><div class="empty">Loading…</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const cfg = window.BP_CONFIG || {};
+  const CONFIGURED = cfg.SUPABASE_URL && !cfg.SUPABASE_URL.includes('YOUR-PROJECT')
+                     && cfg.SUPABASE_ANON_KEY && !cfg.SUPABASE_ANON_KEY.includes('YOUR-ANON');
+  const sb = (CONFIGURED && window.supabase)
+    ? window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY, { auth:{ persistSession:true, autoRefreshToken:true } })
+    : null;
+
+  function setErr(m){ const e=document.getElementById('loginErr'); e.textContent=m; e.classList.toggle('show', !!m); }
+  function busy(on){ const b=document.getElementById('loginBtn'); if(on){b.dataset.l=b.innerHTML;b.innerHTML='<span class="spinner"></span>';b.disabled=true;}else{b.innerHTML=b.dataset.l||'Enter dashboard';b.disabled=false;} }
+
+  async function login(){
+    setErr('');
+    if (!sb) return setErr('Supabase keys are not set in admin.html yet.');
+    const email = document.getElementById('email').value.trim();
+    const pass  = document.getElementById('pass').value;
+    if (!email || !pass) return setErr('Enter email and password.');
+    busy(true);
+    const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
+    busy(false);
+    if (error) return setErr(error.message);
+    if (data.user.email.toLowerCase() !== (cfg.ADMIN_EMAIL||'').toLowerCase()){
+      await sb.auth.signOut();
+      return setErr('This account is not authorised for the admin panel.');
+    }
+    enterDash(data.user);
+  }
+
+  async function logout(){ if (sb) await sb.auth.signOut(); location.reload(); }
+
+  function enterDash(user){
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('dash').style.display = 'block';
+    document.getElementById('who').textContent = user.email;
+    refresh();
+  }
+
+  function tab(t){
+    document.querySelectorAll('.tab').forEach(x => x.classList.toggle('active', x.dataset.tab===t));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-'+t).classList.add('active');
+  }
+
+  function esc(s){ return (s==null?'':String(s)).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+  function fmtDate(d){ return new Date(d).toLocaleString(undefined,{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}); }
+
+  async function refresh(){
+    if (!sb) return;
+    // ----- Leads -----
+    const { data: leads, error: le } = await sb.from('leads').select('*').order('created_at',{ascending:false}).limit(1000);
+    if (le){ document.getElementById('leadsBox').innerHTML = '<div class="empty">Could not load leads.<br><span class="muted">'+esc(le.message)+'</span></div>'; }
+    else { renderLeads(leads || []); renderStats(leads || []); }
+
+    // ----- Events -----
+    const { data: events, error: ee } = await sb.from('page_events').select('*').order('created_at',{ascending:false}).limit(5000);
+    if (ee){ document.getElementById('heatBox').innerHTML = document.getElementById('actBox').innerHTML = '<div class="empty">Could not load events.<br><span class="muted">'+esc(ee.message)+'</span></div>'; document.getElementById('s-events').textContent = '—'; }
+    else { renderHeat(events || []); renderActions(events || []); document.getElementById('s-events').textContent = (events||[]).length; }
+  }
+
+  function renderStats(leads){
+    const now = new Date();
+    const startToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+    const weekAgo = now.getTime() - 7*864e5;
+    document.getElementById('s-total').textContent = leads.length;
+    document.getElementById('s-week').textContent  = leads.filter(l => new Date(l.created_at).getTime() >= weekAgo).length;
+    document.getElementById('s-today').textContent = leads.filter(l => new Date(l.created_at).getTime() >= startToday).length;
+  }
+
+  function renderLeads(leads){
+    if (!leads.length){ document.getElementById('leadsBox').innerHTML = '<div class="empty">No leads yet. They\'ll appear here the moment someone submits the booking form.</div>'; return; }
+    let rows = leads.map(l => '<tr><td>'+esc(l.name)+'</td><td class="email">'+esc(l.email)+'</td><td>'+esc(l.source||'')+'</td><td class="muted">'+esc(l.location||'')+'</td><td class="muted">'+fmtDate(l.created_at)+'</td></tr>').join('');
+    document.getElementById('leadsBox').innerHTML =
+      '<table><thead><tr><th>Name</th><th>Email</th><th>Source</th><th>Location</th><th>When</th></tr></thead><tbody>'+rows+'</tbody></table>';
+  }
+
+  function renderHeat(events){
+    const secs = {};   // page -> total seconds
+    const sess = {};   // page -> set of sessions
+    events.filter(e => e.event_type === 'section_time').forEach(e => {
+      secs[e.page] = (secs[e.page]||0) + (e.duration_s||0);
+      (sess[e.page] = sess[e.page] || new Set()).add(e.session_id);
+    });
+    const entries = Object.entries(secs).sort((a,b)=>b[1]-a[1]);
+    if (!entries.length){ document.getElementById('heatBox').innerHTML = '<div class="empty">No dwell-time data yet. Browse the live site for a bit, then refresh.</div>'; return; }
+    const max = entries[0][1] || 1;
+    document.getElementById('heatBox').innerHTML = entries.map(([page,s]) => {
+      const pct = Math.max(6, Math.round(s/max*100));
+      const n = sess[page] ? sess[page].size : 0;
+      return '<div class="heat-row"><div class="heat-label" title="'+esc(page)+'">'+esc(page)+'</div>'+
+             '<div class="heat-track"><div class="heat-fill" style="width:'+pct+'%">'+s+'s</div></div>'+
+             '<div class="heat-meta">'+n+' visitor'+(n===1?'':'s')+'</div></div>';
+    }).join('');
+  }
+
+  function renderActions(events){
+    const counts = {};
+    events.forEach(e => { counts[e.event_type] = (counts[e.event_type]||0) + 1; });
+    const entries = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+    if (!entries.length){ document.getElementById('actBox').innerHTML = '<div class="empty">No events yet.</div>'; return; }
+    document.getElementById('actBox').innerHTML =
+      '<table><thead><tr><th>Event type</th><th>Count</th></tr></thead><tbody>'+
+      entries.map(([t,c]) => '<tr><td>'+esc(t)+'</td><td>'+c+'</td></tr>').join('')+'</tbody></table>';
+  }
+
+  // Auto-enter if already signed in as admin
+  if (sb){
+    sb.auth.getSession().then(({ data }) => {
+      const u = data.session && data.session.user;
+      if (u && u.email.toLowerCase() === (cfg.ADMIN_EMAIL||'').toLowerCase()) enterDash(u);
+    });
+  } else {
+    setErr('Supabase keys are not set in admin.html yet.');
+  }
+  document.getElementById('pass').addEventListener('keydown', e => { if (e.key==='Enter') login(); });
+</script>
+</body>
+</html>

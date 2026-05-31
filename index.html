@@ -9,12 +9,25 @@
 <meta property="og:description" content="We fix the copy. 7 days. You feel the difference." />
 <meta property="og:type" content="website" />
 
-<!-- Favicon: gear logo -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3CradialGradient id='g' cx='32%25' cy='26%25' r='74%25'%3E%3Cstop offset='0%25' stop-color='%23FEF08A'/%3E%3Cstop offset='20%25' stop-color='%23FB923C'/%3E%3Cstop offset='58%25' stop-color='%23F97316'/%3E%3Cstop offset='100%25' stop-color='%2392400E'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpath fill-rule='evenodd' fill='url(%23g)' d='M43.7 17.6 L43.9 6.4 A44 44 0 0 1 56.1 6.4 L56.3 17.6 A33 33 0 0 1 68.5 22.6 L76.5 14.9 A44 44 0 0 1 85.1 23.5 L77.4 31.6 A33 33 0 0 1 82.4 43.7 L93.6 43.9 A44 44 0 0 1 93.6 56.1 L82.4 56.3 A33 33 0 0 1 77.4 68.5 L85.1 76.5 A44 44 0 0 1 76.5 85.1 L68.5 77.4 A33 33 0 0 1 56.3 82.4 L56.1 93.6 A44 44 0 0 1 43.9 93.6 L43.7 82.4 A33 33 0 0 1 31.5 77.4 L23.5 85.1 A44 44 0 0 1 14.9 76.5 L22.6 68.5 A33 33 0 0 1 17.6 56.3 L6.4 56.1 A44 44 0 0 1 6.4 43.9 L17.6 43.7 A33 33 0 0 1 22.6 31.5 L14.9 23.5 A44 44 0 0 1 23.5 14.9 L31.5 22.6 A33 33 0 0 1 43.7 17.6 Z M64 50 A14 14 0 1 0 36 50 A14 14 0 1 0 64 50 Z'/%3E%3C/svg%3E" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SUPABASE  ·  Paste your two PUBLIC keys (Settings → API).
+     The anon key is safe to expose; Row-Level Security protects data.
+══════════════════════════════════════════════════════════════════ -->
+<script>
+  window.BP_CONFIG = {
+    SUPABASE_URL:      'https://YOUR-PROJECT-REF.supabase.co',
+    SUPABASE_ANON_KEY: 'YOUR-ANON-PUBLIC-KEY',
+    SUPPORT_EMAIL:     'contact@boostprofits.org',
+    ADMIN_EMAIL:       'contact@boostprofits.org'
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
   :root{
@@ -34,9 +47,9 @@
   .wrap{max-width:1120px; margin:0 auto; padding:0 24px}
   .eyebrow{font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:rgba(15,42,71,.5)}
 
-  /* Buttons */
+  /* ── Buttons ── */
   .btn{display:inline-flex; align-items:center; gap:8px; padding:14px 26px; border-radius:12px;
-    font-weight:500; font-size:15px; cursor:pointer; border:none; transition:all .25s ease}
+    font-weight:500; font-size:15px; cursor:pointer; border:none; transition:all .25s ease; font-family:inherit}
   .btn-primary{background:var(--navy); color:#fff}
   .btn-primary:hover{transform:translateY(-2px); box-shadow:0 10px 30px -10px rgba(15,42,71,.5)}
   .btn-ghost{color:rgba(26,26,26,.6)}
@@ -46,8 +59,8 @@
   .btn-outline{background:transparent; border:1px solid rgba(15,42,71,.2); color:var(--navy)}
   .btn-outline:hover{background:rgba(15,42,71,.05)}
 
-  /* Header */
-  header{position:fixed; top:0; left:0; right:0; z-index:50; transition:transform .35s ease, background .3s ease, box-shadow .3s ease, border-color .3s}
+  /* ── Header ── */
+  header{position:fixed; top:0; left:0; right:0; z-index:50; transition:transform .35s ease, background .3s ease, box-shadow .3s ease}
   header.hide{transform:translateY(-100%)}
   header.scrolled{background:rgba(250,248,244,.92); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); box-shadow:0 1px 20px -10px rgba(0,0,0,.1)}
   .nav{display:flex; align-items:center; justify-content:space-between; height:68px}
@@ -58,6 +71,7 @@
   .nav-links a{font-size:14px; color:rgba(26,26,26,.6); transition:color .2s}
   .nav-links a:hover{color:var(--charcoal)}
   .nav-cta{display:flex; align-items:center; gap:8px}
+  .nav-cta a{cursor:pointer}
   .nav-cta a.signin{font-size:14px; font-weight:500; color:rgba(26,26,26,.6); padding:8px 14px}
   .nav-cta a.signin:hover{color:var(--charcoal)}
   .nav-cta a.signup{font-size:14px; font-weight:500; padding:9px 16px; border:1px solid rgba(15,42,71,.2); color:var(--navy); border-radius:10px}
@@ -68,13 +82,22 @@
   .mobile-menu.open{display:flex}
   .mobile-menu a{font-size:15px; color:rgba(26,26,26,.7); padding:4px 0}
 
-  /* Sections */
+  /* User chip (logged-in state) */
+  .user-chip{display:none; align-items:center; gap:10px}
+  .user-chip.show{display:flex}
+  .nav-cta.hide{display:none}
+  .user-chip .avatar{width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,var(--navy),#1d4ed8); color:#fff; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; font-family:'Fraunces',serif}
+  .user-chip .uname{font-size:14px; font-weight:500; color:var(--charcoal)}
+  .user-chip .logout{font-size:13px; color:rgba(26,26,26,.5); border:1px solid rgba(26,26,26,.15); padding:6px 12px; border-radius:10px; cursor:pointer; background:none; font-family:inherit; transition:all .2s}
+  .user-chip .logout:hover{color:var(--charcoal); border-color:rgba(26,26,26,.3)}
+
+  /* ── Sections ── */
   section{padding:110px 0; border-top:1px solid var(--border)}
   section.hero{border-top:none; padding-top:160px}
   .h2{font-size:clamp(28px,4vw,48px); font-weight:600; line-height:1.1}
   .lead{font-size:18px; color:rgba(26,26,26,.65); line-height:1.65}
 
-  /* Hero */
+  /* ── Hero ── */
   .hero-grid{display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center}
   .hero h1{font-size:clamp(40px,5.5vw,72px); font-weight:600; line-height:1.03; margin:20px 0 24px}
   .hero .lead{max-width:500px; margin-bottom:32px}
@@ -82,12 +105,30 @@
   .trust{font-size:12px; color:rgba(26,26,26,.35)}
   .ambient{position:absolute; top:-160px; left:50%; transform:translateX(-50%); width:800px; height:480px; border-radius:50%; background:rgba(15,42,71,.05); filter:blur(120px); pointer-events:none; z-index:-1}
 
-  /* Browser mockup */
-  .mock{border-radius:18px; border:1px solid var(--border); background:#fff; box-shadow:0 40px 80px -30px rgba(15,42,71,.25); overflow:hidden; transition:transform .4s ease}
-  .mock:hover{transform:translateY(-6px)}
-  .mock-bar{background:#F0EDE8; border-bottom:1px solid var(--border); padding:13px 16px; display:flex; align-items:center; gap:12px}
+  /* Browser mockup — floating 3-D card */
+  @keyframes float3d{
+    0%  {transform:perspective(900px) rotateX(2deg) rotateY(-3deg) translateY(0)}
+    50% {transform:perspective(900px) rotateX(-1deg) rotateY(2deg) translateY(-14px)}
+    100%{transform:perspective(900px) rotateX(2deg) rotateY(-3deg) translateY(0)}
+  }
+  .mock-wrap{perspective:900px}
+  .mock{
+    border-radius:18px; border:1px solid var(--border); background:#fff;
+    box-shadow:0 40px 80px -20px rgba(15,42,71,.35), 0 0 0 1px rgba(255,255,255,.5) inset;
+    overflow:hidden; transform-style:preserve-3d;
+    animation:float3d 6s ease-in-out infinite;
+    transition:box-shadow .4s ease;
+  }
+  .mock:hover{
+    animation-play-state:paused;
+    box-shadow:0 60px 100px -20px rgba(15,42,71,.45), 0 0 0 1px rgba(255,255,255,.5) inset;
+  }
+  .mock-bar{background:linear-gradient(135deg,#F5F0E8,#EDE8DF); border-bottom:1px solid var(--border); padding:13px 16px; display:flex; align-items:center; gap:12px}
   .dots{display:flex; gap:6px}
-  .dots span{width:11px; height:11px; border-radius:50%; background:var(--border)}
+  .dots span{width:11px; height:11px; border-radius:50%}
+  .dots span:nth-child(1){background:#FF5F57}
+  .dots span:nth-child(2){background:#FEBC2E}
+  .dots span:nth-child(3){background:#28C840}
   .mock-url{flex:1; background:rgba(232,227,218,.6); border-radius:6px; padding:5px 12px; font-size:12px; color:rgba(26,26,26,.3)}
   .mock-body{padding:24px}
   .before{border-radius:10px; border:1px solid #FECACA; background:rgba(254,242,242,.5); padding:16px; margin-bottom:14px}
@@ -100,7 +141,7 @@
   .mock-arrow div{width:24px; height:24px; border-radius:50%; background:var(--navy); color:#fff; display:flex; align-items:center; justify-content:center; font-size:12px}
   .mock-btn{margin-top:14px; background:var(--navy); color:#fff; text-align:center; border-radius:10px; padding:11px; font-size:12px; font-weight:500}
 
-  /* Cards */
+  /* ── Proof cards ── */
   .cards3{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
   .card{border-radius:16px; border:1px solid var(--border); background:#fff; padding:22px; transition:all .3s ease}
   .card:hover{transform:translateY(-4px); box-shadow:0 20px 40px -20px rgba(15,42,71,.2)}
@@ -111,33 +152,38 @@
   .mini-after p{font-size:13px; font-weight:600}
   .mid-arrow{text-align:center; color:rgba(26,26,26,.25); margin:8px 0}
 
-  /* Problem / Future lists */
+  /* ── Problem / Future ── */
   .narrow{max-width:760px; margin:0 auto}
   .painlist,.winlist{margin-top:36px; display:flex; flex-direction:column; gap:14px}
-  .pain{display:flex; align-items:center; gap:16px; padding:16px; border-radius:16px; border:1px solid var(--border); background:rgba(255,255,255,.7); transition:all .3s}
-  .pain:hover{background:#fff; box-shadow:0 8px 20px -12px rgba(0,0,0,.15)}
-  .pain .ico{width:44px; height:44px; flex-shrink:0; border-radius:12px; display:flex; align-items:center; justify-content:center}
+  .pain{display:flex; align-items:center; gap:16px; padding:18px; border-radius:16px; border:1px solid var(--border); background:rgba(255,255,255,.7); transition:all .35s}
+  .pain:hover{background:#fff; box-shadow:0 8px 24px -12px rgba(0,0,0,.15); transform:translateX(4px)}
+  .pain .ico{width:48px; height:48px; flex-shrink:0; border-radius:14px; display:flex; align-items:center; justify-content:center}
   .pain p{font-size:16px; color:rgba(26,26,26,.75); font-weight:500}
   .win{display:flex; align-items:center; gap:14px}
-  .win .chk{width:22px; height:22px; flex-shrink:0; border-radius:50%; background:rgba(15,42,71,.1); display:flex; align-items:center; justify-content:center; color:var(--navy); font-size:12px; font-weight:700}
+  .win .chk{width:22px; height:22px; flex-shrink:0; border-radius:50%; background:linear-gradient(135deg,rgba(15,42,71,.15),rgba(15,42,71,.05)); display:flex; align-items:center; justify-content:center; color:var(--navy); font-size:12px; font-weight:700}
   .win p{font-size:17px; color:rgba(26,26,26,.78)}
-  .quote-line{font-family:'Fraunces',serif; font-size:20px; font-style:italic; font-weight:500; border-left:2px solid rgba(15,42,71,.2); padding-left:20px; margin-top:48px}
+  .quote-line{font-family:'Fraunces',serif; font-size:20px; font-style:italic; font-weight:500; border-left:3px solid rgba(249,115,22,.5); padding-left:20px; margin-top:48px; color:rgba(26,26,26,.8)}
 
-  /* Process */
+  /* ── Process ── */
   .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:24px; position:relative; margin-top:56px}
-  .steps:before{content:''; position:absolute; top:32px; left:12.5%; right:12.5%; height:1px; background:var(--border)}
+  .steps:before{content:''; position:absolute; top:32px; left:12.5%; right:12.5%; height:1px; background:linear-gradient(90deg,transparent,var(--border),transparent)}
   .step{text-align:center; position:relative}
-  .step .num{width:64px; height:64px; margin:0 auto 22px; border-radius:50%; border:1px solid var(--border); background:var(--cream); display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:600; font-size:18px; color:var(--navy); position:relative; z-index:2}
-  .step.locked .num{border-style:dashed; border-color:rgba(15,42,71,.25)}
+  .step .num{width:64px; height:64px; margin:0 auto 22px; border-radius:50%; border:1px solid var(--border); background:var(--cream); display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:600; font-size:18px; color:var(--navy); position:relative; z-index:2; transition:all .3s}
+  .step:hover .num{box-shadow:0 8px 24px -8px rgba(15,42,71,.25); transform:scale(1.05)}
+  .step.locked .num{border-style:dashed; border-color:rgba(15,42,71,.25); font-size:24px}
   .step h3{font-size:19px; margin-bottom:8px}
   .step p{font-size:14px; color:rgba(26,26,26,.55)}
   .step.locked .blurwrap{position:relative}
   .step.locked .blurwrap .content{filter:blur(5px); user-select:none}
   .step.locked .unlock{position:absolute; inset:0; display:flex; align-items:center; justify-content:center}
-  .step.locked .unlock span{font-size:12px; font-weight:600; color:rgba(15,42,71,.65); background:rgba(250,248,244,.92); padding:5px 12px; border-radius:99px; border:1px solid rgba(15,42,71,.12)}
+  .step.locked .unlock span{font-size:12px; font-weight:600; color:rgba(15,42,71,.65); background:rgba(250,248,244,.92); padding:5px 12px; border-radius:99px; border:1px solid rgba(15,42,71,.12); cursor:pointer; transition:all .2s}
+  .step.locked .unlock span:hover{background:#fff; border-color:rgba(15,42,71,.25)}
   .process-cta{text-align:center; margin-top:48px}
+  .step.unlocked .num{border-style:solid; border-color:rgba(249,115,22,.4); background:rgba(249,115,22,.05); font-size:18px}
+  .step.unlocked .blurwrap .content{filter:none; user-select:auto}
+  .step.unlocked .blurwrap .unlock{display:none}
 
-  /* VSL */
+  /* ── VSL ── */
   .vsl{max-width:760px; margin:0 auto; text-align:center}
   .vsl .video{position:relative; border-radius:18px; overflow:hidden; border:1px solid var(--border); box-shadow:0 30px 60px -30px rgba(15,42,71,.3); aspect-ratio:16/9; background:rgba(15,42,71,.04); margin:36px 0 32px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:18px}
   .vsl .grid-bg{position:absolute; inset:0; opacity:.05; background-image:linear-gradient(var(--navy) 1px,transparent 1px),linear-gradient(90deg,var(--navy) 1px,transparent 1px); background-size:40px 40px}
@@ -145,7 +191,7 @@
   .play:hover{transform:scale(1.1)}
   .vsl .cap{font-size:14px; color:rgba(26,26,26,.5); z-index:2}
 
-  /* Pricing */
+  /* ── Pricing ── */
   .plans{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; align-items:start; margin-top:48px}
   .plan{border-radius:18px; border:1px solid var(--border); background:#fff; padding:28px; display:flex; flex-direction:column; transition:all .3s}
   .plan:hover{transform:translateY(-4px); box-shadow:0 24px 50px -25px rgba(15,42,71,.25)}
@@ -155,23 +201,23 @@
   .plan h3{font-size:24px}
   .plan .desc{font-size:14px; margin-top:2px}
   .plan .desc.d{color:rgba(255,255,255,.55)} .plan .desc.l{color:rgba(26,26,26,.45)}
-  .plan-ico{width:36px; height:36px; border-radius:11px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:18px}
+  .plan-ico{width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0}
   .pop-tag{font-size:10px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.5); margin-bottom:8px}
   .price-old{font-size:18px; text-decoration:line-through; color:rgba(26,26,26,.35)}
   .plan.pop .price-old{color:rgba(255,255,255,.4)}
-  .save{font-size:10px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:2px 8px; border-radius:99px; background:rgba(15,42,71,.1); color:var(--navy); margin-left:8px}
+  .save{font-size:10px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:2px 8px; border-radius:99px; background:rgba(249,115,22,.12); color:var(--orange); margin-left:8px}
   .plan.pop .save{background:rgba(255,255,255,.15); color:#fff}
   .price{font-family:'Fraunces',serif; font-size:48px; font-weight:600; margin:4px 0}
   .price small{font-size:14px; font-weight:400; color:rgba(26,26,26,.4)}
   .plan.pop .price small{color:rgba(255,255,255,.5)}
   .feats{list-style:none; flex:1; margin:24px 0; display:flex; flex-direction:column; gap:12px}
   .feats li{display:flex; gap:10px; font-size:14px; align-items:flex-start}
-  .feats li b{color:var(--navy); flex-shrink:0} .plan.pop .feats li b{color:rgba(255,255,255,.6)}
+  .feats li b{color:var(--orange); flex-shrink:0} .plan.pop .feats li b{color:rgba(255,255,255,.6)}
   .feats li span{color:rgba(26,26,26,.65)} .plan.pop .feats li span{color:rgba(255,255,255,.75)}
 
-  /* Urgency */
+  /* ── Urgency ── */
   .urgency{background:var(--navy); color:#fff; text-align:center; position:relative; overflow:hidden}
-  .urgency .glow{position:absolute; inset:0; background:radial-gradient(ellipse at center,rgba(255,255,255,.05) 0%,transparent 70%)}
+  .urgency .glow{position:absolute; inset:0; background:radial-gradient(ellipse at center,rgba(249,115,22,.12) 0%,transparent 70%)}
   .urgency .narrow{position:relative}
   .countdown{display:flex; justify-content:center; gap:18px; margin:30px 0}
   .cd-unit{display:flex; flex-direction:column; align-items:center}
@@ -185,17 +231,17 @@
   .urgency .lead{color:rgba(255,255,255,.65); max-width:680px; margin:0 auto}
   .small-note{font-size:12px; color:rgba(255,255,255,.25); margin-top:16px}
 
-  /* FAQ */
+  /* ── FAQ ── */
   .faq{max-width:680px; margin:0 auto}
   .faq-item{border-bottom:1px solid var(--border)}
   .faq-q{width:100%; background:none; border:none; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:24px; padding:20px 0; text-align:left; font-size:16px; font-weight:500; color:var(--charcoal); font-family:inherit; transition:color .2s}
   .faq-q:hover{color:var(--navy)}
   .faq-q .pm{flex-shrink:0; color:rgba(26,26,26,.35); font-size:20px; transition:transform .25s}
-  .faq-a{max-height:0; overflow:hidden; transition:max-height .3s ease}
+  .faq-a{max-height:0; overflow:hidden; transition:max-height .35s ease}
   .faq-a p{padding-bottom:20px; font-size:15px; color:rgba(26,26,26,.6)}
   .faq-item.open .pm{transform:rotate(45deg)}
 
-  /* Footer */
+  /* ── Footer ── */
   footer{background:var(--cream); border-top:1px solid var(--border); padding:64px 0 48px}
   .foot-grid{display:flex; justify-content:space-between; gap:48px; flex-wrap:wrap; margin-bottom:48px}
   .foot-brand{max-width:280px}
@@ -209,22 +255,55 @@
   .admin-btn{display:inline-flex; align-items:center; gap:6px; font-size:12px; color:rgba(26,26,26,.4); border:1px solid rgba(26,26,26,.15); padding:6px 12px; border-radius:10px; transition:all .2s}
   .admin-btn:hover{color:rgba(26,26,26,.7); border-color:rgba(26,26,26,.3)}
 
-  /* Reveal animation */
+  /* ── Scroll-reveal ── */
   .reveal{opacity:0; transform:translateY(24px); transition:opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1)}
   .reveal.in{opacity:1; transform:translateY(0)}
 
-  /* Responsive */
+  /* ── Auth modal ── */
+  .modal-bg{position:fixed; inset:0; z-index:200; background:rgba(15,42,71,.5); backdrop-filter:blur(8px); display:none; align-items:center; justify-content:center; padding:24px}
+  .modal-bg.open{display:flex}
+  .modal{width:100%; max-width:430px; background:var(--cream); border:1px solid var(--border); border-radius:22px; box-shadow:0 40px 90px -20px rgba(15,42,71,.55); padding:36px 32px; position:relative;
+    transform:translateY(20px) scale(.97); opacity:0; transition:transform .35s cubic-bezier(.22,1,.36,1), opacity .3s ease}
+  .modal-bg.open .modal{transform:translateY(0) scale(1); opacity:1}
+  .modal-x{position:absolute; top:18px; right:20px; background:none; border:none; font-size:24px; line-height:1; color:rgba(26,26,26,.35); cursor:pointer; font-family:inherit; transition:color .2s}
+  .modal-x:hover{color:var(--charcoal)}
+  .modal h3{font-size:26px; margin-bottom:6px}
+  .modal .sub{font-size:14px; color:rgba(26,26,26,.55); margin-bottom:22px; line-height:1.5}
+  .modal label{display:block; font-size:11px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:rgba(26,26,26,.45); margin:16px 0 6px}
+  .modal input,.modal select{width:100%; padding:12px 15px; border-radius:11px; border:1px solid var(--border); background:#fff; font-size:14px; font-family:inherit; color:var(--charcoal); transition:border-color .2s; -webkit-appearance:none}
+  .modal input:focus,.modal select:focus{outline:none; border-color:var(--navy); box-shadow:0 0 0 3px rgba(15,42,71,.08)}
+  .modal .btn{width:100%; justify-content:center; margin-top:22px; padding:14px}
+  .modal .swap{font-size:13px; color:rgba(26,26,26,.5); text-align:center; margin-top:20px}
+  .modal .swap a{color:var(--navy); font-weight:600; cursor:pointer}
+  .modal .err{font-size:13px; color:#dc2626; margin-top:12px; display:none; padding:10px 14px; background:rgba(220,38,38,.06); border-radius:9px}
+  .modal .err.show{display:block}
+  .modal .ok{font-size:13px; color:#15803d; margin-top:12px; display:none; padding:10px 14px; background:rgba(21,128,61,.07); border-radius:9px}
+  .modal .ok.show{display:block}
+  .otp-input{letter-spacing:.5em; text-align:center; font-size:24px; font-weight:600; font-family:'Fraunces',serif}
+  .auth-view{display:none}
+  .auth-view.active{display:block}
+  .modal .legal{font-size:11px; color:rgba(26,26,26,.38); margin-top:16px; line-height:1.6}
+  .modal .legal a{color:var(--navy)}
+  .spinner{display:inline-block; width:16px; height:16px; border:2px solid rgba(255,255,255,.35); border-top-color:#fff; border-radius:50%; animation:spin .7s linear infinite; vertical-align:-3px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* ── Toast ── */
+  .toast{position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(20px); z-index:300; background:var(--navy); color:#fff; padding:13px 22px; border-radius:12px; font-size:14px; font-weight:500; box-shadow:0 20px 40px -15px rgba(15,42,71,.6); opacity:0; pointer-events:none; transition:all .35s cubic-bezier(.22,1,.36,1); white-space:nowrap}
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+
+  /* ── Responsive ── */
   @media(max-width:900px){
     .hero-grid{grid-template-columns:1fr; gap:40px}
-    .hero .mock{max-width:440px}
+    .hero .mock-wrap{max-width:440px; margin:0 auto}
     .cards3{grid-template-columns:1fr}
     .steps{grid-template-columns:1fr; gap:32px}
     .steps:before{display:none}
     .plans{grid-template-columns:1fr}
     .plan.pop{transform:none} .plan.pop:hover{transform:translateY(-4px)}
-    .nav-links,.nav-cta{display:none}
+    .nav-links,.nav-cta,.user-chip{display:none !important}
     .burger{display:block}
     .foot-grid{flex-direction:column}
+    .booking-form{flex-direction:column}
   }
 </style>
 </head>
@@ -242,10 +321,15 @@
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
     </nav>
-    <div class="nav-cta">
-      <a href="#booking" class="signin">Sign In</a>
-      <a href="#booking" class="signup">Sign Up</a>
+    <div class="nav-cta" id="navCta">
+      <a class="signin" onclick="openAuth('login')">Sign In</a>
+      <a class="signup" onclick="openAuth('signup')">Sign Up</a>
       <a href="#booking" class="book">Book a Free Audit</a>
+    </div>
+    <div class="user-chip" id="userChip">
+      <div class="avatar" id="userAvatar">U</div>
+      <span class="uname" id="userName">User</span>
+      <button class="logout" onclick="bpSignOut()">Sign out</button>
     </div>
     <button class="burger" id="burger" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><path d="M3 6h14M3 10h14M3 14h14" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -255,7 +339,9 @@
     <a href="#process">Process</a>
     <a href="#pricing">Pricing</a>
     <a href="#faq">FAQ</a>
-    <a href="#booking" class="book" style="background:var(--navy);color:#fff;text-align:center;padding:11px;border-radius:10px">Book a Free Audit</a>
+    <a onclick="openAuth('signup')" style="cursor:pointer">Sign Up Free</a>
+    <a onclick="openAuth('login')" style="cursor:pointer">Sign In</a>
+    <a href="#booking" style="background:var(--navy);color:#fff;text-align:center;padding:11px;border-radius:10px">Book a Free Audit</a>
   </div>
 </header>
 
@@ -273,13 +359,18 @@
       </div>
       <p class="trust">For founders and operators who want more buyers from the traffic they already have.</p>
     </div>
-    <div class="reveal mock">
-      <div class="mock-bar"><div class="dots"><span></span><span></span><span></span></div><div class="mock-url">yoursite.com</div></div>
-      <div class="mock-body">
-        <div class="before"><p class="tag red">Before</p><p>We help businesses scale with innovative marketing solutions tailored to your unique needs.</p></div>
-        <div class="mock-arrow"><div>↓</div></div>
-        <div class="after"><p class="tag blue">After</p><p>Get more paying customers without touching your ad spend.</p></div>
-        <div class="mock-btn">Book a Free Audit →</div>
+    <div class="reveal mock-wrap">
+      <div class="mock">
+        <div class="mock-bar">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <div class="mock-url">yoursite.com</div>
+        </div>
+        <div class="mock-body">
+          <div class="before"><p class="tag red">Before</p><p>We help businesses scale with innovative marketing solutions tailored to your unique needs.</p></div>
+          <div class="mock-arrow"><div>↓</div></div>
+          <div class="after"><p class="tag blue">After</p><p>Get more paying customers without touching your ad spend.</p></div>
+          <div class="mock-btn">Book a Free Audit →</div>
+        </div>
       </div>
     </div>
   </div>
@@ -322,10 +413,30 @@
     <h2 class="h2 reveal" style="margin-bottom:24px">You're not losing sales. You're bleeding them.</h2>
     <p class="lead reveal">Every visitor who found you, read your page, and left without buying — that was a buyer. They had money. They had the problem. Something in the words gave them a reason to hesitate. And hesitation online means gone. That's not a traffic problem. That's a words problem.</p>
     <div class="painlist">
-      <div class="pain reveal"><div class="ico" style="background:rgba(239,68,68,.1)">💬</div><p>Words that inform people but never make them want to buy</p></div>
-      <div class="pain reveal"><div class="ico" style="background:rgba(245,158,11,.12)">📩</div><p>DMs and ads that get seen but not acted on</p></div>
-      <div class="pain reveal"><div class="ico" style="background:rgba(59,130,246,.1)">👁️</div><p>Traffic that reads everything, remembers nothing, buys nothing</p></div>
-      <div class="pain reveal"><div class="ico" style="background:rgba(124,58,237,.1)">🌫️</div><p>An offer that makes sense to you but confuses everyone else</p></div>
+      <div class="pain reveal">
+        <div class="ico" style="background:rgba(239,68,68,.08)">
+          <svg viewBox="0 0 24 24" fill="none" width="24" height="24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="rgba(239,68,68,.75)" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><circle cx="8" cy="10" r="1" fill="rgba(239,68,68,.75)"/><circle cx="12" cy="10" r="1" fill="rgba(239,68,68,.75)"/><circle cx="16" cy="10" r="1" fill="rgba(239,68,68,.75)"/></svg>
+        </div>
+        <p>Words that inform people but never make them want to buy</p>
+      </div>
+      <div class="pain reveal">
+        <div class="ico" style="background:rgba(245,158,11,.08)">
+          <svg viewBox="0 0 24 24" fill="none" width="24" height="24"><rect x="2" y="4" width="20" height="16" rx="2" stroke="rgba(245,158,11,.75)" stroke-width="1.8"/><polyline points="2,4 12,13 22,4" stroke="rgba(245,158,11,.75)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <p>DMs and ads that get seen but not acted on</p>
+      </div>
+      <div class="pain reveal">
+        <div class="ico" style="background:rgba(59,130,246,.08)">
+          <svg viewBox="0 0 24 24" fill="none" width="24" height="24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="rgba(59,130,246,.75)" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="3" stroke="rgba(59,130,246,.75)" stroke-width="1.8"/></svg>
+        </div>
+        <p>Traffic that reads everything, remembers nothing, buys nothing</p>
+      </div>
+      <div class="pain reveal">
+        <div class="ico" style="background:rgba(124,58,237,.08)">
+          <svg viewBox="0 0 24 24" fill="none" width="24" height="24"><path d="M3 12h18M3 7h15M6 17h12" stroke="rgba(124,58,237,.75)" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <p>An offer that makes sense to you but confuses everyone else</p>
+      </div>
     </div>
   </div>
 </section>
@@ -334,7 +445,7 @@
 <section>
   <div class="wrap narrow">
     <p class="eyebrow reveal" style="margin-bottom:20px">Now picture the other version</p>
-    <h2 class="h2 reveal" style="margin-bottom:24px">It's a Tuesday. You check your phone. Two people bought while you slept.</h2>
+    <h2 class="h2 reveal" style="margin-bottom:24px">It's a <span id="dynDay">Tuesday</span>. You check your phone. Two people bought while you slept.</h2>
     <p class="lead reveal">Same product. Same traffic. Same you. The only thing that changed was the words. They land. People get it. They don't think — they buy. And you wake up to money that wasn't there last night. No new ads. No grind. Just words finally pulling their weight.</p>
     <div class="winlist">
       <div class="win reveal"><div class="chk">✓</div><p>A stranger lands on your page and gets it in three seconds flat</p></div>
@@ -357,18 +468,18 @@
         <h3>We read everything.</h3>
         <p>Your page, your DMs, your competitor's copy. We find the exact line where buyers stop reading and start leaving.</p>
       </div>
-      <div class="step locked reveal">
+      <div class="step locked reveal" data-num="02">
         <div class="num">🔒</div>
         <div class="blurwrap">
           <div class="content"><h3>The diagnosis.</h3><p>We map exactly where your funnel leaks money and why. Most clients are shocked.</p></div>
-          <div class="unlock"><span>Unlock with sign-up</span></div>
+          <div class="unlock"><span onclick="openAuth('signup')">Unlock with sign-up</span></div>
         </div>
       </div>
-      <div class="step locked reveal">
+      <div class="step locked reveal" data-num="03">
         <div class="num">🔒</div>
         <div class="blurwrap">
           <div class="content"><h3>The rewrite.</h3><p>Every word replaced with something that earns its place. Built for one job: make them act.</p></div>
-          <div class="unlock"><span>Unlock with sign-up</span></div>
+          <div class="unlock"><span onclick="openAuth('signup')">Unlock with sign-up</span></div>
         </div>
       </div>
       <div class="step reveal">
@@ -377,8 +488,8 @@
         <p>Better replies. Higher conversions. Copy that makes people move instead of wonder. You'll know within days.</p>
       </div>
     </div>
-    <div class="process-cta reveal">
-      <a href="#booking" class="btn btn-outline">🔒 Sign up free to see the full process</a>
+    <div class="process-cta reveal" id="processCta">
+      <a class="btn btn-outline" onclick="openAuth('signup')" style="cursor:pointer">🔒 Sign up free to see the full process</a>
     </div>
   </div>
 </section>
@@ -405,10 +516,13 @@
     <h2 class="h2 reveal" style="text-align:center;margin-bottom:8px">Pick your level.</h2>
     <p class="reveal" style="text-align:center;color:rgba(26,26,26,.55);font-size:17px">No contracts. Start tonight. Change your mind tomorrow.</p>
     <div class="plans">
+      <!-- Starter -->
       <div class="plan reveal">
         <div class="plan-head">
           <div><h3>Starter</h3><p class="desc l">Try it. See what changes.</p></div>
-          <div class="plan-ico" style="background:rgba(15,42,71,.08)">⚡</div>
+          <div class="plan-ico" style="background:rgba(15,42,71,.07)">
+            <svg viewBox="0 0 24 24" fill="none" width="22" height="22"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="rgba(15,42,71,.55)" stroke="rgba(15,42,71,.4)" stroke-width=".5" stroke-linejoin="round"/></svg>
+          </div>
         </div>
         <div class="price">$19 <small>/mo</small></div>
         <ul class="feats">
@@ -421,11 +535,14 @@
         </ul>
         <a href="#booking" class="btn btn-primary" style="width:100%;justify-content:center">Start for $19</a>
       </div>
+      <!-- Pro -->
       <div class="plan pop reveal">
         <p class="pop-tag">Most Popular</p>
         <div class="plan-head">
           <div><h3>Pro</h3><p class="desc d">The full rewrite. The real results.</p></div>
-          <div class="plan-ico" style="background:rgba(255,255,255,.15)">⭐</div>
+          <div class="plan-ico" style="background:rgba(255,255,255,.12)">
+            <svg viewBox="0 0 24 24" width="22" height="22"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="rgba(255,255,255,.65)" stroke="rgba(255,255,255,.3)" stroke-width=".5"/></svg>
+          </div>
         </div>
         <div><span class="price-old">$69</span><span class="save">Save $20</span></div>
         <div class="price">$49 <small>/mo</small></div>
@@ -440,10 +557,13 @@
         </ul>
         <a href="#booking" class="btn btn-white" style="width:100%;justify-content:center">Go Pro</a>
       </div>
+      <!-- Elite -->
       <div class="plan reveal">
         <div class="plan-head">
           <div><h3>Elite</h3><p class="desc l">For serious operators. We talk numbers.</p></div>
-          <div class="plan-ico" style="background:rgba(15,42,71,.08)">👑</div>
+          <div class="plan-ico" style="background:rgba(15,42,71,.07)">
+            <svg viewBox="0 0 24 24" fill="none" width="22" height="22"><path d="M2 20h20M5 20V9l7-7 7 7v11" stroke="rgba(15,42,71,.55)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><rect x="9" y="13" width="6" height="7" rx="1" stroke="rgba(15,42,71,.55)" stroke-width="1.7"/></svg>
+          </div>
         </div>
         <div class="price">Custom</div>
         <ul class="feats">
@@ -460,7 +580,7 @@
   </div>
 </section>
 
-<!-- ===== URGENCY ===== -->
+<!-- ===== URGENCY / BOOKING ===== -->
 <section id="booking" class="urgency">
   <div class="glow"></div>
   <div class="wrap narrow">
@@ -475,8 +595,8 @@
       <div class="cd-unit"><span class="v" id="cd-s">00</span><span class="l">sec</span></div>
     </div>
     <form class="booking-form reveal" id="bookingForm">
-      <input type="text" placeholder="Your name" required />
-      <input type="email" placeholder="Your email" required />
+      <input type="text" id="bf-name" placeholder="Your name" required />
+      <input type="email" id="bf-email" placeholder="Your email" required />
       <button type="submit" class="btn btn-white" style="white-space:nowrap">Grab the Seat →</button>
     </form>
     <p class="small-note reveal">No spam. No pitch. Just a straight talk about your copy.</p>
@@ -527,7 +647,7 @@
         <div class="foot-col">
           <h4>Company</h4>
           <a href="#">About</a>
-          <a href="mailto:hello@boostprofits.org">Contact</a>
+          <a href="mailto:contact@boostprofits.org">Contact</a>
         </div>
         <div class="foot-col">
           <h4>Legal</h4>
@@ -538,19 +658,88 @@
           <h4>Connect</h4>
           <a href="#">Instagram</a>
           <a href="#">X / Twitter</a>
-          <a href="mailto:hello@boostprofits.org">Email</a>
+          <a href="mailto:contact@boostprofits.org">Email</a>
         </div>
       </div>
     </div>
     <div class="foot-bottom">
       <p>© 2026 BoostProfits. All rights reserved.</p>
-      <a href="#" class="admin-btn">🛡️ Admin Panel</a>
+      <a href="admin.html" class="admin-btn">🛡️ Admin Panel</a>
     </div>
   </div>
 </footer>
 
+<!-- ===== AUTH MODAL ===== -->
+<div class="modal-bg" id="authModal">
+  <div class="modal">
+    <button class="modal-x" onclick="closeAuth()" aria-label="Close">&times;</button>
+
+    <!-- Sign Up -->
+    <div class="auth-view" id="view-signup">
+      <h3>Create your account</h3>
+      <p class="sub">See the full process. Takes 30 seconds. Free forever.</p>
+      <label>Full name</label>
+      <input type="text" id="su-name" placeholder="Jane Founder" autocomplete="name" />
+      <label>Email</label>
+      <input type="email" id="su-email" placeholder="you@company.com" autocomplete="email" />
+      <label>Nickname (what we call you)</label>
+      <input type="text" id="su-nick" placeholder="Jane" />
+      <label>Password</label>
+      <input type="password" id="su-pass" placeholder="At least 6 characters" autocomplete="new-password" />
+      <label>How did you hear about us?</label>
+      <select id="su-ref">
+        <option value="">Select one…</option>
+        <option>X / Twitter</option>
+        <option>Instagram</option>
+        <option>A friend</option>
+        <option>Google</option>
+        <option>YouTube</option>
+        <option>Other</option>
+      </select>
+      <div class="err" id="su-err"></div>
+      <button class="btn btn-primary" id="su-btn" onclick="doSignup()">Create account &amp; send code</button>
+      <p class="legal">By signing up you agree to our <a href="#">Terms</a> &amp; <a href="#">Privacy Policy</a>.</p>
+      <p class="swap">Already have an account? <a onclick="switchAuth('login')">Sign in</a></p>
+    </div>
+
+    <!-- OTP Verify -->
+    <div class="auth-view" id="view-verify">
+      <h3>Check your email</h3>
+      <p class="sub">We sent a 6-digit code to <b id="vf-email">your email</b>. Enter it below.</p>
+      <label>Verification code</label>
+      <input type="text" inputmode="numeric" maxlength="6" id="vf-code" class="otp-input" placeholder="••••••" />
+      <div class="err" id="vf-err"></div>
+      <div class="ok" id="vf-ok"></div>
+      <button class="btn btn-primary" id="vf-btn" onclick="doVerify()">Verify &amp; unlock</button>
+      <p class="swap">Didn't get it? <a onclick="resendCode()">Resend code</a></p>
+    </div>
+
+    <!-- Login -->
+    <div class="auth-view" id="view-login">
+      <h3>Welcome back</h3>
+      <p class="sub">Sign in to see the full process.</p>
+      <label>Email</label>
+      <input type="email" id="li-email" placeholder="you@company.com" autocomplete="email" />
+      <label>Password</label>
+      <input type="password" id="li-pass" placeholder="Your password" autocomplete="current-password" />
+      <div class="err" id="li-err"></div>
+      <button class="btn btn-primary" id="li-btn" onclick="doLogin()">Sign in</button>
+      <p class="swap">New here? <a onclick="switchAuth('signup')">Create account</a></p>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
 <script>
-  // ===== Smart header: hide on scroll down, show on scroll up =====
+  // ── Dynamic day of week ──────────────────────────────────────
+  (function(){
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const el = document.getElementById('dynDay');
+    if (el) el.textContent = days[new Date().getDay()];
+  })();
+
+  // ── Smart header ─────────────────────────────────────────────
   const header = document.getElementById('header');
   let lastY = 0;
   window.addEventListener('scroll', () => {
@@ -561,7 +750,7 @@
     lastY = y;
   }, { passive: true });
 
-  // ===== Mobile menu =====
+  // ── Mobile menu ──────────────────────────────────────────────
   document.getElementById('burger').addEventListener('click', () => {
     document.getElementById('mobileMenu').classList.toggle('open');
   });
@@ -569,13 +758,13 @@
     a.addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open'))
   );
 
-  // ===== Scroll reveal =====
+  // ── Scroll reveal ────────────────────────────────────────────
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.1, rootMargin: '-40px' });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  // ===== Countdown to midnight tonight =====
+  // ── Countdown to midnight ────────────────────────────────────
   function tick() {
     const now = new Date();
     const end = new Date(now); end.setHours(23, 59, 59, 0);
@@ -590,24 +779,279 @@
   }
   tick(); setInterval(tick, 1000);
 
-  // ===== FAQ accordion =====
+  // ── FAQ accordion ────────────────────────────────────────────
   document.querySelectorAll('.faq-q').forEach(btn => {
     btn.addEventListener('click', () => {
       const item = btn.parentElement;
-      const ans = btn.nextElementSibling;
-      const isOpen = item.classList.contains('open');
+      const ans  = btn.nextElementSibling;
+      const open = item.classList.contains('open');
       document.querySelectorAll('.faq-item').forEach(i => {
         i.classList.remove('open'); i.querySelector('.faq-a').style.maxHeight = null;
       });
-      if (!isOpen) { item.classList.add('open'); ans.style.maxHeight = ans.scrollHeight + 'px'; }
+      if (!open) { item.classList.add('open'); ans.style.maxHeight = ans.scrollHeight + 'px'; }
     });
   });
 
-  // ===== Booking form =====
-  document.getElementById('bookingForm').addEventListener('submit', (e) => {
+  // ═══════════════════════════════════════════════════════════════
+  //  SUPABASE  ·  Auth, process unlock, leads, activity heatmap
+  // ═══════════════════════════════════════════════════════════════
+  const cfg = window.BP_CONFIG || {};
+  const CONFIGURED = !!(cfg.SUPABASE_URL && !cfg.SUPABASE_URL.includes('YOUR-PROJECT')
+                        && cfg.SUPABASE_ANON_KEY && !cfg.SUPABASE_ANON_KEY.includes('YOUR-ANON'));
+  const sb = (CONFIGURED && window.supabase)
+    ? window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY,
+        { auth: { persistSession: true, autoRefreshToken: true } })
+    : null;
+
+  // ── Toast ────────────────────────────────────────────────────
+  let toastTimer;
+  function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 3600);
+  }
+
+  // ── Auth modal ───────────────────────────────────────────────
+  const modal = document.getElementById('authModal');
+  function showView(v) {
+    document.querySelectorAll('.auth-view').forEach(el => el.classList.remove('active'));
+    document.getElementById('view-' + v).classList.add('active');
+  }
+  function openAuth(v)   { showView(v || 'signup'); modal.classList.add('open'); }
+  function switchAuth(v) { showView(v); }
+  function closeAuth()   { modal.classList.remove('open'); }
+  modal.addEventListener('click', e => { if (e.target === modal) closeAuth(); });
+  window.openAuth  = openAuth;
+  window.switchAuth = switchAuth;
+  window.closeAuth = closeAuth;
+
+  function setErr(id, msg) {
+    const el = document.getElementById(id);
+    el.textContent = msg; el.classList.toggle('show', !!msg);
+  }
+  function setBusy(btnId, on) {
+    const b = document.getElementById(btnId);
+    if (on)  { b._orig = b.innerHTML; b.innerHTML = '<span class="spinner"></span>'; b.disabled = true; }
+    else     { b.innerHTML = b._orig || ''; b.disabled = false; }
+  }
+  function needConfig() {
+    toast('Keys not set yet — add your Supabase URL and anon key in BP_CONFIG.');
+    return true;
+  }
+
+  let pendingEmail = '';
+
+  // Sign up → sends 6-digit OTP to email
+  async function doSignup() {
+    setErr('su-err', '');
+    const name  = document.getElementById('su-name').value.trim();
+    const email = document.getElementById('su-email').value.trim();
+    const nick  = document.getElementById('su-nick').value.trim();
+    const pass  = document.getElementById('su-pass').value;
+    const ref   = document.getElementById('su-ref').value;
+    if (!name || !email || !pass) return setErr('su-err', 'Name, email and password are required.');
+    if (pass.length < 6) return setErr('su-err', 'Password must be at least 6 characters.');
+    if (!sb) return needConfig();
+    setBusy('su-btn', true);
+    const { error } = await sb.auth.signUp({
+      email, password: pass,
+      options: { data: { full_name: name, nickname: nick || name.split(' ')[0], referral_source: ref } }
+    });
+    setBusy('su-btn', false);
+    if (error) { setErr('su-err', error.message); return; }
+    pendingEmail = email;
+    document.getElementById('vf-email').textContent = email;
+    showView('verify');
+    setTimeout(() => document.getElementById('vf-code').focus(), 80);
+  }
+
+  // Verify the 6-digit OTP
+  async function doVerify() {
+    setErr('vf-err', '');
+    document.getElementById('vf-ok').classList.remove('show');
+    const token = document.getElementById('vf-code').value.trim();
+    if (token.length < 6) return setErr('vf-err', 'Enter the 6-digit code from your email.');
+    if (!sb) return needConfig();
+    setBusy('vf-btn', true);
+    const { data, error } = await sb.auth.verifyOtp({ email: pendingEmail, token, type: 'signup' });
+    setBusy('vf-btn', false);
+    if (error) { setErr('vf-err', error.message); return; }
+    await upsertProfile(data.user);
+    closeAuth();
+    toast('✓ Email verified — full process is now unlocked.');
+  }
+
+  async function resendCode() {
+    if (!sb) return needConfig();
+    const { error } = await sb.auth.resend({ type: 'signup', email: pendingEmail });
+    const ok = document.getElementById('vf-ok');
+    if (error) setErr('vf-err', error.message);
+    else { ok.textContent = 'New code sent — check your inbox.'; ok.classList.add('show'); }
+  }
+
+  // Login
+  async function doLogin() {
+    setErr('li-err', '');
+    const email = document.getElementById('li-email').value.trim();
+    const pass  = document.getElementById('li-pass').value;
+    if (!email || !pass) return setErr('li-err', 'Email and password are required.');
+    if (!sb) return needConfig();
+    setBusy('li-btn', true);
+    const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
+    setBusy('li-btn', false);
+    if (error) { setErr('li-err', error.message); return; }
+    await upsertProfile(data.user);
+    closeAuth();
+    toast('Welcome back.');
+  }
+
+  // Enter on password field triggers login
+  document.getElementById('li-pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+  document.getElementById('vf-code').addEventListener('keydown', e => { if (e.key === 'Enter') doVerify(); });
+
+  async function bpSignOut() {
+    if (sb) try { await sb.auth.signOut(); } catch(e) {}
+    applyAuthState(null);
+    toast('Signed out.');
+  }
+  window.bpSignOut = bpSignOut;
+
+  // Save/update profile row (best-effort)
+  async function upsertProfile(user) {
+    if (!sb || !user) return;
+    const m = user.user_metadata || {};
+    try {
+      await sb.from('profiles').upsert({
+        id: user.id, email: user.email,
+        name: m.full_name || '', nickname: m.nickname || '', referral_source: m.referral_source || ''
+      }, { onConflict: 'id' });
+    } catch(e) {}
+  }
+
+  // Apply logged-in / logged-out UI
+  function applyAuthState(user) {
+    const chip = document.getElementById('userChip');
+    const nav  = document.getElementById('navCta');
+    if (user) {
+      const m = user.user_metadata || {};
+      const name = m.nickname || m.full_name || (user.email || '').split('@')[0];
+      document.getElementById('userName').textContent = name;
+      document.getElementById('userAvatar').textContent = (name[0] || 'U').toUpperCase();
+      chip.classList.add('show'); nav.classList.add('hide');
+      unlockProcess(true);
+    } else {
+      chip.classList.remove('show'); nav.classList.remove('hide');
+      unlockProcess(false);
+    }
+  }
+
+  function unlockProcess(on) {
+    document.querySelectorAll('.step.locked').forEach(step => {
+      const num = step.querySelector('.num');
+      if (on) {
+        step.classList.add('unlocked');
+        if (step.dataset.num) num.textContent = step.dataset.num;
+      } else {
+        step.classList.remove('unlocked');
+        num.textContent = '🔒';
+      }
+    });
+    const cta = document.getElementById('processCta');
+    if (cta) cta.style.display = on ? 'none' : '';
+  }
+
+  // Session bootstrap
+  if (sb) {
+    sb.auth.getSession().then(({ data }) => applyAuthState(data.session ? data.session.user : null));
+    sb.auth.onAuthStateChange((_e, session) => applyAuthState(session ? session.user : null));
+  }
+
+  // ── Booking form → Supabase leads ────────────────────────────
+  document.getElementById('bookingForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    e.target.innerHTML = '<p style="color:#fff;font-weight:600;width:100%;text-align:center;padding:8px">✓ Seat\'s yours. We\'ll be in touch within 24 hours.</p>';
+    const form  = e.target;
+    const name  = document.getElementById('bf-name').value.trim();
+    const email = document.getElementById('bf-email').value.trim();
+    const btn   = form.querySelector('button[type=submit]');
+    const orig  = btn.innerHTML;
+    btn.innerHTML = '<span class="spinner" style="border-top-color:var(--navy)"></span>';
+    btn.disabled = true;
+
+    if (sb) {
+      const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone) || '';
+      const { error } = await sb.from('leads').insert({ name, email, source: 'booking_cta', location: tz });
+      if (error) {
+        btn.innerHTML = orig; btn.disabled = false;
+        toast('Could not save — try emailing us directly at contact@boostprofits.org');
+        return;
+      }
+    }
+    form.innerHTML = '<p style="color:#fff;font-weight:600;width:100%;text-align:center;padding:12px;line-height:1.5">✓ Seat\'s yours.<br><span style="font-size:13px;opacity:.7">We\'ll reach out from contact@boostprofits.org within 24 hours.</span></p>';
+    trackEvent('lead_submit', 'booking');
   });
+
+  // ═══════════════════════════════════════════════════════════════
+  //  ACTIVITY HEATMAP  ·  Per-section dwell time + page events
+  // ═══════════════════════════════════════════════════════════════
+  function sessionId() {
+    let s = localStorage.getItem('bp_sid');
+    if (!s) { s = (crypto.randomUUID ? crypto.randomUUID() : 'sid-' + Date.now() + '-' + Math.random().toString(36).slice(2)); localStorage.setItem('bp_sid', s); }
+    return s;
+  }
+  const SID = sessionId();
+
+  function restInsert(table, body, keepalive) {
+    if (!CONFIGURED) return Promise.resolve();
+    const rows = Array.isArray(body) ? body : [body];
+    return fetch(cfg.SUPABASE_URL + '/rest/v1/' + table, {
+      method: 'POST', keepalive: !!keepalive,
+      headers: { 'Content-Type': 'application/json', apikey: cfg.SUPABASE_ANON_KEY,
+                 Authorization: 'Bearer ' + cfg.SUPABASE_ANON_KEY, Prefer: 'return=minimal' },
+      body: JSON.stringify(rows)
+    }).catch(() => {});
+  }
+
+  function trackEvent(type, page, dur) {
+    restInsert('page_events', { page: page || 'home', event_type: type, duration_s: dur || null, session_id: SID });
+  }
+
+  // Section dwell: which parts of the page users spend time on
+  const dwell = {}, visibleSince = {};
+  const secObs = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      const name = sectionName(en.target);
+      if (en.isIntersecting) { visibleSince[name] = performance.now(); }
+      else if (visibleSince[name] != null) {
+        dwell[name] = (dwell[name] || 0) + (performance.now() - visibleSince[name]);
+        visibleSince[name] = null;
+      }
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('section').forEach(s => secObs.observe(s));
+
+  function sectionName(sec) {
+    if (sec.id) return sec.id;
+    const h = sec.querySelector('h1,h2');
+    return h ? h.textContent.trim().slice(0, 50) : 'section';
+  }
+
+  function flushDwell(keepalive) {
+    const now = performance.now();
+    const rows = [];
+    const pages = new Set([...Object.keys(dwell), ...Object.keys(visibleSince)]);
+    pages.forEach(name => {
+      let ms = dwell[name] || 0;
+      if (visibleSince[name] != null) { ms += now - visibleSince[name]; visibleSince[name] = now; }
+      const s = Math.round(ms / 1000);
+      if (s >= 1) { rows.push({ page: name, event_type: 'section_time', duration_s: s, session_id: SID }); dwell[name] = 0; }
+    });
+    if (rows.length) restInsert('page_events', rows, keepalive);
+  }
+
+  trackEvent('page_view', 'home');
+  setInterval(() => flushDwell(false), 25000);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') flushDwell(true); });
+  window.addEventListener('pagehide', () => flushDwell(true));
 </script>
 
 </body>
