@@ -21,13 +21,20 @@
 ══════════════════════════════════════════════════════════════════ -->
 <script>
   window.BP_CONFIG = {
-    SUPABASE_URL:      'https://YOUR-PROJECT-REF.supabase.co',
-    SUPABASE_ANON_KEY: 'YOUR-ANON-PUBLIC-KEY',
+    SUPABASE_URL:      'https://emxjtgecafkzqyepvxcs.supabase.co',
+    SUPABASE_ANON_KEY: 'sb_publishable_GBM_JKNd_s0Q2PHhC-O9rA_fhn2c1nd',
     SUPPORT_EMAIL:     'contact@boostprofits.org',
-    ADMIN_EMAIL:       'contact@boostprofits.org'
+    ADMIN_EMAIL:       'contact@boostprofits.org',
+    // EmailJS — free at emailjs.com (200 emails/month free)
+    // Sign up, create a service + two templates, paste the 3 values:
+    EMAILJS_PUBLIC_KEY:   '',   // Account → API Keys → Public Key
+    EMAILJS_SERVICE_ID:   '',   // Email Services → your service ID
+    EMAILJS_OWNER_TMPL:   '',   // template that emails YOU when someone books
+    EMAILJS_GUEST_TMPL:   ''    // template that emails THE VISITOR after booking
   };
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <style>
   :root{
@@ -270,7 +277,7 @@
   .modal h3{font-size:26px; margin-bottom:6px}
   .modal .sub{font-size:14px; color:rgba(26,26,26,.55); margin-bottom:22px; line-height:1.5}
   .modal label{display:block; font-size:11px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:rgba(26,26,26,.45); margin:16px 0 6px}
-  .modal input,.modal select{width:100%; padding:12px 15px; border-radius:11px; border:1px solid var(--border); background:#fff; font-size:14px; font-family:inherit; color:var(--charcoal); transition:border-color .2s; -webkit-appearance:none}
+  .modal input,.modal select{width:100%; padding:12px 15px; border-radius:11px; border:1px solid var(--border); background:#fff; font-size:14px; font-family:inherit; color:var(--charcoal); transition:border-color .2s; -webkit-appearance:none; appearance:none}
   .modal input:focus,.modal select:focus{outline:none; border-color:var(--navy); box-shadow:0 0 0 3px rgba(15,42,71,.08)}
   .modal .btn{width:100%; justify-content:center; margin-top:22px; padding:14px}
   .modal .swap{font-size:13px; color:rgba(26,26,26,.5); text-align:center; margin-top:20px}
@@ -986,6 +993,20 @@
         return;
       }
     }
+    // Send automated emails via EmailJS (if configured)
+    if (cfg.EMAILJS_PUBLIC_KEY && cfg.EMAILJS_SERVICE_ID) {
+      try {
+        emailjs.init({ publicKey: cfg.EMAILJS_PUBLIC_KEY });
+        const params = { name, email, support_email: cfg.SUPPORT_EMAIL || 'contact@boostprofits.org' };
+        // Email to site owner
+        if (cfg.EMAILJS_OWNER_TMPL)
+          emailjs.send(cfg.EMAILJS_SERVICE_ID, cfg.EMAILJS_OWNER_TMPL, params);
+        // Confirmation email to the visitor
+        if (cfg.EMAILJS_GUEST_TMPL)
+          emailjs.send(cfg.EMAILJS_SERVICE_ID, cfg.EMAILJS_GUEST_TMPL, params);
+      } catch(e) { /* EmailJS not yet configured — silent */ }
+    }
+
     form.innerHTML = '<p style="color:#fff;font-weight:600;width:100%;text-align:center;padding:12px;line-height:1.5">✓ Seat\'s yours.<br><span style="font-size:13px;opacity:.7">We\'ll reach out from contact@boostprofits.org within 24 hours.</span></p>';
     trackEvent('lead_submit', 'booking');
   });

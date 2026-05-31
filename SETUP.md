@@ -1,92 +1,121 @@
-# BoostProfits — Go-Live Setup (5 minutes)
+# BoostProfits — Go-Live Checklist
 
-The site is a **static** site on GitHub Pages, wired directly to **Supabase** from
-the browser (no server needed). Email verification, the process unlock, lead
-capture, the activity heatmap and the admin panel all run on the public **anon**
-key — Row-Level Security keeps the data safe.
-
-You only need to do **3 things** once.
+Your Supabase project is already connected (`emxjtgecafkzqyepvxcs`).
+Do these 3 steps once and everything is live.
 
 ---
 
-## 1. Paste your two Supabase keys
+## Step 1 — Create the database tables (30 seconds)
 
-In the Supabase dashboard: **Settings → API**. Copy the **Project URL** and the
-**anon / public** key (NOT the service_role key).
+1. Open **Supabase → SQL Editor → New query**
+2. Paste the entire contents of `supabase/migrations/000_complete_setup.sql`
+3. Click **Run** (green button)
 
-Paste them into the `window.BP_CONFIG` block near the top of **both** files:
+You'll see "Success. No rows returned." — done.
 
-- `index.html`
-- `admin.html`
+---
+
+## Step 2 — Fix the email verification code (2 minutes)
+
+By default Supabase sends a *magic link*. You need it to send a **6-digit code** instead.
+
+1. **Supabase → Authentication → Email Templates → Confirm signup**
+2. Replace the body with:
+
+```
+Your BoostProfits verification code is:
+
+{{ .Token }}
+
+This code expires in 10 minutes. If you didn't sign up, ignore this email.
+
+— The BoostProfits team
+contact@boostprofits.org
+```
+
+3. **Supabase → Authentication → URL Configuration**
+   - Site URL: `https://boostprofits.org`
+   - Redirect URLs: `https://boostprofits.org`
+
+4. Click **Save**
+
+---
+
+## Step 3 — Automated booking confirmation email (5 minutes, optional)
+
+Sign up free at **emailjs.com** — 200 emails/month free.
+
+### A. Create an Email Service
+- EmailJS → Email Services → Add New Service
+- Connect your Gmail or any email
+- Note the **Service ID** (e.g. `service_abc123`)
+
+### B. Create two Email Templates
+
+**Template 1 — owner notification** (you get this when someone books)
+- Template ID: e.g. `template_owner`
+- Subject: `New BoostProfits booking from {{name}}`
+- Body:
+```
+Name:  {{name}}
+Email: {{email}}
+
+They grabbed a seat from boostprofits.org.
+Reply to: {{email}}
+```
+
+**Template 2 — visitor confirmation** (visitor gets this after booking)
+- Template ID: e.g. `template_guest`
+- To Email field: `{{email}}`
+- Subject: `Your seat is reserved — BoostProfits`
+- Body:
+```
+Hi {{name}},
+
+Your seat is reserved. We'll reach out personally within 24 hours from
+contact@boostprofits.org — keep an eye on your inbox.
+
+Talk soon,
+BoostProfits
+```
+
+### C. Paste the 4 values into index.html
+
+Find `BP_CONFIG` near the top of `index.html` and fill in:
 
 ```js
-window.BP_CONFIG = {
-  SUPABASE_URL:      'https://abcd1234.supabase.co',   // your Project URL
-  SUPABASE_ANON_KEY: 'eyJhbGciOi...',                  // your anon public key
-  SUPPORT_EMAIL:     'contact@boostprofits.org',
-  ADMIN_EMAIL:       'contact@boostprofits.org'        // who can open /admin
-};
+EMAILJS_PUBLIC_KEY:  'your_public_key',   // Account → API Keys
+EMAILJS_SERVICE_ID:  'service_abc123',
+EMAILJS_OWNER_TMPL:  'template_owner',
+EMAILJS_GUEST_TMPL:  'template_guest'
 ```
 
-> The anon key is *designed* to live in client code. Never paste the
-> `service_role` key here.
+Commit and push — emails fire automatically on every booking.
 
 ---
 
-## 2. Run the SQL migrations
+## Create the admin account
 
-In Supabase: **SQL Editor → New query**, then run each file in order:
+The admin panel (`/admin.html`) accepts only `contact@boostprofits.org`.
 
-1. `supabase/migrations/001_leads.sql`
-2. `supabase/migrations/002_profiles_and_events.sql`
-3. `supabase/migrations/003_profile_fields.sql`
-4. `supabase/migrations/004_client_admin_and_heatmap.sql`  ← enables the admin panel + heatmap
-
-(If 001–003 were already run, just run 004.)
-
-If your owner email is **not** `contact@boostprofits.org`, edit the email in
-`004_…sql` before running it, and match it in `BP_CONFIG.ADMIN_EMAIL`.
+1. Go to **boostprofits.org**
+2. Click **Sign Up** in the header
+3. Sign up with `contact@boostprofits.org` and any password
+4. Enter the 6-digit code sent to that email
+5. From then on, `/admin.html` → sign in → full dashboard with leads + heatmap
 
 ---
 
-## 3. Turn on the 6-digit email code
+## What's live right now
 
-By default Supabase emails a *link*. We want a *code* the user types in.
-
-**Authentication → Providers → Email**
-- ✅ Enable **Confirm email**
-
-**Authentication → Email Templates → "Confirm signup"**
-- Make sure the template includes the token. The simplest body:
-
-```
-Your BoostProfits verification code is: {{ .Token }}
-```
-
-That `{{ .Token }}` is the 6-digit code the signup form asks for.
-
-**Authentication → URL Configuration**
-- Set **Site URL** to `https://boostprofits.org`
-
-### Create the admin account
-The admin panel is just a normal Supabase user whose email matches
-`ADMIN_EMAIL`. Easiest path: open the live site, click **Sign Up**, register with
-`contact@boostprofits.org`, and verify the code. From then on, `admin.html`
-(the 🛡️ Admin Panel link in the footer) will let that account in.
-
----
-
-## What now works
-
-| Feature | Where |
+| Feature | Status |
 |---|---|
-| Sign up → 6-digit email code → verified account | header **Sign Up** |
-| Sign in | header **Sign In** |
-| Full process steps unlock once verified | Process section |
-| Booking form saves to `leads` | Urgency section |
-| Per-section dwell-time heatmap + event counts | `admin.html` |
-| Real leads list with name / email / source / location / time | `admin.html` |
-| Contact / support email | `contact@boostprofits.org` everywhere |
-
-Until the keys in step 1 are filled in, the site still loads normally; auth
-just shows a friendly "not connected yet" message instead of erroring.
+| Sign Up → 6-digit email OTP → verified account | ✅ Live |
+| Sign In / Sign Out | ✅ Live |
+| Process steps 02-03 unlock after login | ✅ Live |
+| Booking form saves to Supabase `leads` | ✅ After Step 1 |
+| Per-section dwell-time heatmap | ✅ After Step 1 |
+| Admin panel — leads table | ✅ After Step 1 |
+| Admin panel — heatmap bars | ✅ After Step 1 |
+| Automated booking confirmation email | ✅ After Step 3 |
+| contact@boostprofits.org everywhere | ✅ Live |
