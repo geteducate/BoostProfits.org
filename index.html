@@ -875,7 +875,7 @@
 
   let pendingEmail = '';
 
-  // Sign up → sends 6-digit OTP to email
+  // Sign up — handles both: immediate session (no email confirm) and OTP flow
   async function doSignup() {
     setErr('su-err', '');
     const name  = document.getElementById('su-name').value.trim();
@@ -887,12 +887,32 @@
     if (pass.length < 6) return setErr('su-err', 'Password must be at least 6 characters.');
     if (!sb && needConfig()) return;
     setBusy('su-btn', true);
-    const { error } = await sb.auth.signUp({
+    const { data, error } = await sb.auth.signUp({
       email, password: pass,
       options: { data: { full_name: name, nickname: nick || name.split(' ')[0], referral_source: ref } }
     });
     setBusy('su-btn', false);
-    if (error) { setErr('su-err', error.message); return; }
+
+    if (error) {
+      // Friendly messages for common errors
+      const msg = error.message.includes('rate limit')
+        ? 'Too many sign-up attempts right now. Please wait 60 seconds and try again.'
+        : error.message.includes('already registered') || error.message.includes('already been registered')
+        ? 'That email is already registered — try signing in instead.'
+        : error.message;
+      setErr('su-err', msg);
+      return;
+    }
+
+    // Case 1: Email confirmation disabled — user is instantly logged in
+    if (data.session) {
+      await upsertProfile(data.user);
+      closeAuth();
+      toast('✓ Account created — welcome! The full process is now unlocked.');
+      return;
+    }
+
+    // Case 2: Email confirmation required — show OTP input
     pendingEmail = email;
     document.getElementById('vf-email').textContent = email;
     showView('verify');
@@ -933,10 +953,19 @@
     setBusy('li-btn', true);
     const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
     setBusy('li-btn', false);
-    if (error) { setErr('li-err', error.message); return; }
+    if (error) {
+      const msg = error.message.includes('Email not confirmed')
+        ? 'Please check your email for a verification code, or sign up again.'
+        : error.message.includes('Invalid login')
+        ? 'Wrong email or password — please check and try again.'
+        : error.message;
+      setErr('li-err', msg);
+      return;
+    }
     await upsertProfile(data.user);
     closeAuth();
-    toast('Welcome back.');
+    const uname = (data.user.user_metadata||{}).nickname || (data.user.user_metadata||{}).full_name || data.user.email.split('@')[0];
+    toast('Welcome back, ' + uname + '!');
   }
 
   // Enter on password field triggers login
