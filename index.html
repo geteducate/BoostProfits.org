@@ -722,8 +722,8 @@
     <div class="auth-view" id="view-verify">
       <h3>Check your email</h3>
       <p class="sub">We sent a 6-digit code to <b id="vf-email">your email</b>.<br>Enter it below — it expires in 15 minutes.</p>
-      <label>6-digit verification code</label>
-      <input type="text" inputmode="numeric" maxlength="6" id="vf-code" class="otp-input" placeholder="000000" autocomplete="one-time-code" />
+      <label>Verification code</label>
+      <input type="text" inputmode="numeric" maxlength="8" id="vf-code" class="otp-input" placeholder="······" autocomplete="one-time-code" />
       <div class="err" id="vf-err"></div>
       <div class="ok" id="vf-ok"></div>
       <button class="btn btn-primary" id="vf-btn" onclick="doVerify()">Verify &amp; unlock process</button>
@@ -879,74 +879,8 @@
   }
 
   let pendingEmail = '';
-  let pendingName  = '';
   let pendingNick  = '';
-  let pendingPass  = '';
-  let pendingRef   = '';
   let resendTimer  = 0;
-
-  // ── OTP helpers ─────────────────────────────────────────────
-  function genOTP() {
-    return String(Math.floor(100000 + Math.random() * 900000));
-  }
-
-  async function saveOTP(email, code) {
-    // Delete any old codes for this email first, then insert fresh
-    await sb.from('verification_codes').delete().eq('email', email);
-    const { error } = await sb.from('verification_codes').insert({
-      email, code,
-      expires_at: new Date(Date.now() + 15 * 60 * 1000).toISOString()
-    });
-    return !error;
-  }
-
-  async function verifyOTPCode(email, code) {
-    const { data, error } = await sb
-      .from('verification_codes')
-      .select('id, code, expires_at, used')
-      .eq('email', email)
-      .eq('used', false)
-      .gte('expires_at', new Date().toISOString())
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .single();
-
-    if (error || !data) return { ok: false, reason: 'Code not found or expired. Please request a new code.' };
-    if (data.code !== code)  return { ok: false, reason: 'Incorrect code — please try again.' };
-
-    // Mark used
-    await sb.from('verification_codes').update({ used: true }).eq('id', data.id);
-    return { ok: true };
-  }
-
-  async function sendOTPEmail(email, name, code) {
-    const RESEND_KEY = (window.BP_CONFIG || {}).RESEND_API_KEY || '';
-    if (!RESEND_KEY) {
-      // Fallback: use Supabase's own email (works but may hit rate limit)
-      return false;
-    }
-    try {
-      const res = await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + RESEND_KEY },
-        body: JSON.stringify({
-          from: 'BoostProfits <noreply@' + ((window.BP_CONFIG||{}).RESEND_DOMAIN || 'resend.dev') + '>',
-          to: [email],
-          subject: 'Your BoostProfits verification code',
-          html: `
-            <div style="font-family:Inter,sans-serif;max-width:480px;margin:0 auto;padding:40px 24px;background:#FAF8F4">
-              <div style="font-family:Georgia,serif;font-size:22px;font-weight:700;margin-bottom:24px;color:#0F2A47">BoostProfits</div>
-              <p style="font-size:16px;color:#1A1A1A;margin-bottom:8px">Hi ${name},</p>
-              <p style="font-size:15px;color:#444;margin-bottom:32px">Your verification code is:</p>
-              <div style="background:#0F2A47;color:#fff;font-size:40px;font-weight:700;letter-spacing:12px;text-align:center;padding:24px;border-radius:14px;font-family:monospace">${code}</div>
-              <p style="font-size:13px;color:#888;margin-top:24px">Expires in 15 minutes. If you didn't sign up, ignore this email.</p>
-              <p style="font-size:13px;color:#888;margin-top:8px">— The BoostProfits team &nbsp;·&nbsp; contact@boostprofits.org</p>
-            </div>`
-        })
-      });
-      return res.ok;
-    } catch(e) { return false; }
-  }
 
   // ── Resend countdown ────────────────────────────────────────
   function startResendCountdown() {
@@ -966,7 +900,8 @@
     tick();
   }
 
-  // ── Sign up ──────────────────────────────────────────────────
+  // ── Sign up ─────────────────────────────────────────────────
+  // Supabase sends the OTP via Resend SMTP → contact@boostprofits.org
   async function doSignup() {
     setErr('su-err', '');
     const name  = document.getElementById('su-name').value.trim();
@@ -975,22 +910,20 @@
     const pass  = document.getElementById('su-pass').value;
     const ref   = document.getElementById('su-ref').value;
 
-    if (!name)  return setErr('su-err', 'Please enter your full name.');
-    if (!email) return setErr('su-err', 'Please enter your email address.');
-    if (!pass)  return setErr('su-err', 'Please choose a password.');
+    if (!name)         return setErr('su-err', 'Please enter your full name.');
+    if (!email)        return setErr('su-err', 'Please enter your email address.');
+    if (!pass)         return setErr('su-err', 'Please choose a password.');
     if (pass.length < 6) return setErr('su-err', 'Password must be at least 6 characters.');
     if (!sb && needConfig()) return;
 
     setBusy('su-btn', true);
-
-    // Step 1: Create the Supabase account
     const { data, error } = await sb.auth.signUp({
       email, password: pass,
       options: { data: { full_name: name, nickname: nick, referral_source: ref } }
     });
+    setBusy('su-btn', false);
 
     if (error) {
-      setBusy('su-btn', false);
       const msg =
         error.message.toLowerCase().includes('already registered') ||
         error.message.toLowerCase().includes('user already registered')
@@ -999,35 +932,17 @@
       return setErr('su-err', msg);
     }
 
-    // Save info for the verify step
-    pendingEmail = email;
-    pendingName  = name;
-    pendingNick  = nick;
-    pendingPass  = pass;
-    pendingRef   = ref;
-
-    // Step 2: If Supabase gave us a session immediately (autoconfirm on), done
+    // Auto-confirmed (email confirmation disabled in Supabase settings)
     if (data.session) {
-      setBusy('su-btn', false);
       await upsertProfile(data.user);
       closeAuth();
       toast('✓ Welcome, ' + nick + '! The full process is now unlocked.');
       return;
     }
 
-    // Step 3: Generate & send our own OTP (bypasses Supabase rate limit)
-    const code = genOTP();
-    const saved = await saveOTP(email, code);
-    const sent  = await sendOTPEmail(email, name, code);
-    setBusy('su-btn', false);
-
-    if (!saved) return setErr('su-err', 'Could not save verification code. Please try again.');
-
-    // If Resend not configured, fall through — Supabase already sent its own email
-    if (!sent && !(window.BP_CONFIG || {}).RESEND_API_KEY) {
-      // Supabase's own email was sent (might hit rate limit, but try anyway)
-    }
-
+    // Email confirmation required — Supabase sent code via Resend SMTP
+    pendingEmail = email;
+    pendingNick  = nick;
     document.getElementById('vf-email').textContent = email;
     showView('verify');
     startResendCountdown();
@@ -1038,45 +953,32 @@
   }
 
   // ── Verify OTP ───────────────────────────────────────────────
+  // Uses Supabase's standard verifyOtp — works with the code sent via Resend SMTP
   async function doVerify() {
     setErr('vf-err', '');
     document.getElementById('vf-ok').classList.remove('show');
     const token = document.getElementById('vf-code').value.replace(/\D/g, '').trim();
-    if (token.length !== 6) return setErr('vf-err', 'Enter the 6-digit code from your email.');
+    if (!token || token.length < 6) return setErr('vf-err', 'Enter the verification code from your email.');
     if (!sb && needConfig()) return;
 
     setBusy('vf-btn', true);
-
-    // Call the secure DB function: verifies OTP + confirms email atomically
-    const { data: rpcData, error: rpcErr } = await sb.rpc('verify_and_confirm_email', {
-      p_email: pendingEmail,
-      p_code:  token
-    });
-
-    if (rpcErr || !rpcData?.success) {
-      setBusy('vf-btn', false);
-      return setErr('vf-err', rpcData?.error || rpcErr?.message || 'Verification failed. Please try again.');
-    }
-
-    // Email confirmed — sign in
-    const { data: loginData, error: loginErr } = await sb.auth.signInWithPassword({
-      email: pendingEmail, password: pendingPass
-    });
+    const { data, error } = await sb.auth.verifyOtp({ email: pendingEmail, token, type: 'signup' });
     setBusy('vf-btn', false);
 
-    if (loginErr) {
-      return setErr('vf-err', 'Could not sign in: ' + loginErr.message + '. Try using the Sign In button.');
+    if (error) {
+      const msg =
+        error.message.toLowerCase().includes('expired') ||
+        error.message.toLowerCase().includes('invalid') ||
+        error.message.toLowerCase().includes('otp')
+          ? 'Incorrect or expired code — click "Resend code" to get a fresh one.'
+          : error.message;
+      return setErr('vf-err', msg);
     }
 
-    const user = loginData.user;
-    const verified = !!user;
-
-    if (verified && user) {
-      await upsertProfile(user);
-      closeAuth();
-      const name = (user.user_metadata||{}).nickname || pendingNick || user.email.split('@')[0];
-      toast('✓ Verified! Welcome, ' + name + '. The full process is now unlocked.');
-    }
+    await upsertProfile(data.user);
+    closeAuth();
+    const name = (data.user.user_metadata||{}).nickname || pendingNick || data.user.email.split('@')[0];
+    toast('✓ Email verified! Welcome, ' + name + '. The full process is now unlocked.');
   }
 
   // ── Resend code ──────────────────────────────────────────────
@@ -1086,19 +988,11 @@
     setErr('vf-err', '');
     document.getElementById('vf-ok').classList.remove('show');
 
-    const hasCustom = !!(window.BP_CONFIG || {}).RESEND_API_KEY;
-    if (hasCustom) {
-      const code = genOTP();
-      const saved = await saveOTP(pendingEmail, code);
-      const sent  = await sendOTPEmail(pendingEmail, pendingName, code);
-      if (!saved || !sent) return setErr('vf-err', 'Could not send code. Please try again in a moment.');
-    } else {
-      const { error } = await sb.auth.resend({ type: 'signup', email: pendingEmail });
-      if (error) return setErr('vf-err', 'Could not resend. Try again in a moment.');
-    }
+    const { error } = await sb.auth.resend({ type: 'signup', email: pendingEmail });
+    if (error) return setErr('vf-err', 'Could not resend — please wait a moment and try again.');
 
     const ok = document.getElementById('vf-ok');
-    ok.textContent = '✓ New code sent — check your inbox.';
+    ok.textContent = '✓ New code sent — check your inbox at ' + pendingEmail;
     ok.classList.add('show');
     startResendCountdown();
   }
@@ -1108,7 +1002,7 @@
     setErr('li-err', '');
     const email = document.getElementById('li-email').value.trim();
     const pass  = document.getElementById('li-pass').value;
-    if (!email) return setErr('li-err', 'Please enter your email.');
+    if (!email) return setErr('li-err', 'Please enter your email address.');
     if (!pass)  return setErr('li-err', 'Please enter your password.');
     if (!sb && needConfig()) return;
 
@@ -1119,7 +1013,7 @@
     if (error) {
       const msg =
         error.message.includes('Email not confirmed')
-          ? 'Your email is not verified yet. Sign up again to get a new code.'
+          ? 'Please verify your email first — check your inbox for the verification code.'
           : error.message.includes('Invalid login credentials') ||
             error.message.includes('invalid_credentials')
           ? 'Wrong email or password — please check and try again.'
@@ -1137,10 +1031,8 @@
 
   document.getElementById('li-pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
   document.getElementById('vf-code').addEventListener('keydown', e => { if (e.key === 'Enter') doVerify(); });
-  // Auto-submit OTP when 6 digits typed
   document.getElementById('vf-code').addEventListener('input', e => {
-    e.target.value = e.target.value.replace(/\D/g, '').slice(0, 6);
-    if (e.target.value.length === 6) doVerify();
+    e.target.value = e.target.value.replace(/\D/g, '').slice(0, 8);
   });
 
   async function bpSignOut() {
