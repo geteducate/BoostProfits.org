@@ -275,6 +275,91 @@
   .reveal{opacity:0; transform:translateY(24px); transition:opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1)}
   .reveal.in{opacity:1; transform:translateY(0)}
 
+  /* ── Design upgrades ── */
+  body::before{content:''; position:fixed; inset:0; background-image:radial-gradient(rgba(15,42,71,.03) 1px,transparent 1px); background-size:32px 32px; pointer-events:none; z-index:0}
+  section{position:relative; z-index:1}
+  header{z-index:50}
+
+  /* Hero upgrade */
+  .hero h1 span.accent{background:linear-gradient(135deg,var(--navy) 0%,#1e4fd8 50%,var(--orange) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text}
+  .hero-cta .btn-primary{background:linear-gradient(135deg,#0F2A47,#1a3a5c); box-shadow:0 4px 24px -6px rgba(15,42,71,.45)}
+  .hero-cta .btn-primary:hover{transform:translateY(-3px); box-shadow:0 14px 36px -8px rgba(15,42,71,.55)}
+  .trust{font-size:12px; color:rgba(26,26,26,.4); display:flex; align-items:center; gap:8px}
+  .trust::before{content:''; display:inline-block; width:20px; height:1px; background:rgba(26,26,26,.2)}
+
+  /* Cards upgrade */
+  .card{background:linear-gradient(145deg,#fff,#faf8f4); border:1px solid rgba(232,227,218,.8)}
+  .card:hover{transform:translateY(-6px); box-shadow:0 28px 56px -20px rgba(15,42,71,.18), 0 0 0 1px rgba(15,42,71,.04)}
+  .mini-before,.mini-after{transition:all .2s}
+
+  /* Pain cards upgrade */
+  .pain{border:1px solid rgba(232,227,218,.6); background:linear-gradient(145deg,rgba(255,255,255,.8),rgba(250,248,244,.4))}
+  .pain:hover{background:linear-gradient(145deg,#fff,rgba(250,248,244,.8)); transform:translateX(6px)}
+  .pain .ico{box-shadow:0 4px 14px -4px rgba(0,0,0,.08)}
+
+  /* Win list upgrade */
+  .win{padding:10px 0; border-bottom:1px solid rgba(232,227,218,.4)}
+  .win:last-child{border-bottom:none}
+  .win .chk{background:linear-gradient(135deg,rgba(15,42,71,.15),rgba(15,42,71,.06)); box-shadow:0 2px 8px -2px rgba(15,42,71,.15)}
+
+  /* Process upgrade */
+  .step .num{background:linear-gradient(145deg,var(--cream),#f0ede8); box-shadow:0 4px 14px -4px rgba(15,42,71,.1)}
+  .steps::after{content:''; position:absolute; top:50%; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent 5%,rgba(232,227,218,.4) 50%,transparent 95%); pointer-events:none}
+
+  /* Pricing upgrade */
+  .plan{background:linear-gradient(145deg,#fff,#faf8f4)}
+  .plan.pop{background:linear-gradient(145deg,#0F2A47,#162f4e); box-shadow:0 40px 80px -25px rgba(15,42,71,.7), 0 0 0 1px rgba(255,255,255,.06) inset}
+  .plan.pop:hover{box-shadow:0 50px 90px -25px rgba(15,42,71,.75), 0 0 0 1px rgba(255,255,255,.08) inset}
+  .plan-ico svg path,.plan-ico svg polygon{filter:drop-shadow(0 2px 4px rgba(0,0,0,.1))}
+
+  /* Urgency/CTA upgrade */
+  .urgency{background:linear-gradient(160deg,#0a2240,#0F2A47 50%,#0a2240)}
+  .urgency::after{content:''; position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,.03) 1px,transparent 1px); background-size:24px 24px; pointer-events:none}
+  .cd-unit .v{font-size:46px; text-shadow:0 0 40px rgba(249,115,22,.3)}
+  .booking-form input{background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); transition:all .25s}
+  .booking-form input:focus{background:rgba(255,255,255,.14); border-color:rgba(249,115,22,.5); box-shadow:0 0 0 3px rgba(249,115,22,.1)}
+  .booking-form .btn-white{background:linear-gradient(135deg,#fff,#f5f0e8); box-shadow:0 4px 20px -6px rgba(0,0,0,.2)}
+
+  /* FAQ upgrade */
+  .faq-item{border-bottom:1px solid rgba(232,227,218,.5); transition:background .2s}
+  .faq-q{padding:22px 0}
+  .faq-item.open{background:rgba(15,42,71,.02); padding:0 16px; margin:0 -16px; border-radius:12px; border-bottom-color:transparent; margin-bottom:4px}
+
+  /* Footer upgrade */
+  footer{background:linear-gradient(180deg,var(--cream),#f0ede8)}
+  .foot-col a{position:relative; padding-left:0; transition:all .2s}
+  .foot-col a:hover{color:var(--navy); padding-left:6px}
+
+  /* Proof testimonial upgrade */
+  .proof-quote{position:relative; background:linear-gradient(145deg,#fff,#faf8f4); border:1px solid rgba(232,227,218,.8); border-radius:20px; padding:32px; box-shadow:0 20px 50px -20px rgba(15,42,71,.12)}
+  .proof-quote::before{content:'"'; position:absolute; top:-10px; left:20px; font-family:'Fraunces',serif; font-size:80px; color:rgba(15,42,71,.08); line-height:1}
+
+  /* ── Legal modal ── */
+  .legal-bg{position:fixed; inset:0; z-index:250; background:rgba(10,20,36,.7); backdrop-filter:blur(10px); display:none; align-items:center; justify-content:center; padding:20px}
+  .legal-bg.open{display:flex}
+  .legal-modal{width:100%; max-width:680px; background:#fff; border-radius:20px; box-shadow:0 40px 100px -20px rgba(0,0,0,.5); position:relative; display:flex; flex-direction:column; max-height:88vh; overflow:hidden;
+    transform:translateY(20px) scale(.97); opacity:0; transition:all .35s cubic-bezier(.22,1,.36,1)}
+  .legal-bg.open .legal-modal{transform:translateY(0) scale(1); opacity:1}
+  .legal-header{padding:24px 28px 18px; border-bottom:1px solid #E8E3DA; flex-shrink:0; display:flex; align-items:flex-start; justify-content:space-between; gap:16px}
+  .legal-header h2{font-family:'Fraunces',Georgia,serif; font-size:22px; color:#0F2A47; margin:0}
+  .legal-header p{font-size:11px; color:#999; margin-top:3px}
+  .legal-close{background:none; border:none; cursor:pointer; font-size:22px; color:#999; line-height:1; flex-shrink:0; transition:color .2s; font-family:inherit; margin-top:2px}
+  .legal-close:hover{color:#1A1A1A}
+  .legal-body{overflow-y:auto; padding:24px 28px 32px; font-size:11.5px; line-height:1.7; color:#444; scroll-behavior:smooth}
+  .legal-body::-webkit-scrollbar{width:5px}
+  .legal-body::-webkit-scrollbar-track{background:transparent}
+  .legal-body::-webkit-scrollbar-thumb{background:#D4CFC8; border-radius:99px}
+  .legal-body h3{font-family:'Fraunces',Georgia,serif; font-size:13px; font-weight:600; color:#0F2A47; margin:22px 0 6px; text-transform:uppercase; letter-spacing:.06em}
+  .legal-body h3:first-child{margin-top:0}
+  .legal-body p{margin-bottom:10px; color:#555}
+  .legal-body ul{margin:8px 0 10px 16px; display:flex; flex-direction:column; gap:4px}
+  .legal-body ul li{color:#555}
+  .legal-body .highlight{background:rgba(15,42,71,.04); border-left:3px solid rgba(249,115,22,.6); padding:10px 14px; border-radius:0 8px 8px 0; margin:12px 0; font-size:11px; color:#444}
+  .legal-footer-bar{padding:14px 28px; border-top:1px solid #E8E3DA; flex-shrink:0; display:flex; align-items:center; justify-content:space-between; background:#FAFAF8}
+  .legal-footer-bar p{font-size:11px; color:#999}
+  .legal-accept{background:var(--navy); color:#fff; border:none; padding:9px 20px; border-radius:10px; font-size:13px; font-weight:500; cursor:pointer; font-family:inherit; transition:all .2s}
+  .legal-accept:hover{background:#162f4e; transform:translateY(-1px)}
+
   /* ── Auth modal ── */
   .modal-bg{position:fixed; inset:0; z-index:200; background:rgba(15,42,71,.5); backdrop-filter:blur(8px); display:none; align-items:center; justify-content:center; padding:24px}
   .modal-bg.open{display:flex}
@@ -367,7 +452,7 @@
   <div class="wrap hero-grid">
     <div class="reveal">
       <p class="eyebrow">If you're getting views but not sales — keep reading.</p>
-      <h1>Your words are costing you $200 every hour.</h1>
+      <h1>Your <span class="accent">words</span> are costing you $200 every hour.</h1>
       <p class="lead">Not your product. Not your price. The words. We've watched great offers bleed money for years because the copy wasn't doing its job. We fix the words. In 7 days, you feel the difference.</p>
       <div class="hero-cta">
         <a href="#booking" class="btn btn-primary">Book a Free Audit</a>
@@ -416,9 +501,16 @@
         <div class="mini-after"><p class="tag blue">After</p><p>The sentence killing your checkout page</p></div>
       </div>
     </div>
-    <div class="reveal" style="text-align:center;max-width:520px;margin:56px auto 0">
-      <p style="font-family:'Fraunces',serif;font-size:19px;font-style:italic;color:rgba(26,26,26,.7)">"Went from 4% to 11% conversion in 8 days. Nothing else changed except the words."</p>
-      <p style="font-size:14px;color:rgba(26,26,26,.35);margin-top:12px">— Marcus D., e-commerce founder</p>
+    <div class="reveal proof-quote" style="max-width:520px;margin:56px auto 0">
+      <p style="font-family:'Fraunces',serif;font-size:19px;font-style:italic;color:rgba(26,26,26,.78);line-height:1.5">"Went from 4% to 11% conversion in 8 days. Nothing else changed except the words."</p>
+      <div style="display:flex;align-items:center;gap:12px;margin-top:18px">
+        <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#0F2A47,#1e4fd8);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Fraunces',serif;font-weight:600;font-size:14px">M</div>
+        <div>
+          <p style="font-size:14px;font-weight:600;color:var(--charcoal);margin:0">Marcus D.</p>
+          <p style="font-size:12px;color:rgba(26,26,26,.4);margin:0">E-commerce founder · 8 days</p>
+        </div>
+        <div style="margin-left:auto;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(249,115,22,.8);background:rgba(249,115,22,.08);padding:4px 10px;border-radius:99px">+7% CVR</div>
+      </div>
     </div>
   </div>
 </section>
@@ -667,8 +759,8 @@
         </div>
         <div class="foot-col">
           <h4>Legal</h4>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
+          <a onclick="openLegal('privacy')" style="cursor:pointer">Privacy Policy</a>
+          <a onclick="openLegal('terms')" style="cursor:pointer">Terms of Service</a>
         </div>
         <div class="foot-col">
           <h4>Connect</h4>
@@ -714,7 +806,7 @@
       </select>
       <div class="err" id="su-err"></div>
       <button class="btn btn-primary" id="su-btn" onclick="doSignup()">Create account &amp; send code</button>
-      <p class="legal">By signing up you agree to our <a href="#">Terms</a> &amp; <a href="#">Privacy Policy</a>.</p>
+      <p class="legal">By signing up you agree to our <a onclick="openLegal('terms')" style="cursor:pointer">Terms</a> &amp; <a onclick="openLegal('privacy')" style="cursor:pointer">Privacy Policy</a>.</p>
       <p class="swap">Already have an account? <a onclick="switchAuth('login')">Sign in</a></p>
     </div>
 
@@ -746,6 +838,174 @@
 </div>
 
 <div class="toast" id="toast"></div>
+
+<!-- ===== PRIVACY POLICY MODAL ===== -->
+<div class="legal-bg" id="privacyModal">
+  <div class="legal-modal">
+    <div class="legal-header">
+      <div>
+        <h2>Privacy Policy</h2>
+        <p>Effective June 1, 2026 &nbsp;·&nbsp; Last updated June 1, 2026 &nbsp;·&nbsp; Version 1.0</p>
+      </div>
+      <button class="legal-close" onclick="closeLegal('privacy')">&times;</button>
+    </div>
+    <div class="legal-body">
+      <div class="highlight">Plain English first: We collect your name and email when you sign up. We use it to run this service. We store it for up to 4 years. We never sell it, share it, or use it against you. That's the whole deal.</div>
+
+      <h3>1. Who We Are</h3>
+      <p>BoostProfits ("we," "us," "our") operates the website located at boostprofits.org (the "Service"). We are a copywriting and conversion optimization service. Our registered contact email is contact@boostprofits.org. By using our Service, you agree to the collection and use of information in accordance with this policy.</p>
+
+      <h3>2. Information We Collect</h3>
+      <p>We collect the following categories of data when you interact with our Service:</p>
+      <ul>
+        <li><strong>Identity Data:</strong> Full name, nickname or preferred name you provide during registration or contact.</li>
+        <li><strong>Contact Data:</strong> Email address submitted via sign-up forms, booking forms, or direct communication.</li>
+        <li><strong>Technical Data:</strong> IP address (anonymized after 90 days), browser type and version, operating system, referring URL, pages visited, time zone, device type, and session duration captured through server logs and analytics.</li>
+        <li><strong>Usage Data:</strong> Page-level dwell time, scroll depth, section engagement patterns, and click behavior — aggregated and anonymized per session — to understand how users interact with our content.</li>
+        <li><strong>Communications Data:</strong> Any content you voluntarily submit via forms, emails, or other communication channels.</li>
+        <li><strong>Preference Data:</strong> How you heard about us (referral source), your service preferences, and any additional information you voluntarily provide.</li>
+      </ul>
+      <p>We do not collect, store, or process financial data, payment card information, government ID numbers, social security numbers, or sensitive personal data as defined under applicable data protection laws.</p>
+
+      <h3>3. How We Collect Data</h3>
+      <p>Data is collected through the following direct interactions: (a) account registration and email verification on our website; (b) completion of the booking/inquiry form on our homepage; (c) voluntary email correspondence with our team; and (d) passive collection via standard web server logs and first-party analytics tools embedded in our pages. We do not use third-party advertising trackers, cross-site tracking pixels, or behavioral advertising identifiers.</p>
+
+      <h3>4. Data Retention Policy — Maximum 4 Years</h3>
+      <p>We retain your personal data for no longer than <strong>four (4) calendar years</strong> from the date of your last active interaction with the Service. This retention period is necessary to: (a) provide continuity of service to returning clients; (b) maintain accurate billing and project history; (c) comply with applicable tax and business record-keeping obligations; and (d) respond to any disputes or claims arising from prior service engagements.</p>
+      <p>After the 4-year retention window expires, all personal data associated with your account is securely deleted or irreversibly anonymized within ninety (90) days of the expiry date. Usage and analytics data is aggregated and anonymized within the same window and may be retained in non-identifiable form indefinitely for statistical purposes.</p>
+      <div class="highlight">We do not retain your data indefinitely. 4 years. Then it's gone. No exceptions, no rolling extensions, no data sold before deletion.</div>
+
+      <h3>5. How We Use Your Data</h3>
+      <p>We process your data solely for the following legitimate purposes:</p>
+      <ul>
+        <li>To create and manage your account and authenticate your identity;</li>
+        <li>To deliver the copywriting and conversion services you have requested;</li>
+        <li>To communicate project updates, deliverables, and responses to your inquiries;</li>
+        <li>To send service-related transactional emails (e.g., verification codes, booking confirmations);</li>
+        <li>To analyze aggregate usage patterns and improve the quality and performance of our website and service offerings;</li>
+        <li>To comply with legal obligations and enforce our Terms of Service.</li>
+      </ul>
+      <p>We do not use your personal data for automated profiling, AI training, targeted advertising, political communications, third-party marketing, data brokering, or any purpose not explicitly listed above.</p>
+
+      <h3>6. No Sale, No Exploitation</h3>
+      <p>We do not sell, rent, license, lease, auction, or otherwise transfer your personal data to any third party for commercial gain. Full stop. We do not participate in data marketplace programs, audience monetization schemes, or any arrangement by which a third party derives value from your personal information. This commitment applies regardless of whether such transfer would be technically legal under applicable law — we simply do not do it.</p>
+      <p>We do not build advertising audiences from your data. We do not share your data with data brokers. We do not infer sensitive characteristics about you from your usage patterns. Your data is used exclusively to serve you, the person who gave it to us.</p>
+
+      <h3>7. Third-Party Services</h3>
+      <p>To operate the Service, we use the following sub-processors who may receive limited portions of your data as necessary to perform their functions:</p>
+      <ul>
+        <li><strong>Supabase Inc.</strong> — database hosting and authentication infrastructure (USA/EU). Data processed: email, name, usage metadata. DPA available at supabase.com/privacy.</li>
+        <li><strong>Resend Inc.</strong> — transactional email delivery (USA). Data processed: email address, email subject. DPA available at resend.com/legal/privacy-policy.</li>
+        <li><strong>GitHub Inc. / Fastly Inc.</strong> — static file hosting and CDN (USA). Data processed: IP address (server logs only). Privacy policy at docs.github.com/en/site-policy/privacy-policies.</li>
+      </ul>
+      <p>All sub-processors are contractually bound to process data only as instructed and to maintain appropriate security standards. We do not authorize any sub-processor to use your data for their own independent purposes.</p>
+
+      <h3>8. Cookies and Local Storage</h3>
+      <p>We use browser local storage (not cookies) solely to: (a) maintain your login session across page visits; (b) store a non-identifiable session ID for aggregate analytics; and (c) remember your authentication state. We do not use cookies for tracking, advertising, or cross-site identification. No cookie consent banner is shown because we do not deploy non-essential cookies.</p>
+
+      <h3>9. Data Security</h3>
+      <p>We implement industry-standard security measures including TLS/HTTPS encryption for all data in transit, AES-256 encryption for data at rest (via Supabase), row-level security policies restricting data access, password hashing using bcrypt with appropriate cost factors, and email verification for all new accounts. No method of electronic storage or transmission is 100% secure. We commit to notifying affected users within 72 hours in the event of a breach that poses a risk to their rights and freedoms.</p>
+
+      <h3>10. Your Rights</h3>
+      <p>Depending on your jurisdiction, you may have the following rights regarding your personal data:</p>
+      <ul>
+        <li><strong>Access:</strong> Request a copy of the personal data we hold about you;</li>
+        <li><strong>Rectification:</strong> Request correction of inaccurate or incomplete data;</li>
+        <li><strong>Erasure:</strong> Request deletion of your data ("right to be forgotten") — we will process this within 30 days;</li>
+        <li><strong>Restriction:</strong> Request that we limit processing of your data in specific circumstances;</li>
+        <li><strong>Portability:</strong> Request your data in a structured, machine-readable format (JSON or CSV);</li>
+        <li><strong>Objection:</strong> Object to processing based on legitimate interests;</li>
+        <li><strong>Withdrawal:</strong> Withdraw consent at any time where processing is based on consent.</li>
+      </ul>
+      <p>To exercise any of these rights, email contact@boostprofits.org with the subject line "Data Rights Request." We will respond within 30 calendar days. We may need to verify your identity before processing the request.</p>
+
+      <h3>11. Children's Privacy</h3>
+      <p>Our Service is not directed to individuals under the age of 16. We do not knowingly collect personal data from children. If you are a parent or guardian and believe your child has provided us with personal data without your consent, please contact us at contact@boostprofits.org and we will delete the information promptly.</p>
+
+      <h3>12. International Data Transfers</h3>
+      <p>Your data may be stored and processed in the United States or other countries where our sub-processors maintain infrastructure. When data is transferred outside the European Economic Area, we rely on Standard Contractual Clauses (SCCs) as approved by the European Commission, or other lawful transfer mechanisms. A copy of our transfer safeguards is available upon request.</p>
+
+      <h3>13. Changes to This Policy</h3>
+      <p>We may update this Privacy Policy from time to time. Material changes will be communicated via email to registered users at least 14 days before taking effect. Continued use of the Service after the effective date constitutes acceptance of the revised policy. The version history is maintained and prior versions are available upon request.</p>
+
+      <h3>14. Contact</h3>
+      <p>For all privacy-related inquiries, data rights requests, or complaints: <strong>contact@boostprofits.org</strong>. We aim to respond within 2 business days. If you are not satisfied with our response, you have the right to lodge a complaint with your national data protection authority.</p>
+    </div>
+    <div class="legal-footer-bar">
+      <p>BoostProfits · contact@boostprofits.org · Last updated June 1, 2026</p>
+      <button class="legal-accept" onclick="closeLegal('privacy')">Got it</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TERMS OF SERVICE MODAL ===== -->
+<div class="legal-bg" id="termsModal">
+  <div class="legal-modal">
+    <div class="legal-header">
+      <div>
+        <h2>Terms of Service</h2>
+        <p>Effective June 1, 2026 &nbsp;·&nbsp; Last updated June 1, 2026 &nbsp;·&nbsp; Version 1.0</p>
+      </div>
+      <button class="legal-close" onclick="closeLegal('terms')">&times;</button>
+    </div>
+    <div class="legal-body">
+      <div class="highlight">Short version: You pay, we write. You own the copy. We stand behind our work. If it doesn't move the needle, we rewrite it free. Be honest, be on time, and this goes smoothly for everyone.</div>
+
+      <h3>1. Agreement and Acceptance</h3>
+      <p>These Terms of Service ("Terms," "Agreement") constitute a legally binding agreement between you ("Client," "you," "your") and BoostProfits ("BoostProfits," "we," "us," "our"), governing your access to and use of the website boostprofits.org and any copywriting, consulting, or conversion optimization services provided thereunder. By creating an account, submitting a booking form, or otherwise engaging with our Service, you represent that you are at least 18 years old, have the legal capacity to enter into binding contracts, and accept these Terms in their entirety. If you do not agree to any part of these Terms, you must not use the Service.</p>
+
+      <h3>2. Service Description</h3>
+      <p>BoostProfits provides professional copywriting, conversion rate optimization consulting, and related services including but not limited to: (a) landing page copy audits and rewrites; (b) email sequence creation and optimization; (c) headline and CTA analysis and revision; (d) offer positioning and messaging strategy; (e) funnel review and conversion consulting. The specific deliverables, timeline, and scope applicable to your engagement are as described in the relevant service tier at the time of purchase or as agreed in writing.</p>
+
+      <h3>3. Account Registration and Security</h3>
+      <p>To access certain features of the Service, you must create an account by providing accurate and complete information. You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account. You agree to notify us immediately at contact@boostprofits.org if you suspect unauthorized access to your account. We reserve the right to terminate accounts where registration information is found to be false, misleading, or in violation of these Terms. One person may not maintain multiple accounts for the purpose of circumventing service limitations or pricing.</p>
+
+      <h3>4. Service Tiers and Pricing</h3>
+      <p>Services are offered across three tiers: Starter ($19/month), Pro ($49/month), and Elite (custom pricing). Prices are stated in United States Dollars (USD) and are exclusive of applicable taxes unless stated otherwise. We reserve the right to modify pricing at any time upon thirty (30) days' advance notice to existing subscribers. Price changes will not apply retroactively to the current billing period. Promotional pricing and discounts may be offered at our discretion and may be withdrawn without prior notice to non-subscribed visitors.</p>
+
+      <h3>5. Payment Terms</h3>
+      <p>Payment for monthly subscription tiers is due in advance at the beginning of each billing cycle. Payment for project-based engagements (Elite tier) is governed by the separately agreed project agreement. We accept payment via the methods listed at checkout. All payments are final and non-disputable except as provided in Section 6 (Refund Policy). Failure to remit payment may result in suspension of your account and cessation of service delivery until payment is received.</p>
+
+      <h3>6. Refund and Revision Policy</h3>
+      <p>We stand behind our work. If the copy we deliver does not achieve measurable improvement in your stated metric (conversion rate, reply rate, click rate, etc.) within the applicable delivery window, we will revise the copy at no additional charge. This revision commitment applies: (a) for Starter tier, once per engagement; (b) for Pro tier, up to three revision rounds; (c) for Elite tier, as specified in the project agreement. Revisions must be requested within fourteen (14) days of delivery. We do not issue cash refunds for work that has been delivered and accepted. Refund requests arising from billing errors or duplicate charges will be processed within 7 business days.</p>
+      <div class="highlight">We rewrite it free if it doesn't work. That's the deal. We don't make excuses and we don't run from a result that needs improvement.</div>
+
+      <h3>7. Intellectual Property and Ownership</h3>
+      <p>Upon full payment for a service engagement, all copy, creative work, and deliverables produced specifically for you under that engagement ("Work Product") shall become your sole and exclusive intellectual property. You receive full, perpetual, irrevocable, worldwide rights to use, modify, republish, or distribute the Work Product in any form without attribution or further permission. BoostProfits retains no license to use your Work Product. We retain the right to display anonymized or paraphrased representations of our work in our portfolio, case studies, and marketing materials, provided such representations do not identify you or your business without your express written consent.</p>
+
+      <h3>8. Client Obligations</h3>
+      <p>To enable effective service delivery, you agree to: (a) provide accurate, complete, and timely information about your business, offer, target audience, and conversion goals; (b) respond to requests for clarification or approval within five (5) business days; (c) grant us access to relevant analytics, performance data, or existing copy as requested; (d) review and provide substantive feedback on drafts within the agreed timeline; and (e) inform us of any material changes to your product, offer, pricing, or market that may affect copy performance. Delays caused by your failure to fulfill these obligations extend delivery timelines proportionally and do not entitle you to a refund.</p>
+
+      <h3>9. Confidentiality</h3>
+      <p>Both parties may share confidential information in the course of the engagement. Each party agrees to: (a) hold the other party's confidential information in strict confidence; (b) use confidential information solely for the purposes of the engagement; (c) not disclose confidential information to third parties without prior written consent; and (d) apply the same degree of care to protect the other party's confidential information as they apply to their own, but in no event less than reasonable care. Confidentiality obligations survive termination of this Agreement for a period of three (3) years.</p>
+
+      <h3>10. Limitation of Liability</h3>
+      <p>To the maximum extent permitted by applicable law, BoostProfits' total cumulative liability to you for any and all claims arising out of or related to the Service shall not exceed the total amount paid by you to BoostProfits in the three (3) months immediately preceding the event giving rise to the claim. In no event shall BoostProfits be liable for: (a) indirect, incidental, consequential, special, exemplary, or punitive damages; (b) loss of profits, revenue, customers, business, or data; (c) the cost of procuring substitute services; (d) any damages arising from your use or inability to use third-party platforms, advertising networks, or tools in conjunction with our copy. Nothing in this Agreement limits liability that cannot be excluded under applicable law.</p>
+
+      <h3>11. Disclaimer of Warranties</h3>
+      <p>The Service is provided "as is" and "as available" without warranties of any kind. We make no guarantee that our copy will achieve any specific conversion rate, revenue outcome, or business result. Copy performance is influenced by numerous factors outside our control, including traffic quality, market conditions, offer strength, competitor behavior, and platform algorithms. Our revision commitment (Section 6) is your exclusive remedy for underperforming deliverables.</p>
+
+      <h3>12. Termination</h3>
+      <p>Either party may terminate a subscription or project engagement upon written notice. Upon termination: (a) your right to access the Service ceases; (b) any outstanding payment for delivered work becomes immediately due; (c) we will deliver any completed work product in our possession; (d) we will delete your account data within 30 days subject to our retention policy in the Privacy Policy. We may terminate or suspend your account immediately, without prior notice, if you: breach these Terms; engage in fraudulent activity; or use the Service in a way that exposes us to legal liability.</p>
+
+      <h3>13. Governing Law and Dispute Resolution</h3>
+      <p>This Agreement is governed by and construed in accordance with the laws of the applicable jurisdiction without regard to conflicts of law provisions. Any dispute arising under or related to this Agreement shall first be submitted to good-faith negotiation. If negotiation fails within thirty (30) days, disputes shall be resolved through binding arbitration in accordance with applicable arbitration rules. Class action and class arbitration waivers apply to the fullest extent permitted by law. Nothing in this section prevents either party from seeking emergency injunctive relief from a court of competent jurisdiction.</p>
+
+      <h3>14. Modifications to Terms</h3>
+      <p>We reserve the right to modify these Terms at any time. Material changes will be communicated to registered users via email at least 14 days prior to the effective date. Your continued use of the Service after the effective date of modified Terms constitutes your acceptance of the changes. If you do not agree to the modified Terms, you must stop using the Service and may request account deletion at contact@boostprofits.org.</p>
+
+      <h3>15. Miscellaneous</h3>
+      <p>If any provision of these Terms is found to be unenforceable, the remaining provisions shall continue in full force. Our failure to enforce any right under these Terms does not constitute a waiver of that right. These Terms, together with our Privacy Policy and any separately agreed project documents, constitute the entire agreement between you and BoostProfits regarding the Service and supersede all prior representations, negotiations, or agreements. These Terms may not be assigned by you without our written consent. We may assign these Terms in connection with a merger, acquisition, or sale of assets.</p>
+
+      <h3>16. Contact</h3>
+      <p>For any questions regarding these Terms, contact us at <strong>contact@boostprofits.org</strong>. We respond to all contractual inquiries within 2 business days.</p>
+    </div>
+    <div class="legal-footer-bar">
+      <p>BoostProfits · contact@boostprofits.org · Last updated June 1, 2026</p>
+      <button class="legal-accept" onclick="closeLegal('terms')">Got it</button>
+    </div>
+  </div>
+</div>
 
 <script>
   // ── Dynamic day of week ──────────────────────────────────────
@@ -1192,6 +1452,36 @@
   setInterval(() => flushDwell(false), 25000);
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') flushDwell(true); });
   window.addEventListener('pagehide', () => flushDwell(true));
+
+  // ── Legal modals ─────────────────────────────────────────────
+  function openLegal(type) {
+    const id = type === 'privacy' ? 'privacyModal' : 'termsModal';
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    // scroll to top of content
+    const body = el.querySelector('.legal-body');
+    if (body) body.scrollTop = 0;
+  }
+  function closeLegal(type) {
+    const id = type === 'privacy' ? 'privacyModal' : 'termsModal';
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  window.openLegal  = openLegal;
+  window.closeLegal = closeLegal;
+  // Close on backdrop click
+  ['privacyModal','termsModal'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('click', e => { if (e.target === el) closeLegal(id === 'privacyModal' ? 'privacy' : 'terms'); });
+  });
+  // Close on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeLegal('privacy'); closeLegal('terms'); }
+  });
 </script>
 
 </body>
