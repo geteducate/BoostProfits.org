@@ -448,6 +448,7 @@
   .r-form input:focus{outline:none; border-color:var(--navy); box-shadow:0 0 0 3px rgba(15,42,71,.1); background:#fff}
   .r-form input.invalid{border-color:#A14040; box-shadow:0 0 0 3px rgba(161,64,64,.08)}
   .field-err{font-size:12px; color:#A14040; margin-top:-4px; min-height:0}
+  .r-microtrust{font-size:12.5px; color:rgba(20,20,20,.45); line-height:1.45; margin-top:4px}
   .r-btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:14px 28px; border-radius:8px;
     font-weight:600; font-size:15px; cursor:pointer; border:none; font-family:inherit; background:var(--navy); color:#fff;
     box-shadow:0 6px 20px -8px rgba(15,42,71,.5); transition:transform .15s var(--spring), background .2s, box-shadow .25s; align-self:flex-start; text-decoration:none}
@@ -456,6 +457,12 @@
   .r-btn:focus-visible{outline:2px solid var(--navy); outline-offset:2px}
   .r-btn.wide{width:100%; max-width:420px; margin-top:8px}
   .r-success{font-size:15px; line-height:1.55; color:#3E7A4F; background:rgba(62,122,79,.08); border-radius:12px; padding:18px 20px; font-weight:500; max-width:480px}
+  .r-success-block{max-width:480px; animation:fadeUp .35s var(--ease); outline:none}
+  .r-success-block h4{font-family:'Fraunces',serif; font-size:24px; color:var(--charcoal); margin-bottom:10px}
+  .r-success-block p{font-size:16px; line-height:1.55; color:rgba(20,20,20,.7); margin-bottom:12px}
+  .r-success-block .r-success-tiny{font-size:13px; color:rgba(20,20,20,.45); margin-bottom:0}
+  @keyframes fadeUp{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:translateY(0)}}
+  @media(prefers-reduced-motion:reduce){ .r-success-block{animation:none} }
 
   /* Door 3 tier cards */
   .tiers{display:grid; grid-template-columns:1fr 1fr; gap:16px; max-width:620px}
@@ -755,17 +762,21 @@
     <!-- REVEAL PANELS -->
     <div class="reveal-panel" id="panel-1" role="region" aria-labelledby="door-1">
       <div class="reveal-inner">
-        <p class="r-line">Fair. Hand me your link — I'll send back the 3 lines quietly killing your sales. Free. You decide after.</p>
-        <form class="r-form" id="auditForm" novalidate>
-          <label class="sr-only" for="audit-url">Your page link</label>
-          <input type="text" id="audit-url" name="page_url" placeholder="your page link" autocomplete="url" />
+        <p class="r-line">Fair. Drop the page. Tell me where to send it. Inside 24 hours you've got three lines from your page, what each one costs you by the hour, and what I'd write instead. You read. You decide.</p>
+        <form class="r-form" id="auditForm" novalidate aria-describedby="audit-status">
+          <label class="sr-only" for="audit-url">Your page URL</label>
+          <input type="url" inputmode="url" id="audit-url" name="page_url" placeholder="the page you want me to look at" autocomplete="url" required />
           <div class="field-err" id="audit-url-err"></div>
-          <label class="sr-only" for="audit-email">Where do I send it?</label>
-          <input type="email" id="audit-email" name="email" placeholder="where do I send it?" autocomplete="email" />
+          <label class="sr-only" for="audit-email">Your email</label>
+          <input type="email" inputmode="email" id="audit-email" name="email" placeholder="best inbox for the report" autocomplete="email" required />
           <div class="field-err" id="audit-email-err"></div>
-          <input type="text" name="botcheck" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
-          <button type="submit" class="r-btn" id="audit-btn">Send me the leaks</button>
+          <!-- honeypot -->
+          <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true" />
+          <p class="r-microtrust">No newsletter. No spam. The report lands, then I leave you alone unless you ping me back.</p>
+          <button type="submit" class="r-btn" id="audit-btn">Show me the leaks</button>
+          <div class="field-err" id="audit-form-err" aria-live="polite"></div>
         </form>
+        <div id="audit-status" class="sr-only" aria-live="polite"></div>
       </div>
     </div>
 
@@ -1564,43 +1575,69 @@
       } else { emailInput.classList.remove('invalid'); emailErr.textContent = ''; }
     });
 
+    const formErr = document.getElementById('audit-form-err');
+
     auditForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      // Honeypot
-      if (auditForm.querySelector('[name=botcheck]').value) return;
+      formErr.textContent = '';
+
+      // Honeypot — silently fake-succeed, never tip off the bot
+      if (auditForm.querySelector('[name=website]').value) { showAuditSuccess(); return; }
+
+      // Client rate-limit: 30s between submits
+      const last = +(sessionStorage.getItem('bp_audit_ts') || 0);
+      if (Date.now() - last < 30000) {
+        formErr.textContent = 'Hang on a few seconds before trying again.';
+        return;
+      }
 
       const url   = cleanUrl(urlInput.value);
       const email = emailInput.value.trim();
       let bad = false;
-      if (!looksLikeDomain(url)) { urlInput.classList.add('invalid'); urlErr.textContent = 'Add your page link first.'; bad = true; }
-      if (!validEmail(email))    { emailInput.classList.add('invalid'); emailErr.textContent = 'Where should we send it?'; bad = true; }
+      if (!looksLikeDomain(url)) { urlInput.classList.add('invalid'); urlInput.setAttribute('aria-invalid','true'); urlErr.textContent = 'Add the page you want me to look at.'; bad = true; }
+      if (!validEmail(email))    { emailInput.classList.add('invalid'); emailInput.setAttribute('aria-invalid','true'); emailErr.textContent = 'Where should I send the report?'; bad = true; }
       if (bad) return;
 
       const btn = document.getElementById('audit-btn');
-      const orig = btn.innerHTML;
       btn.innerHTML = 'Sending…'; btn.disabled = true;
 
-      // Save to Supabase leads
+      // Save to Supabase leads — DB trigger fires both emails (lead + operator)
+      let ok = false;
       if (sb) {
         const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone) || '';
-        try { await sb.from('leads').insert({ name: url, email, source: 'free_audit', location: tz }); } catch(e) {}
-      }
-
-      // Send to Web3Forms (if key configured)
-      const WEB3KEY = 'WEB3FORMS_KEY_HERE'; // <!-- replace -->
-      if (WEB3KEY && !WEB3KEY.includes('HERE')) {
         try {
-          await fetch('https://api.web3forms.com/submit', {
-            method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-            body: JSON.stringify({ access_key: WEB3KEY, page_url: url, email,
-              subject: 'New free-audit request from ' + email, from_name: 'BoostProfits Site' })
-          });
-        } catch(e) {}
+          const { error } = await sb.from('leads').insert({ name: url, email, source: 'free_audit', location: tz });
+          ok = !error;
+        } catch(e) { ok = false; }
+      } else {
+        ok = true; // no backend in dev — still show success
       }
 
+      if (!ok) {
+        btn.innerHTML = 'Show me the leaks'; btn.disabled = false;
+        formErr.textContent = 'Something hiccuped on my end. Try again in a sec, or email the page to contact@boostprofits.org.';
+        return;
+      }
+
+      sessionStorage.setItem('bp_audit_ts', String(Date.now()));
       trackEvent('lead_submit', 'free_audit');
-      auditForm.innerHTML = '<p class="r-success">Got it. Your 3 fixes land within 24 hours.</p>';
+      showAuditSuccess();
     });
+
+    function showAuditSuccess() {
+      const status = document.getElementById('audit-status');
+      const inner = auditForm.closest('.reveal-inner');
+      inner.querySelector('.r-line').style.display = 'none';
+      auditForm.innerHTML =
+        '<div class="r-success-block" tabindex="-1">' +
+          '<h4>Locked in.</h4>' +
+          '<p>Watch your inbox in the next 24 hours. Three lines from your page. What each one is costing you. What I\'d write instead. Read it twice. Then we\'ll talk — if it lands.</p>' +
+          '<p class="r-success-tiny">Didn\'t arrive by tomorrow night? Check spam, then ping back at contact@boostprofits.org.</p>' +
+        '</div>';
+      if (status) status.textContent = 'Request received. Check your inbox within 24 hours.';
+      const block = auditForm.querySelector('.r-success-block');
+      if (block) { try { block.focus({preventScroll:true}); } catch(e){} }
+    }
   }
 
   // ── Cal.com popup embed (Card 2) ─────────────────────────────
