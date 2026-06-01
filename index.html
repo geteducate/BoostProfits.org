@@ -439,7 +439,7 @@
   /* Reveal panel below the row */
   .reveal-panel{max-width:980px; margin:0 auto; max-height:0; opacity:0; overflow:hidden;
     transition:max-height .35s var(--ease), opacity .3s var(--ease), margin .35s var(--ease)}
-  .reveal-panel.open{max-height:520px; opacity:1; margin-top:18px}
+  .reveal-panel.open{max-height:760px; opacity:1; margin-top:18px}
   .reveal-inner{background:#fff; border:0.5px solid #E4DCCC; border-radius:20px; padding:30px 30px; box-shadow:var(--shadow-md)}
   .reveal-inner .r-line{font-size:17px; line-height:1.55; color:rgba(20,20,20,.78); margin-bottom:18px; max-width:620px}
   .reveal-inner .r-trust{font-size:13px; line-height:1.5; color:rgba(15,42,71,.6); background:rgba(15,42,71,.04); border-radius:10px; padding:11px 14px; margin-bottom:18px; max-width:560px}
@@ -457,6 +457,22 @@
   .r-btn.wide{width:100%; max-width:420px; margin-top:8px}
   .r-success{font-size:15px; line-height:1.55; color:#3E7A4F; background:rgba(62,122,79,.08); border-radius:12px; padding:18px 20px; font-weight:500; max-width:480px}
 
+  /* Door 3 tier cards */
+  .tiers{display:grid; grid-template-columns:1fr 1fr; gap:16px; max-width:620px}
+  .tier{position:relative; display:flex; flex-direction:column; background:#FAFAF8; border:1px solid #EDE7DA; border-radius:18px; padding:24px 22px; transition:transform .35s var(--spring), box-shadow .35s var(--ease)}
+  .tier:hover{transform:translateY(-3px); box-shadow:var(--shadow-md)}
+  .tier.pro{background:#fff; border:2px solid var(--navy); box-shadow:0 10px 30px -14px rgba(15,42,71,.35)}
+  .tier-tag{position:absolute; top:-10px; left:50%; transform:translateX(-50%); font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#fff; background:var(--navy); padding:4px 12px; border-radius:99px; white-space:nowrap}
+  .tier-top h4{font-family:'Fraunces',serif; font-size:21px; color:var(--charcoal); margin-bottom:3px}
+  .tier-desc{font-size:13px; color:rgba(20,20,20,.5); line-height:1.4}
+  .tier-price{font-family:'Fraunces',serif; font-size:42px; font-weight:600; color:var(--navy); margin:16px 0 18px; line-height:1}
+  .tier-price span{font-size:14px; font-weight:400; color:rgba(20,20,20,.4); font-family:'Inter',sans-serif}
+  .tier-feats{list-style:none; display:flex; flex-direction:column; gap:10px; margin-bottom:22px; flex:1}
+  .tier-feats li{display:flex; align-items:flex-start; gap:9px; font-size:13.5px; color:rgba(20,20,20,.7); line-height:1.4}
+  .tier-feats li svg{width:17px; height:17px; flex-shrink:0; color:var(--navy); margin-top:1px}
+  .tier-note{font-size:12.5px; color:rgba(20,20,20,.4); margin-top:16px; text-align:center}
+  @media(max-width:600px){ .tiers{grid-template-columns:1fr; gap:22px} }
+
   .book-close{text-align:center; max-width:680px; margin:48px auto 0; font-family:'Fraunces',serif; font-size:19px; font-style:italic; line-height:1.55; color:rgba(20,20,20,.7); transition:opacity .35s var(--ease)}
   .book-close.dim{opacity:.55}
   .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0}
@@ -471,6 +487,7 @@
     .door{min-height:0}
     .door .d-whisper{opacity:1; transform:none}
     .reveal-panel,.book-close{max-width:460px}
+    .reveal-panel.open{max-height:1100px}
   }
 
   /* ── Responsive ── */
@@ -500,7 +517,7 @@
     </a>
     <nav class="nav-links">
       <a href="#process">Process</a>
-      <a href="#pricing">Pricing</a>
+      <a href="#booking">Pricing</a>
       <a href="#faq">FAQ</a>
     </nav>
     <div class="nav-cta" id="navCta">
@@ -519,7 +536,7 @@
   </div>
   <div class="mobile-menu" id="mobileMenu">
     <a href="#process">Process</a>
-    <a href="#pricing">Pricing</a>
+    <a href="#booking">Pricing</a>
     <a href="#faq">FAQ</a>
     <a onclick="openAuth('signup')" style="cursor:pointer">Sign Up Free</a>
     <a onclick="openAuth('login')" style="cursor:pointer">Sign In</a>
@@ -700,77 +717,7 @@
   </div>
 </section>
 
-<!-- ===== PRICING ===== -->
-<section id="pricing" style="background:rgba(245,241,235,.4)">
-  <div class="wrap">
-    <h2 class="h2 reveal" style="text-align:center;margin-bottom:8px">Pick your level.</h2>
-    <p class="reveal" style="text-align:center;color:rgba(26,26,26,.55);font-size:17px">No contracts. Start tonight. Change your mind tomorrow.</p>
-    <div class="plans">
-      <!-- Starter -->
-      <div class="plan reveal">
-        <div class="plan-head">
-          <div><h3>Starter</h3><p class="desc l">Try it. See what changes.</p></div>
-          <div class="plan-ico" style="background:rgba(15,42,71,.07)">
-            <svg viewBox="0 0 24 24" fill="none" width="22" height="22"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="rgba(15,42,71,.55)" stroke="rgba(15,42,71,.4)" stroke-width=".5" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-        <div class="price">$19 <small>/mo</small></div>
-        <ul class="feats">
-          <li><b>✓</b><span>1 landing page audit</span></li>
-          <li><b>✓</b><span>5 headline rewrites</span></li>
-          <li><b>✓</b><span>Offer clarity check</span></li>
-          <li><b>✓</b><span>CTA review</span></li>
-          <li><b>✓</b><span>48-hour delivery</span></li>
-          <li><b>✓</b><span>Email support</span></li>
-        </ul>
-        <a href="#booking" class="btn btn-primary" style="width:100%;justify-content:center">Start for $19</a>
-      </div>
-      <!-- Pro -->
-      <div class="plan pop reveal">
-        <p class="pop-tag">Most Popular</p>
-        <div class="plan-head">
-          <div><h3>Pro</h3><p class="desc d">The full rewrite. The real results.</p></div>
-          <div class="plan-ico" style="background:rgba(255,255,255,.12)">
-            <svg viewBox="0 0 24 24" width="22" height="22"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="rgba(255,255,255,.65)" stroke="rgba(255,255,255,.3)" stroke-width=".5"/></svg>
-          </div>
-        </div>
-        <div><span class="price-old">$69</span><span class="save">Save $20</span></div>
-        <div class="price">$49 <small>/mo</small></div>
-        <ul class="feats">
-          <li><b>✓</b><span>Everything in Starter</span></li>
-          <li><b>✓</b><span>Full page rewrite</span></li>
-          <li><b>✓</b><span>Offer restructuring + positioning</span></li>
-          <li><b>✓</b><span>CTA and funnel optimization</span></li>
-          <li><b>✓</b><span>3 email sequences</span></li>
-          <li><b>✓</b><span>7-day delivery</span></li>
-          <li><b>✓</b><span>Priority response</span></li>
-        </ul>
-        <a href="#booking" class="btn btn-white" style="width:100%;justify-content:center">Go Pro</a>
-      </div>
-      <!-- Elite -->
-      <div class="plan reveal">
-        <div class="plan-head">
-          <div><h3>Elite</h3><p class="desc l">For serious operators. We talk numbers.</p></div>
-          <div class="plan-ico" style="background:rgba(15,42,71,.07)">
-            <svg viewBox="0 0 24 24" fill="none" width="22" height="22"><path d="M2 20h20M5 20V9l7-7 7 7v11" stroke="rgba(15,42,71,.55)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><rect x="9" y="13" width="6" height="7" rx="1" stroke="rgba(15,42,71,.55)" stroke-width="1.7"/></svg>
-          </div>
-        </div>
-        <div class="price">Custom</div>
-        <ul class="feats">
-          <li><b>✓</b><span>Full funnel — pages, emails, DMs</span></li>
-          <li><b>✓</b><span>Monthly strategy sessions</span></li>
-          <li><b>✓</b><span>Dedicated conversion writer</span></li>
-          <li><b>✓</b><span>Positioning system</span></li>
-          <li><b>✓</b><span>Ongoing optimization</span></li>
-          <li><b>✓</b><span>No contracts</span></li>
-        </ul>
-        <a href="#booking" class="btn btn-primary" style="width:100%;justify-content:center">Talk to Us</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== BOOKING · THREE DOORS ===== -->
+<!-- ===== BOOKING · THREE DOORS (pricing lives inside Door 3) ===== -->
 <section id="booking" class="book-sec">
   <div class="wrap">
     <div class="book-head reveal">
@@ -825,7 +772,7 @@
     <div class="reveal-panel" id="panel-2" role="region" aria-labelledby="door-2">
       <div class="reveal-inner">
         <p class="r-line">20 minutes. Your page on screen. I point at the exact spot the money leaks — and what it costs you by the hour.</p>
-        <p class="r-trust">If we're not a fit in the first five, you go back to your day sharper than you came.</p>
+        <p class="r-trust">If we're not a fit in the first five, you go back to your day sharper than you came. Bigger job, custom work — this is where we sort it too.</p>
         <!-- replace CAL_LINK with your-name/20-min-copy-teardown -->
         <button class="r-btn" data-cal-link="CAL_LINK" data-cal-config='{"layout":"month_view"}'>
           Pick a time
@@ -836,9 +783,41 @@
 
     <div class="reveal-panel" id="panel-3" role="region" aria-labelledby="door-3">
       <div class="reveal-inner">
-        <p class="r-line">Good. Skip the talk. I start tonight — you're reading the rewrite in 48 hours.</p>
-        <!-- replace STRIPE_OR_LEMON_LINK with your checkout URL -->
-        <a class="r-btn" href="STRIPE_OR_LEMON_LINK">Start — $99</a>
+        <p class="r-line">Good. Pick your level and I start tonight.</p>
+        <div class="tiers">
+          <!-- Starter -->
+          <div class="tier">
+            <div class="tier-top">
+              <h4>Starter</h4>
+              <p class="tier-desc">Try it. See what changes.</p>
+            </div>
+            <div class="tier-price">$19<span>/mo</span></div>
+            <ul class="tier-feats">
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>1 page audit</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>5 headline rewrites</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>48-hour delivery</li>
+            </ul>
+            <!-- replace STARTER_LINK with your checkout URL -->
+            <a class="r-btn wide" href="STARTER_LINK">Start for $19</a>
+          </div>
+          <!-- Pro -->
+          <div class="tier pro">
+            <span class="tier-tag">most popular</span>
+            <div class="tier-top">
+              <h4>Pro</h4>
+              <p class="tier-desc">The full rewrite. Real results.</p>
+            </div>
+            <div class="tier-price">$49<span>/mo</span></div>
+            <ul class="tier-feats">
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Everything in Starter</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Full rewrite + positioning</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>3 email sequences · 7-day</li>
+            </ul>
+            <!-- replace PRO_LINK with your checkout URL -->
+            <a class="r-btn wide" href="PRO_LINK">Go Pro</a>
+          </div>
+        </div>
+        <p class="tier-note">No contracts. Change your mind tomorrow.</p>
       </div>
     </div>
 
