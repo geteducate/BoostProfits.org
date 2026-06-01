@@ -382,6 +382,45 @@
   .toast{position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(20px); z-index:300; background:var(--navy); color:#fff; padding:13px 22px; border-radius:12px; font-size:14px; font-weight:500; box-shadow:0 20px 40px -15px rgba(15,42,71,.6); opacity:0; pointer-events:none; transition:all .35s cubic-bezier(.22,1,.36,1); white-space:nowrap}
   .toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
 
+  /* ── Booking (3-door) ── */
+  .book-sec{background:linear-gradient(180deg,#FAF7F1,#F4EEE3)}
+  .book-head{text-align:center; max-width:720px; margin:0 auto 56px}
+  .book-head .eyebrow{color:rgba(15,42,71,.5); margin-bottom:16px}
+  .book-head h2{font-size:clamp(30px,4vw,50px); font-weight:600; line-height:1.08; margin-bottom:20px}
+  .book-head .subline{font-size:18px; color:rgba(20,20,20,.6); line-height:1.6}
+  .doors{display:grid; grid-template-columns:repeat(3,1fr); gap:22px; align-items:stretch; max-width:1120px; margin:0 auto}
+  .door{display:flex; flex-direction:column; background:#fff; border:1px solid #EDE7DA; border-radius:18px; padding:30px 26px;
+    box-shadow:0 1px 2px rgba(20,20,20,.04), 0 12px 32px -16px rgba(20,20,20,.12); transition:transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s}
+  .door:hover{transform:translateY(-4px); box-shadow:0 1px 2px rgba(20,20,20,.04), 0 24px 50px -20px rgba(20,20,20,.18)}
+  .door.raised{border-top:3px solid var(--navy); transform:scale(1.025); box-shadow:0 1px 2px rgba(20,20,20,.04), 0 30px 60px -22px rgba(15,42,71,.32)}
+  .door.raised:hover{transform:scale(1.025) translateY(-4px)}
+  .door .d-eyebrow{font-size:11px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:rgba(15,42,71,.5); margin-bottom:14px}
+  .door.raised .d-eyebrow{color:var(--orange)}
+  .door h3{font-family:'Fraunces',serif; font-size:22px; line-height:1.2; margin-bottom:12px; color:var(--charcoal)}
+  .door .d-body{font-size:14.5px; line-height:1.6; color:rgba(20,20,20,.62); flex:1}
+  .door .d-trust{font-size:12.5px; line-height:1.5; color:rgba(15,42,71,.6); background:rgba(15,42,71,.04); border-radius:10px; padding:11px 13px; margin-top:16px}
+  .door form{margin-top:18px; display:flex; flex-direction:column; gap:10px}
+  .door form input{width:100%; padding:12px 14px; border-radius:10px; border:1px solid #EDE7DA; background:#FAFAF8; font-size:14px; font-family:inherit; color:var(--charcoal); transition:all .2s}
+  .door form input:focus{outline:none; border-color:var(--navy); box-shadow:0 0 0 3px rgba(15,42,71,.1); background:#fff}
+  .door form input.invalid{border-color:#A14040; box-shadow:0 0 0 3px rgba(161,64,64,.08)}
+  .door .field-err{font-size:12px; color:#A14040; min-height:0; margin-top:-4px}
+  .door .d-btn{margin-top:18px; width:100%; justify-content:center; display:inline-flex; align-items:center; gap:8px; padding:14px 28px; border-radius:8px; font-weight:600; font-size:15px; cursor:pointer; border:none; font-family:inherit; transition:transform .15s, box-shadow .25s, background .2s}
+  .d-btn.primary{background:var(--navy); color:#fff; box-shadow:0 6px 20px -8px rgba(15,42,71,.5)}
+  .d-btn.primary:hover{background:#1A3D63; box-shadow:0 10px 28px -8px rgba(15,42,71,.55)}
+  .d-btn.outline{background:transparent; color:var(--navy); border:1.5px solid rgba(15,42,71,.25)}
+  .d-btn.outline:hover{background:rgba(15,42,71,.05); border-color:var(--navy)}
+  .d-btn:active{transform:scale(.98)}
+  .d-btn:focus-visible{outline:2px solid var(--navy); outline-offset:2px}
+  .door .d-success{font-size:14px; line-height:1.55; color:#3E7A4F; background:rgba(62,122,79,.08); border-radius:10px; padding:16px; margin-top:18px; text-align:center; font-weight:500}
+  .book-close{text-align:center; max-width:680px; margin:52px auto 0; font-family:'Fraunces',serif; font-size:19px; font-style:italic; line-height:1.55; color:rgba(20,20,20,.7)}
+  .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0}
+  @media(prefers-reduced-motion:reduce){ .door,.door:hover,.door.raised:hover{transform:none; transition:none} }
+  @media(max-width:900px){
+    .doors{grid-template-columns:1fr; gap:18px; max-width:440px}
+    .door.raised{transform:none}
+    .door.raised:hover{transform:translateY(-4px)}
+  }
+
   /* ── Responsive ── */
   @media(max-width:900px){
     .hero-grid{grid-template-columns:1fr; gap:40px}
@@ -679,25 +718,57 @@
 </section>
 
 <!-- ===== URGENCY / BOOKING ===== -->
-<section id="booking" class="urgency">
-  <div class="glow"></div>
-  <div class="wrap narrow">
-    <h2 class="h2 reveal" style="margin-bottom:16px">We take three people a week. Then we shut the door.</h2>
-    <p class="lead reveal">Not a trick. We write every word by hand. Take on more than three and somebody gets rushed, sloppy work — and that's not what you're paying for. So we cap it. One seat is open this week. After the timer hits zero, it's gone.</p>
-    <p class="eyebrow reveal" style="color:rgba(255,255,255,.35);margin-top:30px">This seat closes in:</p>
-    <div class="countdown reveal" id="countdown">
-      <div class="cd-unit"><span class="v" id="cd-h">00</span><span class="l">hrs</span></div>
-      <span class="cd-sep">:</span>
-      <div class="cd-unit"><span class="v" id="cd-m">00</span><span class="l">min</span></div>
-      <span class="cd-sep">:</span>
-      <div class="cd-unit"><span class="v" id="cd-s">00</span><span class="l">sec</span></div>
+<section id="booking" class="book-sec">
+  <div class="wrap">
+    <div class="book-head reveal">
+      <p class="eyebrow">You made it all the way down here.</p>
+      <h2>That itch you feel right now? It's your gut already deciding.</h2>
+      <p class="subline">So here are three ways in. Pick the one that matches how brave you feel tonight. All three end the same way — you, watching strangers turn into buyers because the words finally did their job.</p>
     </div>
-    <form class="booking-form reveal" id="bookingForm">
-      <input type="text" id="bf-name" placeholder="Your name" required />
-      <input type="email" id="bf-email" placeholder="Your email" required />
-      <button type="submit" class="btn btn-white" style="white-space:nowrap">Grab the Seat →</button>
-    </form>
-    <p class="small-note reveal">No spam. No pitch. Just a straight talk about your copy.</p>
+
+    <div class="doors">
+      <!-- CARD 1 — free audit form (Web3Forms) -->
+      <div class="door reveal">
+        <p class="d-eyebrow">Still on the fence</p>
+        <h3>Hand me your page. I'll find the leak.</h3>
+        <p class="d-body">Paste your link. Inside a day, you get back the three lines quietly bleeding your sales dry, plus what I'd write in their place. You read it in bed. You feel the click. Then you decide. All it costs you is a link and an email.</p>
+        <form id="auditForm" novalidate>
+          <label class="sr-only" for="audit-url">Your page link</label>
+          <input type="text" id="audit-url" name="page_url" placeholder="your page link" autocomplete="url" />
+          <div class="field-err" id="audit-url-err"></div>
+          <label class="sr-only" for="audit-email">Where do I send it?</label>
+          <input type="email" id="audit-email" name="email" placeholder="where do I send it?" autocomplete="email" />
+          <div class="field-err" id="audit-email-err"></div>
+          <!-- honeypot -->
+          <input type="text" name="botcheck" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
+          <button type="submit" class="d-btn outline" id="audit-btn">Show me the 3 fixes</button>
+        </form>
+      </div>
+
+      <!-- CARD 2 — call booking (Cal.com) -->
+      <div class="door raised reveal">
+        <p class="d-eyebrow">Where most people land</p>
+        <h3>Give me 20 minutes. I'll show you the money you're leaving on the table.</h3>
+        <p class="d-body">You jump on, you pull up your page, and I walk you through the exact spot where buyers go cold — and roughly what that cold spot costs you every hour it sits there. Worst case, you leave knowing precisely what to fix and you do it yourself. Either way you win. Just grab a slot and tell me what you sell.</p>
+        <p class="d-trust">Twenty minutes, straight talk. If we're not a fit in the first five, you go back to your day sharper than you came.</p>
+        <!-- replace CAL_LINK_HERE with your-name/20-min-copy-teardown -->
+        <button class="d-btn primary" data-cal-link="CAL_LINK_HERE" data-cal-config='{"layout":"month_view"}'>
+          Grab my slot
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <!-- CARD 3 — paid audit (Stripe / Lemon Squeezy) -->
+      <div class="door reveal">
+        <p class="d-eyebrow">You already made up your mind</p>
+        <h3>Skip the chat. Put me to work tonight.</h3>
+        <p class="d-body">You don't need a call. You need the rewrite. Start the audit, drop your page, and in 48 hours you're reading words built to pull a stranger by the collar to your checkout. The version of you sitting here next Friday? He already pressed this button. Catch up to him.</p>
+        <!-- replace STRIPE_OR_LEMON_LINK_HERE with your checkout URL -->
+        <a class="d-btn primary" href="STRIPE_OR_LEMON_LINK_HERE">Start my audit — $99</a>
+      </div>
+    </div>
+
+    <p class="book-close reveal">Tap any door. They all open onto the same room: a page where people reach for their wallet instead of the back button. So pick the one that feels right tonight — and let next-week-you do the thanking.</p>
   </div>
 </section>
 
@@ -1030,20 +1101,21 @@
   }, { threshold: 0.1, rootMargin: '-40px' });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  // ── Countdown to midnight ────────────────────────────────────
-  function tick() {
-    const now = new Date();
-    const end = new Date(now); end.setHours(23, 59, 59, 0);
-    if (now >= end) end.setDate(end.getDate() + 1);
-    let diff = Math.max(0, end - now);
-    const h = Math.floor(diff / 3.6e6);
-    const m = Math.floor((diff % 3.6e6) / 6e4);
-    const s = Math.floor((diff % 6e4) / 1000);
-    document.getElementById('cd-h').textContent = String(h).padStart(2, '0');
-    document.getElementById('cd-m').textContent = String(m).padStart(2, '0');
-    document.getElementById('cd-s').textContent = String(s).padStart(2, '0');
-  }
-  tick(); setInterval(tick, 1000);
+  // ── Countdown to midnight (only if countdown exists) ─────────
+  (function(){
+    const ch = document.getElementById('cd-h');
+    if (!ch) return;
+    function tick() {
+      const now = new Date();
+      const end = new Date(now); end.setHours(23, 59, 59, 0);
+      if (now >= end) end.setDate(end.getDate() + 1);
+      let diff = Math.max(0, end - now);
+      document.getElementById('cd-h').textContent = String(Math.floor(diff / 3.6e6)).padStart(2, '0');
+      document.getElementById('cd-m').textContent = String(Math.floor((diff % 3.6e6) / 6e4)).padStart(2, '0');
+      document.getElementById('cd-s').textContent = String(Math.floor((diff % 6e4) / 1000)).padStart(2, '0');
+    }
+    tick(); setInterval(tick, 1000);
+  })();
 
   // ── FAQ accordion ────────────────────────────────────────────
   document.querySelectorAll('.faq-q').forEach(btn => {
@@ -1261,11 +1333,22 @@
     setBusy('li-btn', false);
 
     if (error) {
+      // Unconfirmed email → send them straight to verification with a fresh code
+      if (error.message.toLowerCase().includes('not confirmed')) {
+        pendingEmail = email;
+        try { await sb.auth.resend({ type: 'signup', email }); } catch(e) {}
+        document.getElementById('vf-email').textContent = email;
+        showView('verify');
+        startResendCountdown();
+        const ok = document.getElementById('vf-ok');
+        ok.textContent = 'Your email needs verifying first — we just sent a fresh code to ' + email;
+        ok.classList.add('show');
+        setTimeout(() => { const i = document.getElementById('vf-code'); if (i){ i.value=''; i.focus(); } }, 80);
+        return;
+      }
       const msg =
-        error.message.includes('Email not confirmed')
-          ? 'Please verify your email first — check your inbox for the verification code.'
-          : error.message.includes('Invalid login credentials') ||
-            error.message.includes('invalid_credentials')
+        error.message.includes('Invalid login credentials') ||
+        error.message.includes('invalid_credentials')
           ? 'Wrong email or password — please check and try again.'
           : error.message;
       return setErr('li-err', msg);
@@ -1342,43 +1425,91 @@
     sb.auth.onAuthStateChange((_e, session) => applyAuthState(session ? session.user : null));
   }
 
-  // ── Booking form → Supabase leads ────────────────────────────
-  document.getElementById('bookingForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const form  = e.target;
-    const name  = document.getElementById('bf-name').value.trim();
-    const email = document.getElementById('bf-email').value.trim();
-    const btn   = form.querySelector('button[type=submit]');
-    const orig  = btn.innerHTML;
-    btn.innerHTML = '<span class="spinner" style="border-top-color:var(--navy)"></span>';
-    btn.disabled = true;
+  // ── Card 1: free audit form → Supabase leads + Web3Forms ─────
+  function cleanUrl(v){
+    v = (v||'').trim();
+    if (!v) return '';
+    if (!/^https?:\/\//i.test(v)) v = 'https://' + v;
+    return v;
+  }
+  function looksLikeDomain(v){
+    return /^https?:\/\/[^\s.]+\.[^\s]{2,}/i.test(v);
+  }
+  function validEmail(v){
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test((v||'').trim());
+  }
 
-    if (sb) {
-      const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone) || '';
-      const { error } = await sb.from('leads').insert({ name, email, source: 'booking_cta', location: tz });
-      if (error) {
-        btn.innerHTML = orig; btn.disabled = false;
-        toast('Could not save — try emailing us directly at contact@boostprofits.org');
-        return;
+  const auditForm = document.getElementById('auditForm');
+  if (auditForm) {
+    const urlInput   = document.getElementById('audit-url');
+    const emailInput = document.getElementById('audit-email');
+    const urlErr     = document.getElementById('audit-url-err');
+    const emailErr   = document.getElementById('audit-email-err');
+
+    // Inline validation (on blur)
+    urlInput.addEventListener('blur', () => {
+      if (urlInput.value && !looksLikeDomain(cleanUrl(urlInput.value))) {
+        urlInput.classList.add('invalid'); urlErr.textContent = "That doesn't look like a web address.";
+      } else { urlInput.classList.remove('invalid'); urlErr.textContent = ''; }
+    });
+    emailInput.addEventListener('blur', () => {
+      if (emailInput.value && !validEmail(emailInput.value)) {
+        emailInput.classList.add('invalid'); emailErr.textContent = 'Enter a valid email.';
+      } else { emailInput.classList.remove('invalid'); emailErr.textContent = ''; }
+    });
+
+    auditForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      // Honeypot
+      if (auditForm.querySelector('[name=botcheck]').value) return;
+
+      const url   = cleanUrl(urlInput.value);
+      const email = emailInput.value.trim();
+      let bad = false;
+      if (!looksLikeDomain(url)) { urlInput.classList.add('invalid'); urlErr.textContent = 'Add your page link first.'; bad = true; }
+      if (!validEmail(email))    { emailInput.classList.add('invalid'); emailErr.textContent = 'Where should we send it?'; bad = true; }
+      if (bad) return;
+
+      const btn = document.getElementById('audit-btn');
+      const orig = btn.innerHTML;
+      btn.innerHTML = 'Sending…'; btn.disabled = true;
+
+      // Save to Supabase leads
+      if (sb) {
+        const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone) || '';
+        try { await sb.from('leads').insert({ name: url, email, source: 'free_audit', location: tz }); } catch(e) {}
       }
-    }
-    // Send automated emails via EmailJS (if configured)
-    if (cfg.EMAILJS_PUBLIC_KEY && cfg.EMAILJS_SERVICE_ID) {
-      try {
-        emailjs.init({ publicKey: cfg.EMAILJS_PUBLIC_KEY });
-        const params = { name, email, support_email: cfg.SUPPORT_EMAIL || 'contact@boostprofits.org' };
-        // Email to site owner
-        if (cfg.EMAILJS_OWNER_TMPL)
-          emailjs.send(cfg.EMAILJS_SERVICE_ID, cfg.EMAILJS_OWNER_TMPL, params);
-        // Confirmation email to the visitor
-        if (cfg.EMAILJS_GUEST_TMPL)
-          emailjs.send(cfg.EMAILJS_SERVICE_ID, cfg.EMAILJS_GUEST_TMPL, params);
-      } catch(e) { /* EmailJS not yet configured — silent */ }
-    }
 
-    form.innerHTML = '<p style="color:#fff;font-weight:600;width:100%;text-align:center;padding:12px;line-height:1.5">✓ Seat\'s yours.<br><span style="font-size:13px;opacity:.7">We\'ll reach out from contact@boostprofits.org within 24 hours.</span></p>';
-    trackEvent('lead_submit', 'booking');
-  });
+      // Send to Web3Forms (if key configured)
+      const WEB3KEY = 'WEB3FORMS_KEY_HERE'; // <!-- replace -->
+      if (WEB3KEY && !WEB3KEY.includes('HERE')) {
+        try {
+          await fetch('https://api.web3forms.com/submit', {
+            method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify({ access_key: WEB3KEY, page_url: url, email,
+              subject: 'New free-audit request from ' + email, from_name: 'BoostProfits Site' })
+          });
+        } catch(e) {}
+      }
+
+      trackEvent('lead_submit', 'free_audit');
+      auditForm.innerHTML = '<p class="d-success">Got it. Watch your inbox — your three fixes land within 24 hours.</p>';
+    });
+  }
+
+  // ── Cal.com popup embed (Card 2) ─────────────────────────────
+  (function (C, A, L) {
+    let p = function (a, ar) { a.q.push(ar); };
+    let d = C.document; C.Cal = C.Cal || function () {
+      let cal = C.Cal; let ar = arguments;
+      if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; }
+      if (ar[0] === L) { const api = function () { p(api, arguments); }; const ns = ar[1]; api.q = api.q || [];
+        typeof ns === "string" ? (cal.ns[ns] = api) && p(api, ar) : p(cal, ar); return; }
+      p(cal, ar);
+    };
+  })(window, "https://app.cal.com/embed/embed.js", "init");
+  Cal("init", { origin: "https://cal.com" });
+  Cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
 
   // ═══════════════════════════════════════════════════════════════
   //  ACTIVITY HEATMAP  ·  Per-section dwell time + page events

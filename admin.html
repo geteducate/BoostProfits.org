@@ -17,7 +17,7 @@
     ADMIN_EMAIL:       'contact@boostprofits.org'
   };
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js" onerror="this.onerror=null;this.src='https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js'"></script>
 
 <style>
   :root{ --cream:#FAF8F4; --charcoal:#1A1A1A; --navy:#0F2A47; --border:#E8E3DA; --muted:#6B6560; --orange:#F97316; }
@@ -155,16 +155,23 @@
   const cfg = window.BP_CONFIG || {};
   const CONFIGURED = cfg.SUPABASE_URL && !cfg.SUPABASE_URL.includes('YOUR-PROJECT')
                      && cfg.SUPABASE_ANON_KEY && !cfg.SUPABASE_ANON_KEY.includes('YOUR-ANON');
-  const sb = (CONFIGURED && window.supabase)
-    ? window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY, { auth:{ persistSession:true, autoRefreshToken:true } })
-    : null;
+  let sb = null;
+  function initSb(){
+    if (sb) return sb;
+    const lib = window.supabase || window.Supabase;
+    if (CONFIGURED && lib && lib.createClient){
+      sb = lib.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY, { auth:{ persistSession:true, autoRefreshToken:true } });
+    }
+    return sb;
+  }
+  initSb();
 
   function setErr(m){ const e=document.getElementById('loginErr'); e.textContent=m; e.classList.toggle('show', !!m); }
   function busy(on){ const b=document.getElementById('loginBtn'); if(on){b.dataset.l=b.innerHTML;b.innerHTML='<span class="spinner"></span>';b.disabled=true;}else{b.innerHTML=b.dataset.l||'Enter dashboard';b.disabled=false;} }
 
   async function login(){
     setErr('');
-    if (!sb) return setErr('Supabase keys are not set in admin.html yet.');
+    if (!initSb()) return setErr('Could not connect — please hard-refresh (Ctrl+Shift+R) and try again.');
     const email = document.getElementById('email').value.trim();
     const pass  = document.getElementById('pass').value;
     if (!email || !pass) return setErr('Enter email and password.');
@@ -198,16 +205,26 @@
   function fmtDate(d){ return new Date(d).toLocaleString(undefined,{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}); }
 
   async function refresh(){
-    if (!sb) return;
+    if (!initSb()) return;
+
     // ----- Leads -----
-    const { data: leads, error: le } = await sb.from('leads').select('*').order('created_at',{ascending:false}).limit(1000);
-    if (le){ document.getElementById('leadsBox').innerHTML = '<div class="empty">Could not load leads.<br><span class="muted">'+esc(le.message)+'</span></div>'; }
-    else { renderLeads(leads || []); renderStats(leads || []); }
+    try {
+      const { data: leads, error: le } = await sb.from('leads').select('*').order('created_at',{ascending:false}).limit(1000);
+      if (le){ document.getElementById('leadsBox').innerHTML = '<div class="empty">Could not load leads.<br><span class="muted">'+esc(le.message)+'</span></div>'; document.getElementById('s-total').textContent='—'; }
+      else { renderLeads(leads || []); renderStats(leads || []); }
+    } catch(err){
+      document.getElementById('leadsBox').innerHTML = '<div class="empty">Network error loading leads.<br><span class="muted">'+esc(err.message||String(err))+'</span></div>';
+    }
 
     // ----- Events -----
-    const { data: events, error: ee } = await sb.from('page_events').select('*').order('created_at',{ascending:false}).limit(5000);
-    if (ee){ document.getElementById('heatBox').innerHTML = document.getElementById('actBox').innerHTML = '<div class="empty">Could not load events.<br><span class="muted">'+esc(ee.message)+'</span></div>'; document.getElementById('s-events').textContent = '—'; }
-    else { renderHeat(events || []); renderActions(events || []); document.getElementById('s-events').textContent = (events||[]).length; }
+    try {
+      const { data: events, error: ee } = await sb.from('page_events').select('*').order('created_at',{ascending:false}).limit(5000);
+      if (ee){ document.getElementById('heatBox').innerHTML = document.getElementById('actBox').innerHTML = '<div class="empty">Could not load events.<br><span class="muted">'+esc(ee.message)+'</span></div>'; document.getElementById('s-events').textContent = '—'; }
+      else { renderHeat(events || []); renderActions(events || []); document.getElementById('s-events').textContent = (events||[]).length; }
+    } catch(err){
+      document.getElementById('heatBox').innerHTML = document.getElementById('actBox').innerHTML = '<div class="empty">Network error loading events.<br><span class="muted">'+esc(err.message||String(err))+'</span></div>';
+      document.getElementById('s-events').textContent = '—';
+    }
   }
 
   function renderStats(leads){
@@ -256,13 +273,13 @@
   }
 
   // Auto-enter if already signed in as admin
-  if (sb){
+  if (initSb()){
     sb.auth.getSession().then(({ data }) => {
       const u = data.session && data.session.user;
       if (u && u.email.toLowerCase() === (cfg.ADMIN_EMAIL||'').toLowerCase()) enterDash(u);
-    });
+    }).catch(()=>{});
   } else {
-    setErr('Supabase keys are not set in admin.html yet.');
+    setErr('Could not connect — please hard-refresh (Ctrl+Shift+R).');
   }
   document.getElementById('pass').addEventListener('keydown', e => { if (e.key==='Enter') login(); });
 </script>
