@@ -408,43 +408,69 @@
   .toast{position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(20px); z-index:300; background:var(--navy); color:#fff; padding:13px 22px; border-radius:12px; font-size:14px; font-weight:500; box-shadow:0 20px 40px -15px rgba(15,42,71,.6); opacity:0; pointer-events:none; transition:all .35s cubic-bezier(.22,1,.36,1); white-space:nowrap}
   .toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
 
-  /* ── Booking (3-door) ── */
+  /* ── Booking · Three Doors (feel → tap → read one thing) ── */
   .book-sec{background:linear-gradient(180deg,#FAF7F1,#F4EEE3)}
-  .book-head{text-align:center; max-width:720px; margin:0 auto 56px}
-  .book-head .eyebrow{color:rgba(15,42,71,.5); margin-bottom:16px}
-  .book-head h2{font-size:clamp(30px,4vw,50px); font-weight:600; line-height:1.08; margin-bottom:20px}
-  .book-head .subline{font-size:18px; color:rgba(20,20,20,.6); line-height:1.6}
-  .doors{display:grid; grid-template-columns:repeat(3,1fr); gap:22px; align-items:stretch; max-width:1120px; margin:0 auto}
-  .door{display:flex; flex-direction:column; background:#fff; border:1px solid #EDE7DA; border-radius:18px; padding:30px 26px;
-    box-shadow:0 1px 2px rgba(20,20,20,.04), 0 12px 32px -16px rgba(20,20,20,.12); transition:transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s}
-  .door:hover{transform:translateY(-4px); box-shadow:0 1px 2px rgba(20,20,20,.04), 0 24px 50px -20px rgba(20,20,20,.18)}
-  .door.raised{border-top:3px solid var(--navy); transform:scale(1.025); box-shadow:0 1px 2px rgba(20,20,20,.04), 0 30px 60px -22px rgba(15,42,71,.32)}
-  .door.raised:hover{transform:scale(1.025) translateY(-4px)}
-  .door .d-eyebrow{font-size:11px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:rgba(15,42,71,.5); margin-bottom:14px}
-  .door.raised .d-eyebrow{color:var(--orange)}
-  .door h3{font-family:'Fraunces',serif; font-size:22px; line-height:1.2; margin-bottom:12px; color:var(--charcoal)}
-  .door .d-body{font-size:14.5px; line-height:1.6; color:rgba(20,20,20,.62); flex:1}
-  .door .d-trust{font-size:12.5px; line-height:1.5; color:rgba(15,42,71,.6); background:rgba(15,42,71,.04); border-radius:10px; padding:11px 13px; margin-top:16px}
-  .door form{margin-top:18px; display:flex; flex-direction:column; gap:10px}
-  .door form input{width:100%; padding:12px 14px; border-radius:10px; border:1px solid #EDE7DA; background:#FAFAF8; font-size:14px; font-family:inherit; color:var(--charcoal); transition:all .2s}
-  .door form input:focus{outline:none; border-color:var(--navy); box-shadow:0 0 0 3px rgba(15,42,71,.1); background:#fff}
-  .door form input.invalid{border-color:#A14040; box-shadow:0 0 0 3px rgba(161,64,64,.08)}
-  .door .field-err{font-size:12px; color:#A14040; min-height:0; margin-top:-4px}
-  .door .d-btn{margin-top:18px; width:100%; justify-content:center; display:inline-flex; align-items:center; gap:8px; padding:14px 28px; border-radius:8px; font-weight:600; font-size:15px; cursor:pointer; border:none; font-family:inherit; transition:transform .15s, box-shadow .25s, background .2s}
-  .d-btn.primary{background:var(--navy); color:#fff; box-shadow:0 6px 20px -8px rgba(15,42,71,.5)}
-  .d-btn.primary:hover{background:#1A3D63; box-shadow:0 10px 28px -8px rgba(15,42,71,.55)}
-  .d-btn.outline{background:transparent; color:var(--navy); border:1.5px solid rgba(15,42,71,.25)}
-  .d-btn.outline:hover{background:rgba(15,42,71,.05); border-color:var(--navy)}
-  .d-btn:active{transform:scale(.98)}
-  .d-btn:focus-visible{outline:2px solid var(--navy); outline-offset:2px}
-  .door .d-success{font-size:14px; line-height:1.55; color:#3E7A4F; background:rgba(62,122,79,.08); border-radius:10px; padding:16px; margin-top:18px; text-align:center; font-weight:500}
-  .book-close{text-align:center; max-width:680px; margin:52px auto 0; font-family:'Fraunces',serif; font-size:19px; font-style:italic; line-height:1.55; color:rgba(20,20,20,.7)}
+  .book-head{text-align:center; max-width:660px; margin:0 auto 48px}
+  .book-head h2{font-size:clamp(32px,4.4vw,54px); font-weight:600; line-height:1.06; margin-bottom:18px; letter-spacing:-.02em}
+  .book-head .subline{font-size:18px; color:rgba(20,20,20,.58); line-height:1.6}
+
+  .doors{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; max-width:980px; margin:0 auto}
+  /* Resting door = a real button, almost no reading load */
+  .door{position:relative; display:flex; flex-direction:column; align-items:flex-start; gap:10px;
+    background:#fff; border:0.5px solid #E4DCCC; border-radius:20px; padding:30px 26px; cursor:pointer;
+    font-family:inherit; text-align:left; width:100%; min-height:148px;
+    box-shadow:var(--shadow-sm);
+    transition:transform .3s var(--spring), box-shadow .35s var(--ease), opacity .3s var(--ease), border-color .3s}
+  .door:hover{transform:translateY(-4px); box-shadow:var(--shadow-md)}
+  .door.featured{border:2px solid var(--navy)}
+  .door .d-eyebrow{font-size:10px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:rgba(15,42,71,.45)}
+  .door.featured .d-eyebrow{color:var(--navy)}
+  .door .d-line{font-family:'Fraunces',serif; font-size:25px; line-height:1.15; color:var(--charcoal); font-weight:500}
+  .door .d-whisper{font-size:12.5px; color:rgba(20,20,20,.4); font-style:italic; opacity:0; transform:translateY(4px); transition:opacity .3s, transform .3s; min-height:1em}
+  .door:hover .d-whisper{opacity:1; transform:translateY(0)}
+  .door .d-tag{position:absolute; top:14px; right:14px; font-size:10px; font-weight:600; letter-spacing:.04em; color:var(--navy); background:rgba(15,42,71,.07); padding:3px 9px; border-radius:99px}
+  .door .d-chevron{position:absolute; bottom:24px; right:24px; color:rgba(15,42,71,.3); transition:transform .35s var(--spring)}
+  .door[aria-expanded="true"] .d-chevron{transform:rotate(90deg); color:var(--navy)}
+  /* Dimmed siblings when one is open */
+  .doors.has-open .door:not([aria-expanded="true"]){opacity:.4; transform:scale(.97)}
+  .doors.has-open .door[aria-expanded="true"]{transform:translateY(-2px); border-color:var(--navy); box-shadow:var(--shadow-md)}
+  .door:focus-visible{outline:2px solid var(--navy); outline-offset:3px}
+
+  /* Reveal panel below the row */
+  .reveal-panel{max-width:980px; margin:0 auto; max-height:0; opacity:0; overflow:hidden;
+    transition:max-height .35s var(--ease), opacity .3s var(--ease), margin .35s var(--ease)}
+  .reveal-panel.open{max-height:520px; opacity:1; margin-top:18px}
+  .reveal-inner{background:#fff; border:0.5px solid #E4DCCC; border-radius:20px; padding:30px 30px; box-shadow:var(--shadow-md)}
+  .reveal-inner .r-line{font-size:17px; line-height:1.55; color:rgba(20,20,20,.78); margin-bottom:18px; max-width:620px}
+  .reveal-inner .r-trust{font-size:13px; line-height:1.5; color:rgba(15,42,71,.6); background:rgba(15,42,71,.04); border-radius:10px; padding:11px 14px; margin-bottom:18px; max-width:560px}
+  .r-form{display:flex; flex-direction:column; gap:10px; max-width:420px}
+  .r-form input{width:100%; padding:13px 15px; border-radius:11px; border:1px solid #E4DCCC; background:#FAFAF8; font-size:14px; font-family:inherit; color:var(--charcoal); transition:all .2s}
+  .r-form input:focus{outline:none; border-color:var(--navy); box-shadow:0 0 0 3px rgba(15,42,71,.1); background:#fff}
+  .r-form input.invalid{border-color:#A14040; box-shadow:0 0 0 3px rgba(161,64,64,.08)}
+  .field-err{font-size:12px; color:#A14040; margin-top:-4px; min-height:0}
+  .r-btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:14px 28px; border-radius:8px;
+    font-weight:600; font-size:15px; cursor:pointer; border:none; font-family:inherit; background:var(--navy); color:#fff;
+    box-shadow:0 6px 20px -8px rgba(15,42,71,.5); transition:transform .15s var(--spring), background .2s, box-shadow .25s; align-self:flex-start; text-decoration:none}
+  .r-btn:hover{background:var(--navy-hi); box-shadow:0 10px 28px -8px rgba(15,42,71,.55)}
+  .r-btn:active{transform:scale(.97)}
+  .r-btn:focus-visible{outline:2px solid var(--navy); outline-offset:2px}
+  .r-btn.wide{width:100%; max-width:420px; margin-top:8px}
+  .r-success{font-size:15px; line-height:1.55; color:#3E7A4F; background:rgba(62,122,79,.08); border-radius:12px; padding:18px 20px; font-weight:500; max-width:480px}
+
+  .book-close{text-align:center; max-width:680px; margin:48px auto 0; font-family:'Fraunces',serif; font-size:19px; font-style:italic; line-height:1.55; color:rgba(20,20,20,.7); transition:opacity .35s var(--ease)}
+  .book-close.dim{opacity:.55}
   .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0}
-  @media(prefers-reduced-motion:reduce){ .door,.door:hover,.door.raised:hover{transform:none; transition:none} }
-  @media(max-width:900px){
-    .doors{grid-template-columns:1fr; gap:18px; max-width:440px}
-    .door.raised{transform:none}
-    .door.raised:hover{transform:translateY(-4px)}
+
+  @media(prefers-reduced-motion:reduce){
+    .door,.door:hover,.doors.has-open .door:not([aria-expanded="true"]),.doors.has-open .door[aria-expanded="true"]{transform:none; transition:none}
+    .reveal-panel{transition:none}
+    .d-whisper{transition:none}
+  }
+  @media(max-width:840px){
+    .doors{grid-template-columns:1fr; gap:14px; max-width:460px}
+    .door{min-height:0}
+    .door .d-whisper{opacity:1; transform:none}
+    .reveal-panel,.book-close{max-width:460px}
   }
 
   /* ── Responsive ── */
@@ -744,58 +770,79 @@
   </div>
 </section>
 
-<!-- ===== URGENCY / BOOKING ===== -->
+<!-- ===== BOOKING · THREE DOORS ===== -->
 <section id="booking" class="book-sec">
   <div class="wrap">
     <div class="book-head reveal">
-      <p class="eyebrow">You made it all the way down here.</p>
-      <h2>That itch you feel right now? It's your gut already deciding.</h2>
-      <p class="subline">So here are three ways in. Pick the one that matches how brave you feel tonight. All three end the same way — you, watching strangers turn into buyers because the words finally did their job.</p>
+      <h2>So. Where's your head at?</h2>
+      <p class="subline">Three doors. Pick the one that fits how you feel right now. They all lead to the same room.</p>
     </div>
 
-    <div class="doors">
-      <!-- CARD 1 — free audit form (Web3Forms) -->
-      <div class="door reveal">
-        <p class="d-eyebrow">Still on the fence</p>
-        <h3>Hand me your page. I'll find the leak.</h3>
-        <p class="d-body">Paste your link. Inside a day, you get back the three lines quietly bleeding your sales dry, plus what I'd write in their place. You read it in bed. You feel the click. Then you decide. All it costs you is a link and an email.</p>
-        <form id="auditForm" novalidate>
+    <div class="doors" id="doors">
+      <!-- DOOR 1 -->
+      <button class="door reveal" type="button" id="door-1" aria-expanded="false" aria-controls="panel-1" onclick="toggleDoor(1)">
+        <span class="d-eyebrow">just looking</span>
+        <span class="d-line">I'm just looking.</span>
+        <span class="d-whisper">no pressure — peek first.</span>
+        <svg class="d-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <!-- DOOR 2 (featured) -->
+      <button class="door featured reveal" type="button" id="door-2" aria-expanded="false" aria-controls="panel-2" onclick="toggleDoor(2)">
+        <span class="d-tag">most people</span>
+        <span class="d-eyebrow">most people</span>
+        <span class="d-line">Let's talk.</span>
+        <span class="d-whisper">twenty minutes, real answers.</span>
+        <svg class="d-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <!-- DOOR 3 -->
+      <button class="door reveal" type="button" id="door-3" aria-expanded="false" aria-controls="panel-3" onclick="toggleDoor(3)">
+        <span class="d-eyebrow">decided</span>
+        <span class="d-line">I'm in.</span>
+        <span class="d-whisper">the brave ones eat first.</span>
+        <svg class="d-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+    <!-- REVEAL PANELS -->
+    <div class="reveal-panel" id="panel-1" role="region" aria-labelledby="door-1">
+      <div class="reveal-inner">
+        <p class="r-line">Fair. Hand me your link — I'll send back the 3 lines quietly killing your sales. Free. You decide after.</p>
+        <form class="r-form" id="auditForm" novalidate>
           <label class="sr-only" for="audit-url">Your page link</label>
           <input type="text" id="audit-url" name="page_url" placeholder="your page link" autocomplete="url" />
           <div class="field-err" id="audit-url-err"></div>
           <label class="sr-only" for="audit-email">Where do I send it?</label>
           <input type="email" id="audit-email" name="email" placeholder="where do I send it?" autocomplete="email" />
           <div class="field-err" id="audit-email-err"></div>
-          <!-- honeypot -->
           <input type="text" name="botcheck" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
-          <button type="submit" class="d-btn outline" id="audit-btn">Show me the 3 fixes</button>
+          <button type="submit" class="r-btn" id="audit-btn">Send me the leaks</button>
         </form>
-      </div>
-
-      <!-- CARD 2 — call booking (Cal.com) -->
-      <div class="door raised reveal">
-        <p class="d-eyebrow">Where most people land</p>
-        <h3>Give me 20 minutes. I'll show you the money you're leaving on the table.</h3>
-        <p class="d-body">You jump on, you pull up your page, and I walk you through the exact spot where buyers go cold — and roughly what that cold spot costs you every hour it sits there. Worst case, you leave knowing precisely what to fix and you do it yourself. Either way you win. Just grab a slot and tell me what you sell.</p>
-        <p class="d-trust">Twenty minutes, straight talk. If we're not a fit in the first five, you go back to your day sharper than you came.</p>
-        <!-- replace CAL_LINK_HERE with your-name/20-min-copy-teardown -->
-        <button class="d-btn primary" data-cal-link="CAL_LINK_HERE" data-cal-config='{"layout":"month_view"}'>
-          Grab my slot
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
-
-      <!-- CARD 3 — paid audit (Stripe / Lemon Squeezy) -->
-      <div class="door reveal">
-        <p class="d-eyebrow">You already made up your mind</p>
-        <h3>Skip the chat. Put me to work tonight.</h3>
-        <p class="d-body">You don't need a call. You need the rewrite. Start the audit, drop your page, and in 48 hours you're reading words built to pull a stranger by the collar to your checkout. The version of you sitting here next Friday? He already pressed this button. Catch up to him.</p>
-        <!-- replace STRIPE_OR_LEMON_LINK_HERE with your checkout URL -->
-        <a class="d-btn primary" href="STRIPE_OR_LEMON_LINK_HERE">Start my audit — $99</a>
       </div>
     </div>
 
-    <p class="book-close reveal">Tap any door. They all open onto the same room: a page where people reach for their wallet instead of the back button. So pick the one that feels right tonight — and let next-week-you do the thanking.</p>
+    <div class="reveal-panel" id="panel-2" role="region" aria-labelledby="door-2">
+      <div class="reveal-inner">
+        <p class="r-line">20 minutes. Your page on screen. I point at the exact spot the money leaks — and what it costs you by the hour.</p>
+        <p class="r-trust">If we're not a fit in the first five, you go back to your day sharper than you came.</p>
+        <!-- replace CAL_LINK with your-name/20-min-copy-teardown -->
+        <button class="r-btn" data-cal-link="CAL_LINK" data-cal-config='{"layout":"month_view"}'>
+          Pick a time
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="reveal-panel" id="panel-3" role="region" aria-labelledby="door-3">
+      <div class="reveal-inner">
+        <p class="r-line">Good. Skip the talk. I start tonight — you're reading the rewrite in 48 hours.</p>
+        <!-- replace STRIPE_OR_LEMON_LINK with your checkout URL -->
+        <a class="r-btn" href="STRIPE_OR_LEMON_LINK">Start — $99</a>
+      </div>
+    </div>
+
+    <p class="book-close reveal" id="bookClose">Whichever door — same room on the other side. People reaching for the wallet, not the back button.</p>
   </div>
 </section>
 
@@ -1470,6 +1517,42 @@
     sb.auth.onAuthStateChange((_e, session) => applyAuthState(session ? session.user : null));
   }
 
+  // ── Three Doors: feel → tap → reveal one thing ───────────────
+  let openDoor = 0;
+  function toggleDoor(n){
+    const doors = document.getElementById('doors');
+    const bookClose = document.getElementById('bookClose');
+    const willOpen = openDoor !== n;
+
+    // Close all panels + reset all doors
+    for (let i = 1; i <= 3; i++){
+      const d = document.getElementById('door-' + i);
+      const p = document.getElementById('panel-' + i);
+      d.setAttribute('aria-expanded', 'false');
+      p.classList.remove('open');
+    }
+
+    if (willOpen){
+      const d = document.getElementById('door-' + n);
+      const p = document.getElementById('panel-' + n);
+      d.setAttribute('aria-expanded', 'true');
+      p.classList.add('open');
+      doors.classList.add('has-open');
+      bookClose.classList.add('dim');
+      openDoor = n;
+      // focus first field/button in the panel for keyboard users
+      setTimeout(() => {
+        const f = p.querySelector('input, .r-btn');
+        if (f && window.matchMedia('(min-width:840px)').matches) { try { f.focus({preventScroll:true}); } catch(e){} }
+      }, 360);
+    } else {
+      doors.classList.remove('has-open');
+      bookClose.classList.remove('dim');
+      openDoor = 0;
+    }
+  }
+  window.toggleDoor = toggleDoor;
+
   // ── Card 1: free audit form → Supabase leads + Web3Forms ─────
   function cleanUrl(v){
     v = (v||'').trim();
@@ -1538,7 +1621,7 @@
       }
 
       trackEvent('lead_submit', 'free_audit');
-      auditForm.innerHTML = '<p class="d-success">Got it. Watch your inbox — your three fixes land within 24 hours.</p>';
+      auditForm.innerHTML = '<p class="r-success">Got it. Your 3 fixes land within 24 hours.</p>';
     });
   }
 
