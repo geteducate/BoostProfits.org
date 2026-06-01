@@ -81,7 +81,7 @@ begin
     '1. [hero/headline] — ~$___/hr because [reason]. I''d write: "______"' || E'\n' ||
     '2. [CTA/offer] — ~$___/hr because [reason]. I''d write: "______"' || E'\n' ||
     '3. [trust/proof] — ~$___/hr because [reason]. I''d write: "______"' || E'\n\n' ||
-    'Want the whole page rewritten? The Pro tier handles it in 7 days.' || E'\n\n' || '— ' || coalesce(v_op_name,'') ||
+    'Want the whole page rewritten? The Rewrite tier ($149) handles it in 7 days.' || E'\n\n' || '— ' || coalesce(v_op_name,'') ||
     '</pre></div>';
 
   perform net.http_post(
