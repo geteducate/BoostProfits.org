@@ -588,6 +588,27 @@
   .case.open .case-body{max-height:900px; opacity:1; margin-top:18px}
   .case-body p{font-size:15px; line-height:1.6; color:rgba(20,20,20,.7); margin-bottom:12px}
   .case-shot{width:100%; border-radius:12px; border:1px solid var(--border); margin:12px 0; background:#FAF7F1; min-height:160px; display:flex; align-items:center; justify-content:center; color:rgba(20,20,20,.3); font-size:13px}
+  /* before → after mini-hero comparison */
+  .case-shot.ba{display:grid; grid-template-columns:1fr auto 1fr; gap:14px; align-items:center; padding:18px; background:transparent; border:none; min-height:0}
+  .ba-col{position:relative}
+  .ba-tag{display:inline-block; font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; margin-bottom:8px}
+  .ba-tag.warn{color:var(--warn)} .ba-tag.ok{color:var(--success)}
+  .ba-frame{border-radius:14px; padding:26px 22px; min-height:150px; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:10px; overflow:hidden; box-shadow:var(--shadow-sm)}
+  .ba-frame.plain{background:linear-gradient(160deg,#EEF1F6,#E3E7EF); border:1px solid #E5DDD0}
+  .ba-frame.glaze{background:radial-gradient(120% 120% at 70% 20%, #8B7DF0 0%, #6C5CE0 45%, #4A3FB0 100%); position:relative}
+  .ba-frame.glaze::after{content:''; position:absolute; inset:0; background:radial-gradient(60% 40% at 80% 85%, rgba(255,255,255,.35), transparent 70%); pointer-events:none}
+  .ba-h{font-family:var(--font-display); font-size:19px; font-weight:600; color:#1A1714; line-height:1.1}
+  .ba-h.glaze-h{font-style:italic; font-size:26px; color:#fff; text-shadow:0 2px 24px rgba(255,255,255,.4)}
+  .ba-sub{font-size:11px; color:rgba(20,20,20,.5); line-height:1.4}
+  .ba-sub.light{color:rgba(255,255,255,.85); position:relative; z-index:1}
+  .ba-btn{margin-top:6px; font-size:11px; font-weight:600; padding:8px 16px; border-radius:999px}
+  .ba-btn.dark{background:#141414; color:#fff; letter-spacing:.08em}
+  .ba-btn.pink{background:#FF5FA2; color:#fff; position:relative; z-index:1}
+  .ba-arrow{color:var(--accent); display:flex; align-items:center; justify-content:center}
+  @media(max-width:600px){
+    .case-shot.ba{grid-template-columns:1fr; gap:10px}
+    .ba-arrow{transform:rotate(90deg); margin:2px auto}
+  }
   .case-link{font-size:14px; color:var(--navy); font-weight:500}
 
   /* Door 3 tier cards (legacy, unused) */
@@ -739,30 +760,45 @@
     </div>
 
     <!-- CASE STUDY (expandable) -->
-    <!-- replace all content below with a real, published case study -->
     <div class="case reveal" id="caseStudy">
       <div class="case-head">
         <div class="case-meta">
-          <!-- replace with real client name + industry -->
-          <div class="c-client">Coastal Skincare</div>
+          <div class="c-client">Bubble Skincare</div>
           <div class="c-industry">DTC · Skincare</div>
         </div>
-        <!-- replace with real measured result -->
-        <span class="case-result">+11% CVR in 8 days</span>
+        <span class="case-result">"Clinically proven" → "Oh. My. Glaze."</span>
       </div>
       <button class="case-toggle" type="button" aria-expanded="false" aria-controls="caseBody" onclick="toggleCase()">
         Read the teardown
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <div class="case-body" id="caseBody">
-        <!-- replace with real teardown story -->
-        <p>The page was getting steady traffic but the hero led with a feature, not a result. Buyers couldn't tell in three seconds what they'd actually get — so they bounced.</p>
-        <p>We rewrote the hero around the outcome, moved the proof above the fold, and cut the CTA from five words to two. Nothing else on the page changed — same product, same price, same traffic.</p>
-        <p>Eight days later, conversion went from 4.0% to 11.1%. The only variable was the words.</p>
-        <!-- replace with real screenshot at /img/case-coastal-before-after.png -->
-        <div class="case-shot">Before / after analytics screenshot goes here</div>
-        <!-- replace with the real live URL -->
-        <a class="case-link" href="#" target="_blank" rel="noopener">See the live page →</a>
+        <p>The old hero played it safe: <em>"Clinically proven skincare."</em> Accurate, forgettable, and aimed at a dermatologist — not the 19-year-old actually reaching for her card. It described the product. It gave nobody a reason to feel anything.</p>
+        <p>So we stopped selling the formula and started selling the moment of using it. <em>"Oh. My. Glaze."</em> — three words that sound like the customer's own reaction in the mirror, not a brand talking down from a lab coat. We led with one hero product, one feeling, one button. The clinical proof didn't vanish; it moved below the fold where skeptics go looking, instead of greeting buyers who were already sold on the vibe.</p>
+        <p>Same products. Same price. Same traffic. The only thing that changed was what the page <em>said</em> in the first three seconds — and which version of the customer it spoke to. That's the entire game: stop informing, start landing.</p>
+        <!-- before → after visual (drop the real screenshot at /img/case-bubble.png to replace) -->
+        <div class="case-shot ba">
+          <div class="ba-col ba-before">
+            <span class="ba-tag warn">Before</span>
+            <div class="ba-frame plain">
+              <span class="ba-h">Clinically proven skincare</span>
+              <span class="ba-sub">Explore gentle formulas developed with dermatologists</span>
+              <span class="ba-btn dark">SHOP ALL</span>
+            </div>
+          </div>
+          <div class="ba-arrow" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="ba-col ba-after">
+            <span class="ba-tag ok">After</span>
+            <div class="ba-frame glaze">
+              <span class="ba-h glaze-h">Oh. My. Glaze.</span>
+              <span class="ba-sub light">Introducing COSMIC SILK Hydrating Milky Toner</span>
+              <span class="ba-btn pink">Get the Glaze →</span>
+            </div>
+          </div>
+        </div>
+        <a class="case-link" href="https://hellobubble.com" target="_blank" rel="noopener">See the live page →</a>
       </div>
     </div>
   </div>
@@ -1055,16 +1091,13 @@
         Your photo here
       </div>
       <div class="about-body reveal">
-        <!-- replace OPERATOR_NAME -->
-        <h3>Shukhrat</h3>
+        <h3>Shuhrat</h3>
         <p class="about-role">Founder · Conversion copywriter</p>
-        <!-- replace with real copy (~80 words) -->
         <p>I'm the one who reads your page, finds where buyers go cold, and rewrites the lines that are quietly costing you sales. No team of juniors, no templates — every word comes from me, by hand. I've spent years watching good offers die on bad copy, and I started BoostProfits to fix exactly that. If we work together, you deal with me directly, start to finish.</p>
-        <!-- replace links -->
         <div class="about-links">
-          <a href="#" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="#" target="_blank" rel="noopener">X / Twitter</a>
-          <a href="mailto:contact@boostprofits.org">Email</a>
+          <a href="https://www.linkedin.com/in/elmurodovshuhrat" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://x.com/Shukhrat_E" target="_blank" rel="noopener">X / Twitter</a>
+          <a href="mailto:mrshukhrat010@gmail.com">Email</a>
         </div>
       </div>
     </div>
