@@ -1,5 +1,29 @@
 # Changelog
 
+## Editorial design polish (v2.1)
+
+Visual/motion/a11y pass on top of the premium structure — no sections removed.
+
+- **Fonts** → Fraunces (display) + General Sans (body, via Fontshare) + JetBrains Mono (before/after cards). Replaces Inter as primary. *(Editorial New / Neue Montreal need licensed WOFF2 self-hosting — used the prompt's stated Fontshare fallback.)*
+- **Palette** → warmer editorial system: bg `#F6F1E8`, warm near-black ink `#1A1714`, muted/faint tiers, and a single confident **sienna accent `#C2410C`** replacing the navy/blue. Remapped onto existing CSS variables so the whole cascade shifted at once.
+- **Hero** → left-aligned, Editorial-scale H1 (`clamp(40px,7vw,84px)`, weight 400), italic emphasis on **"$200 every hour"** (the only italic on the page). Primary CTA is the solid accent pill.
+- **Signature scroll moment** → the hero "$200" counts up 0→200 over 800ms on first view (IntersectionObserver + rAF). Respects `prefers-reduced-motion` (shows 200 instantly).
+- **Proof cards** → before/after copy now in mono; BEFORE label `--warn`, AFTER label `--success`.
+- **Buttons** → pill-shaped, accent fill, 1px hover lift, cursor-follow shine, transitions inside 120–280ms.
+- **Sticky nav** → fades to opaque bg + 1px bottom rule after scroll.
+- **Accessibility** → skip-to-content link, `<main>` landmark, universal 2px accent focus ring, global `prefers-reduced-motion` kill-switch, canonical tag.
+- **Spacing** → sections `clamp(96px,12vw,160px)`, container 1180px, body copy capped at 64ch.
+- Removed dead countdown JS (the seat-cap/countdown section was already gone in v2.0).
+
+### Build-only items NOT done (need tooling a static GitHub Pages repo lacks — flagged honestly)
+- Self-hosted WOFF2 binaries + critical-CSS inlining (using Fontshare/Google CDN with `display:swap` instead)
+- AVIF/WebP image pipeline (no raster images on the page — all SVG/CSS, so moot)
+- Dynamic `/og-image` route (static host can't render one; would need a prebuilt 1200×630 PNG)
+- Real Lighthouse before/after numbers (can't run a headless audit from here — page is light: 2 font requests, ~1 JS lib, no images)
+- Lenis smooth-scroll (skipped — page isn't jumpy; native scroll is smoother on mobile)
+
+---
+
 ## Premium repositioning (v2.0)
 
 Repositioned the site for one-time premium engagements instead of subscription impulse buys.

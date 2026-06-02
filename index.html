@@ -56,9 +56,11 @@
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3CradialGradient id='g' cx='32%25' cy='26%25' r='74%25'%3E%3Cstop offset='0%25' stop-color='%23FEF08A'/%3E%3Cstop offset='20%25' stop-color='%23FB923C'/%3E%3Cstop offset='58%25' stop-color='%23F97316'/%3E%3Cstop offset='100%25' stop-color='%2392400E'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpath fill-rule='evenodd' fill='url(%23g)' d='M43.7 17.6 L43.9 6.4 A44 44 0 0 1 56.1 6.4 L56.3 17.6 A33 33 0 0 1 68.5 22.6 L76.5 14.9 A44 44 0 0 1 85.1 23.5 L77.4 31.6 A33 33 0 0 1 82.4 43.7 L93.6 43.9 A44 44 0 0 1 93.6 56.1 L82.4 56.3 A33 33 0 0 1 77.4 68.5 L85.1 76.5 A44 44 0 0 1 76.5 85.1 L68.5 77.4 A33 33 0 0 1 56.3 82.4 L56.1 93.6 A44 44 0 0 1 43.9 93.6 L43.7 82.4 A33 33 0 0 1 31.5 77.4 L23.5 85.1 A44 44 0 0 1 14.9 76.5 L22.6 68.5 A33 33 0 0 1 17.6 56.3 L6.4 56.1 A44 44 0 0 1 6.4 43.9 L17.6 43.7 A33 33 0 0 1 22.6 31.5 L14.9 23.5 A44 44 0 0 1 23.5 14.9 L31.5 22.6 A33 33 0 0 1 43.7 17.6 Z M64 50 A14 14 0 1 0 36 50 A14 14 0 1 0 64 50 Z'/%3E%3C/svg%3E" />
 
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="canonical" href="https://boostprofits.org/" />
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<!-- Editorial system: Fraunces (display) + General Sans (body/UI), self-served via Fontshare; JetBrains Mono for raw-copy cards -->
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
 <!-- ═══════════════════════════════════════════════════════════════
      SUPABASE  ·  Paste your two PUBLIC keys (Settings → API).
@@ -79,31 +81,52 @@
 
 <style>
   :root{
-    --cream:#FAF7F1; --charcoal:#141414; --navy:#0F2A47; --navy-hi:#1A3D63;
-    --border:#EDE7DA; --muted:#5B5B5B; --orange:#F97316; --gold:#F4D9A3;
+    /* Editorial warm palette — sienna accent, near-black warm ink */
+    --cream:#F6F1E8; --bg:#F6F1E8; --surface:#FFFFFF;
+    --charcoal:#1A1714; --ink:#1A1714; --ink-muted:#5C544C; --ink-faint:#8A8278;
+    --navy:#C2410C; --navy-hi:#9A3309;            /* accent remapped to sienna (kept var names so cascade flows) */
+    --accent:#C2410C; --accent-hover:#9A3309; --accent-soft:#FBE8DD;
+    --border:#E5DDD0; --rule:#E5DDD0; --muted:#5C544C;
+    --orange:#C2410C; --gold:#F4D9A3;
+    --success:#3E7A4F; --warn:#A14040;
+    /* type */
+    --font-display:'Fraunces',Georgia,serif;
+    --font-body:'General Sans','Inter',system-ui,sans-serif;
+    --font-mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
     --ease:cubic-bezier(.22,1,.36,1);
     --spring:cubic-bezier(.34,1.56,.64,1);
-    --shadow-sm:0 1px 2px rgba(20,20,20,.04), 0 8px 24px rgba(20,20,20,.04);
-    --shadow-md:0 2px 4px rgba(20,20,20,.04), 0 18px 44px -12px rgba(20,20,20,.12);
-    --shadow-lg:0 4px 8px rgba(20,20,20,.05), 0 30px 70px -20px rgba(15,42,71,.28);
+    --shadow-sm:0 1px 2px rgba(26,23,20,.04), 0 12px 32px rgba(26,23,20,.06);
+    --shadow-md:0 1px 2px rgba(26,23,20,.04), 0 18px 44px -12px rgba(26,23,20,.1);
+    --shadow-lg:0 4px 8px rgba(26,23,20,.05), 0 30px 70px -20px rgba(26,23,20,.16);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
-    background:var(--cream); color:var(--charcoal);
-    font-family:'Inter',system-ui,sans-serif; line-height:1.6;
+    background:var(--bg); color:var(--ink);
+    font-family:var(--font-body); line-height:1.6;
     -webkit-font-smoothing:antialiased; overflow-x:hidden;
   }
-  ::selection{background:var(--navy); color:#fff}
-  h1,h2,h3,.serif{font-family:'Fraunces',Georgia,serif; letter-spacing:-.02em}
+  ::selection{background:var(--accent); color:#fff}
+  h1,h2,h3,.serif{font-family:var(--font-display); letter-spacing:-.02em; font-weight:500}
   a{color:inherit; text-decoration:none}
-  .wrap{max-width:1120px; margin:0 auto; padding:0 24px}
-  .eyebrow{font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:rgba(15,42,71,.5)}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 clamp(16px,5vw,32px)}
+  /* Skip link */
+  .skip-link{position:absolute; left:-999px; top:8px; z-index:400; background:var(--ink); color:#fff; padding:10px 16px; border-radius:8px; font-size:14px}
+  .skip-link:focus{left:8px}
+  /* Universal focus ring */
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible, [tabindex]:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:4px;
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation-duration:.001ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important}
+    html{scroll-behavior:auto}
+  }
+  .eyebrow{font-family:var(--font-body); font-size:12px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-faint)}
 
   /* ── Buttons ── */
-  .btn{position:relative; display:inline-flex; align-items:center; gap:8px; padding:14px 28px; border-radius:12px;
-    font-weight:600; font-size:15px; cursor:pointer; border:none; font-family:inherit; overflow:hidden;
-    transition:transform .25s var(--spring), box-shadow .3s var(--ease), background .25s ease}
+  .btn{position:relative; display:inline-flex; align-items:center; gap:8px; padding:14px 28px; border-radius:999px;
+    font-weight:600; font-size:15px; cursor:pointer; border:none; font-family:var(--font-body); overflow:hidden;
+    transition:transform .2s var(--ease), box-shadow .25s var(--ease), background .2s ease}
   .btn::after{content:''; position:absolute; inset:0; background:radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.25), transparent 60%); opacity:0; transition:opacity .3s}
   .btn:hover::after{opacity:1}
   .btn:active{transform:scale(.97)}
@@ -119,7 +142,7 @@
   /* ── Header ── */
   header{position:fixed; top:0; left:0; right:0; z-index:50; transition:transform .35s ease, background .3s ease, box-shadow .3s ease}
   header.hide{transform:translateY(-100%)}
-  header.scrolled{background:rgba(250,248,244,.92); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); box-shadow:0 1px 20px -10px rgba(0,0,0,.1)}
+  header.scrolled{background:var(--bg); border-bottom:1px solid var(--rule)}
   .nav{display:flex; align-items:center; justify-content:space-between; height:68px}
   .logo{display:flex; align-items:center; gap:10px; font-family:'Fraunces',serif; font-weight:600; font-size:19px}
   .logo svg{width:32px; height:32px; transition:transform .4s cubic-bezier(.22,1,.36,1)}
@@ -133,7 +156,8 @@
   .nav-cta a.signin:hover{color:var(--charcoal)}
   .nav-cta a.signup{font-size:14px; font-weight:500; padding:9px 16px; border:1px solid rgba(15,42,71,.2); color:var(--navy); border-radius:10px}
   .nav-cta a.signup:hover{background:rgba(15,42,71,.05)}
-  .nav-cta a.book{font-size:14px; font-weight:500; padding:9px 16px; background:var(--navy); color:#fff; border-radius:10px}
+  .nav-cta a.book{font-size:14px; font-weight:500; padding:9px 18px; background:var(--accent); color:#fff; border-radius:999px; transition:transform .18s var(--ease), background .2s}
+  .nav-cta a.book:hover{transform:translateY(-1px); background:var(--accent-hover)}
   .burger{display:none; background:none; border:none; cursor:pointer; padding:8px}
   .mobile-menu{display:none; flex-direction:column; gap:12px; padding:20px 24px; background:var(--cream); border-bottom:1px solid var(--border)}
   .mobile-menu.open{display:flex}
@@ -149,17 +173,18 @@
   .user-chip .logout:hover{color:var(--charcoal); border-color:rgba(26,26,26,.3)}
 
   /* ── Sections ── */
-  section{padding:120px 0; border-top:1px solid var(--border)}
+  section{padding:clamp(96px,12vw,160px) 0; border-top:1px solid var(--rule)}
   section.hero{border-top:none; padding-top:160px}
-  .h2{font-size:clamp(32px,4vw,52px); font-weight:600; line-height:1.08; letter-spacing:-.02em}
-  .lead{font-size:18px; color:rgba(20,20,20,.62); line-height:1.65}
+  .h2{font-size:clamp(32px,5vw,56px); font-weight:500; line-height:1.05; letter-spacing:-.02em}
+  .lead{font-size:18px; color:var(--ink-muted); line-height:1.6; max-width:64ch}
 
-  /* ── Hero ── */
-  .hero-grid{display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center}
-  .hero h1{font-size:clamp(40px,5.5vw,72px); font-weight:600; line-height:1.03; margin:20px 0 24px}
-  .hero .lead{max-width:500px; margin-bottom:32px}
+  /* ── Hero (left-aligned, editorial) ── */
+  .hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:64px; align-items:center; text-align:left}
+  .hero h1{font-size:clamp(40px,7vw,84px); font-weight:400; line-height:1.02; letter-spacing:-.025em; margin:20px 0 24px; max-width:15ch}
+  .hero h1 .em{font-style:italic; font-weight:400}
+  .hero .lead{max-width:52ch; margin-bottom:32px}
   .hero-cta{display:flex; gap:16px; align-items:center; flex-wrap:wrap; margin-bottom:30px}
-  .trust{font-size:12px; color:rgba(20,20,20,.4)}
+  .trust{font-size:13px; color:var(--ink-faint)}
   /* Soft warm gold blob behind hero (Picktime-style ambient glow) */
   .ambient{position:absolute; top:-220px; right:-120px; width:680px; height:680px; border-radius:50%;
     background:radial-gradient(circle, var(--gold) 0%, transparent 60%); opacity:.2; filter:blur(120px); pointer-events:none; z-index:-1;
@@ -201,9 +226,9 @@
   .before{border-radius:10px; border:1px solid #FECACA; background:rgba(254,242,242,.5); padding:16px; margin-bottom:14px}
   .after{border-radius:10px; border:1px solid rgba(15,42,71,.1); background:rgba(15,42,71,.04); padding:16px}
   .tag{font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; margin-bottom:8px}
-  .tag.red{color:rgba(248,113,113,.7)} .tag.blue{color:rgba(15,42,71,.55)}
-  .before p{font-size:14px; color:rgba(26,26,26,.4); text-decoration:line-through}
-  .after p{font-size:14px; font-weight:600; color:var(--charcoal)}
+  .tag.red{color:var(--warn)} .tag.blue{color:var(--success)}
+  .before p{font-family:var(--font-mono); font-size:13px; color:var(--ink-muted); text-decoration:line-through}
+  .after p{font-family:var(--font-mono); font-size:13px; font-weight:500; color:var(--ink)}
   .mock-arrow{display:flex; justify-content:center; margin:6px 0}
   .mock-arrow div{width:24px; height:24px; border-radius:50%; background:var(--navy); color:#fff; display:flex; align-items:center; justify-content:center; font-size:12px}
   .mock-btn{margin-top:14px; background:var(--navy); color:#fff; text-align:center; border-radius:10px; padding:11px; font-size:12px; font-weight:500}
@@ -215,8 +240,8 @@
   .ctx{font-size:10px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:rgba(26,26,26,.35); margin-bottom:12px}
   .mini-before{border-radius:10px; background:rgba(254,242,242,.5); border:1px solid #FECACA; padding:12px; margin-bottom:10px}
   .mini-after{border-radius:10px; background:rgba(15,42,71,.04); border:1px solid rgba(15,42,71,.1); padding:12px}
-  .mini-before p{font-size:13px; color:rgba(26,26,26,.45)}
-  .mini-after p{font-size:13px; font-weight:600}
+  .mini-before p{font-family:var(--font-mono); font-size:12.5px; color:var(--ink-muted)}
+  .mini-after p{font-family:var(--font-mono); font-size:12.5px; font-weight:500; color:var(--ink)}
   .mid-arrow{text-align:center; color:rgba(26,26,26,.25); margin:8px 0}
 
   /* ── Problem / Future ── */
@@ -291,7 +316,7 @@
   .urgency .narrow{position:relative}
   .countdown{display:flex; justify-content:center; gap:18px; margin:30px 0}
   .cd-unit{display:flex; flex-direction:column; align-items:center}
-  .cd-unit .v{font-size:44px; font-weight:700; font-variant-numeric:tabular-nums; font-family:'Inter',monospace}
+  .cd-unit .v{font-size:44px; font-weight:700; font-variant-numeric:tabular-nums; font-family:var(--font-mono)}
   .cd-unit .l{font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.35); margin-top:4px}
   .cd-sep{font-size:32px; color:rgba(255,255,255,.2); margin-top:6px}
   .booking-form{display:flex; gap:12px; max-width:520px; margin:32px auto 0}
@@ -339,8 +364,8 @@
   header{z-index:50}
 
   /* Hero upgrade */
-  .hero h1 span.accent{background:linear-gradient(135deg,var(--navy) 0%,#1e4fd8 50%,var(--orange) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text}
-  .hero-cta .btn-primary{background:linear-gradient(135deg,#0F2A47,#1a3a5c); box-shadow:0 4px 24px -6px rgba(15,42,71,.45)}
+  .hero h1 .em{color:var(--accent); font-style:italic}
+  .hero-cta .btn-primary{background:var(--accent); box-shadow:0 4px 24px -6px rgba(194,65,12,.4)}
   .hero-cta .btn-primary:hover{transform:translateY(-3px); box-shadow:0 14px 36px -8px rgba(15,42,71,.55)}
   .trust{font-size:12px; color:rgba(26,26,26,.4); display:flex; align-items:center; gap:8px}
   .trust::before{content:''; display:inline-block; width:20px; height:1px; background:rgba(26,26,26,.2)}
@@ -399,7 +424,7 @@
     transform:translateY(20px) scale(.97); opacity:0; transition:all .35s cubic-bezier(.22,1,.36,1)}
   .legal-bg.open .legal-modal{transform:translateY(0) scale(1); opacity:1}
   .legal-header{padding:24px 28px 18px; border-bottom:1px solid #E8E3DA; flex-shrink:0; display:flex; align-items:flex-start; justify-content:space-between; gap:16px}
-  .legal-header h2{font-family:'Fraunces',Georgia,serif; font-size:22px; color:#0F2A47; margin:0}
+  .legal-header h2{font-family:'Fraunces',Georgia,serif; font-size:22px; color:var(--ink); margin:0}
   .legal-header p{font-size:11px; color:#999; margin-top:3px}
   .legal-close{background:none; border:none; cursor:pointer; font-size:22px; color:#999; line-height:1; flex-shrink:0; transition:color .2s; font-family:inherit; margin-top:2px}
   .legal-close:hover{color:#1A1A1A}
@@ -407,7 +432,7 @@
   .legal-body::-webkit-scrollbar{width:5px}
   .legal-body::-webkit-scrollbar-track{background:transparent}
   .legal-body::-webkit-scrollbar-thumb{background:#D4CFC8; border-radius:99px}
-  .legal-body h3{font-family:'Fraunces',Georgia,serif; font-size:13px; font-weight:600; color:#0F2A47; margin:22px 0 6px; text-transform:uppercase; letter-spacing:.06em}
+  .legal-body h3{font-family:'Fraunces',Georgia,serif; font-size:13px; font-weight:600; color:var(--accent); margin:22px 0 6px; text-transform:uppercase; letter-spacing:.06em}
   .legal-body h3:first-child{margin-top:0}
   .legal-body p{margin-bottom:10px; color:#555}
   .legal-body ul{margin:8px 0 10px 16px; display:flex; flex-direction:column; gap:4px}
@@ -518,7 +543,7 @@
   .pcard-head h3{font-family:'Fraunces',serif; font-size:26px; color:var(--charcoal); margin-bottom:4px}
   .pcard-sub{font-size:14px; color:rgba(20,20,20,.5); line-height:1.4}
   .pcard-price{font-family:'Fraunces',serif; font-size:52px; font-weight:600; color:var(--navy); margin:18px 0 20px; line-height:1; display:flex; flex-direction:column; gap:4px}
-  .pcard-price .po{font-size:13px; font-weight:400; color:rgba(20,20,20,.42); font-family:'Inter',sans-serif; letter-spacing:.01em}
+  .pcard-price .po{font-size:13px; font-weight:400; color:rgba(20,20,20,.42); font-family:var(--font-body); letter-spacing:.01em}
   .pcard-feats{list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:26px; flex:1}
   .pcard-feats li{display:flex; align-items:flex-start; gap:10px; font-size:14px; color:rgba(20,20,20,.72); line-height:1.45}
   .pcard-feats li svg{width:18px; height:18px; flex-shrink:0; color:var(--navy); margin-top:1px}
@@ -574,7 +599,7 @@
   .tier-top h4{font-family:'Fraunces',serif; font-size:21px; color:var(--charcoal); margin-bottom:3px}
   .tier-desc{font-size:13px; color:rgba(20,20,20,.5); line-height:1.4}
   .tier-price{font-family:'Fraunces',serif; font-size:42px; font-weight:600; color:var(--navy); margin:16px 0 18px; line-height:1}
-  .tier-price span{font-size:14px; font-weight:400; color:rgba(20,20,20,.4); font-family:'Inter',sans-serif}
+  .tier-price span{font-size:14px; font-weight:400; color:rgba(20,20,20,.4); font-family:var(--font-body)}
   .tier-feats{list-style:none; display:flex; flex-direction:column; gap:10px; margin-bottom:22px; flex:1}
   .tier-feats li{display:flex; align-items:flex-start; gap:9px; font-size:13.5px; color:rgba(20,20,20,.7); line-height:1.4}
   .tier-feats li svg{width:17px; height:17px; flex-shrink:0; color:var(--navy); margin-top:1px}
@@ -615,6 +640,7 @@
 </style>
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to content</a>
 
 <!-- ===== HEADER ===== -->
 <header id="header">
@@ -644,13 +670,14 @@
 </header>
 
 <!-- ===== HERO ===== -->
+<main id="main">
 <section class="hero" style="position:relative">
   <div class="ambient"></div>
   <div class="ambient two"></div>
   <div class="wrap hero-grid">
     <div class="reveal">
       <p class="eyebrow">If you're getting views but not sales — keep reading.</p>
-      <h1>Your <span class="accent">words</span> are costing you $200 every hour.</h1>
+      <h1>Your words are costing you <span class="em">$<span id="heroCount">200</span> every hour</span>.</h1>
       <p class="lead">Not your product. Not your price. The words. We've watched great offers bleed money for years because the copy wasn't doing its job. We fix the words. In 7 days, you feel the difference.</p>
       <div class="hero-cta">
         <a href="#booking" class="btn btn-primary">Book a Free Audit</a>
@@ -702,7 +729,7 @@
     <div class="reveal proof-quote" style="max-width:520px;margin:56px auto 0">
       <p style="font-family:'Fraunces',serif;font-size:19px;font-style:italic;color:rgba(26,26,26,.78);line-height:1.5">"Went from 4% to 11% conversion in 8 days. Nothing else changed except the words."</p>
       <div style="display:flex;align-items:center;gap:12px;margin-top:18px">
-        <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#0F2A47,#1e4fd8);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Fraunces',serif;font-weight:600;font-size:14px">M</div>
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Fraunces',serif;font-weight:600;font-size:14px">M</div>
         <div>
           <p style="font-size:14px;font-weight:600;color:var(--charcoal);margin:0">Marcus D.</p>
           <p style="font-size:12px;color:rgba(26,26,26,.4);margin:0">E-commerce founder · 8 days</p>
@@ -1043,6 +1070,7 @@
     </div>
   </div>
 </section>
+</main>
 
 <!-- ===== FOOTER ===== -->
 <footer>
@@ -1292,6 +1320,31 @@
   }, { threshold: 0.1, rootMargin: '-40px' });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
+  // ── Signature scroll moment: hero $200 counts up once ────────
+  (function(){
+    const el = document.getElementById('heroCount');
+    if (!el) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) { el.textContent = '200'; return; }
+    let fired = false;
+    const run = () => {
+      if (fired) return; fired = true;
+      const start = performance.now(), dur = 800;
+      const step = (now) => {
+        const t = Math.min(1, (now - start) / dur);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = Math.round(eased * 200);
+        if (t < 1) requestAnimationFrame(step);
+      };
+      el.textContent = '0';
+      requestAnimationFrame(step);
+    };
+    const co = new IntersectionObserver((es) => {
+      es.forEach(e => { if (e.isIntersecting) { run(); co.disconnect(); } });
+    }, { threshold: 0.6 });
+    co.observe(el);
+  })();
+
   // ── Button shine follows cursor ──────────────────────────────
   document.querySelectorAll('.btn').forEach(b => {
     b.addEventListener('pointermove', e => {
@@ -1300,22 +1353,6 @@
       b.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
     });
   });
-
-  // ── Countdown to midnight (only if countdown exists) ─────────
-  (function(){
-    const ch = document.getElementById('cd-h');
-    if (!ch) return;
-    function tick() {
-      const now = new Date();
-      const end = new Date(now); end.setHours(23, 59, 59, 0);
-      if (now >= end) end.setDate(end.getDate() + 1);
-      let diff = Math.max(0, end - now);
-      document.getElementById('cd-h').textContent = String(Math.floor(diff / 3.6e6)).padStart(2, '0');
-      document.getElementById('cd-m').textContent = String(Math.floor((diff % 3.6e6) / 6e4)).padStart(2, '0');
-      document.getElementById('cd-s').textContent = String(Math.floor((diff % 6e4) / 1000)).padStart(2, '0');
-    }
-    tick(); setInterval(tick, 1000);
-  })();
 
   // ── FAQ accordion ────────────────────────────────────────────
   document.querySelectorAll('.faq-q').forEach(btn => {
