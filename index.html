@@ -565,7 +565,7 @@
 
   /* About operator */
   .about-grid{display:grid; grid-template-columns:300px 1fr; gap:48px; align-items:center; max-width:920px; margin:0 auto}
-  .about-photo{width:100%; max-width:300px; aspect-ratio:1; border-radius:24px; background:linear-gradient(145deg,#EDE7DA,#FAF7F1); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; color:rgba(20,20,20,.3); font-size:14px; overflow:hidden; box-shadow:var(--shadow-md)}
+  .about-photo{width:100%; max-width:300px; aspect-ratio:3/4; border-radius:20px; background:linear-gradient(145deg,#EDE7DA,#FAF7F1); border:1px solid var(--border); overflow:hidden; box-shadow:0 8px 32px rgba(20,20,20,.12), 0 2px 8px rgba(20,20,20,.06)}
   .about-photo img{width:100%; height:100%; object-fit:cover}
   .about-body h3{font-family:'Fraunces',serif; font-size:30px; color:var(--charcoal); margin-bottom:6px}
   .about-role{font-size:14px; font-weight:600; letter-spacing:.04em; text-transform:uppercase; color:var(--navy); margin-bottom:18px}
@@ -1085,15 +1085,17 @@
 <section id="about" style="background:rgba(245,241,235,.4)">
   <div class="wrap">
     <div class="about-grid">
-      <!-- replace with photo: /img/operator.jpg -->
       <div class="about-photo">
-        <!-- <img src="/img/operator.jpg" alt="OPERATOR_NAME" /> -->
-        Your photo here
+        <img src="/img/operator.jpg" alt="Shuhrat Elmurodov — Founder, BoostProfits" />
       </div>
       <div class="about-body reveal">
-        <h3>Shuhrat</h3>
-        <p class="about-role">Founder · Conversion copywriter</p>
-        <p>I'm the one who reads your page, finds where buyers go cold, and rewrites the lines that are quietly costing you sales. No team of juniors, no templates — every word comes from me, by hand. I've spent years watching good offers die on bad copy, and I started BoostProfits to fix exactly that. If we work together, you deal with me directly, start to finish.</p>
+        <h3>Shuhrat Elmurodov</h3>
+        <p class="about-role">Founder · Conversion Copywriter</p>
+        <p>Most copy problems aren't writing problems. They're thinking problems — a founder who knows their product so well they've forgotten how a skeptical stranger reads it.</p>
+        <p>That's the gap I close.</p>
+        <p>My work is one thing: find the exact words standing between your offer and a buyer's decision to pay. Not a reword. Not a refresh. A precise, revenue-targeted rewrite of the specific lines quietly leaking sales.</p>
+        <p>I work with a small number of clients at a time. Every audit, every rewrite comes directly from me — no team, no templates, no hand-offs. You deal with me from the first read to the final revision.</p>
+        <p>Good offers don't fail because of bad traffic. They fail because of words that describe instead of compel. If yours are doing that, I'll find them.</p>
         <div class="about-links">
           <a href="https://www.linkedin.com/in/elmurodovshuhrat" target="_blank" rel="noopener">LinkedIn</a>
           <a href="https://x.com/Shukhrat_E" target="_blank" rel="noopener">X / Twitter</a>
@@ -1686,14 +1688,4 @@
   window.closeLegal = closeLegal;
   // Close on backdrop click
   ['privacyModal','termsModal'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('click', e => { if (e.target === el) closeLegal(id === 'privacyModal' ? 'privacy' : 'terms'); });
-  });
-  // Close on Escape
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { closeLegal('privacy'); closeLegal('terms'); }
-  });
-</script>
-
-</body>
-</html>
+   
