@@ -516,6 +516,11 @@
   .r-form input.invalid{border-color:#A14040; box-shadow:0 0 0 3px rgba(161,64,64,.08)}
   .field-err{font-size:12px; color:#A14040; margin-top:-4px; min-height:0}
   .r-microtrust{font-size:12.5px; color:rgba(20,20,20,.45); line-height:1.45; margin-top:4px}
+  .r-consent{display:flex; align-items:flex-start; gap:9px; font-size:12.5px; color:rgba(20,20,20,.6); line-height:1.45; cursor:pointer; margin-top:2px}
+  .r-consent input{margin-top:2px; width:15px; height:15px; flex-shrink:0; accent-color:var(--accent); cursor:pointer}
+  .r-consent a{color:var(--accent); font-weight:500}
+  .r-btn:disabled{opacity:.5; cursor:not-allowed}
+  .r-btn:disabled:hover{background:var(--navy); transform:none; box-shadow:0 6px 20px -8px rgba(15,42,71,.5)}
   .r-btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:14px 28px; border-radius:8px;
     font-weight:600; font-size:15px; cursor:pointer; border:none; font-family:inherit; background:var(--navy); color:#fff;
     box-shadow:0 6px 20px -8px rgba(15,42,71,.5); transition:transform .15s var(--spring), background .2s, box-shadow .25s; align-self:flex-start; text-decoration:none}
@@ -907,7 +912,7 @@
 <section id="pricing">
   <div class="wrap">
     <h2 class="h2 reveal" style="text-align:center;margin-bottom:10px">Pick the level that fits the job.</h2>
-    <p class="reveal" style="text-align:center;color:rgba(20,20,20,.55);font-size:17px;max-width:560px;margin:0 auto">One-time projects. Real deliverables. No subscriptions.</p>
+    <p class="reveal" style="text-align:center;color:rgba(20,20,20,.55);font-size:17px;max-width:560px;margin:0 auto">One-time projects. Real deliverables. No subscriptions. <a href="refund-policy.html" style="color:var(--accent);font-weight:500">If it doesn't work, you don't pay twice →</a></p>
     <div class="price-grid">
       <!-- Audit -->
       <div class="pcard reveal">
@@ -1021,8 +1026,12 @@
           <div class="field-err" id="audit-email-err"></div>
           <!-- honeypot -->
           <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true" />
-          <p class="r-microtrust">No newsletter. No spam. The report lands, then I leave you alone unless you ping me back.</p>
-          <button type="submit" class="r-btn" id="audit-btn">Show me the leaks</button>
+          <label class="r-consent">
+            <input type="checkbox" id="audit-consent" />
+            <span>I've read and agree to the <a href="terms-of-service.html" target="_blank" rel="noopener">Terms</a>, <a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>, and <a href="refund-policy.html" target="_blank" rel="noopener">Refund Policy</a>.</span>
+          </label>
+          <p class="r-microtrust">Data I collect: just your email and the page link. No newsletter, no spam — the report lands, then I leave you alone unless you ping me back.</p>
+          <button type="submit" class="r-btn" id="audit-btn" disabled>Show me the leaks</button>
           <div class="field-err" id="audit-form-err" aria-live="polite"></div>
         </form>
         <div id="audit-status" class="sr-only" aria-live="polite"></div>
@@ -1126,8 +1135,9 @@
         </div>
         <div class="foot-col">
           <h4>Legal</h4>
-          <a onclick="openLegal('privacy')" style="cursor:pointer">Privacy Policy</a>
-          <a onclick="openLegal('terms')" style="cursor:pointer">Terms of Service</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-of-service.html">Terms of Service</a>
+          <a href="refund-policy.html">Refund Policy</a>
         </div>
         <div class="foot-col">
           <h4>Connect</h4>
@@ -1238,7 +1248,7 @@
       <p>For all privacy-related inquiries, data rights requests, or complaints: <strong>contact@boostprofits.org</strong>. We aim to respond within 2 business days. If you are not satisfied with our response, you have the right to lodge a complaint with your national data protection authority.</p>
     </div>
     <div class="legal-footer-bar">
-      <p>BoostProfits · contact@boostprofits.org · Last updated June 1, 2026</p>
+      <a href="privacy-policy.html" target="_blank" rel="noopener" style="font-size:12px;color:var(--accent);font-weight:600">View full page →</a>
       <button class="legal-accept" onclick="closeLegal('privacy')">Got it</button>
     </div>
   </div>
@@ -1307,7 +1317,7 @@
       <p>For any questions regarding these Terms, contact us at <strong>contact@boostprofits.org</strong>. We respond to all contractual inquiries within 2 business days.</p>
     </div>
     <div class="legal-footer-bar">
-      <p>BoostProfits · contact@boostprofits.org · Last updated June 1, 2026</p>
+      <a href="terms-of-service.html" target="_blank" rel="noopener" style="font-size:12px;color:var(--accent);font-weight:600">View full page →</a>
       <button class="legal-accept" onclick="closeLegal('terms')">Got it</button>
     </div>
   </div>
@@ -1525,10 +1535,18 @@
     });
 
     const formErr = document.getElementById('audit-form-err');
+    const consent = document.getElementById('audit-consent');
+    const auditBtn = document.getElementById('audit-btn');
+
+    // Enforceable consent: button stays disabled until the box is checked
+    if (consent) consent.addEventListener('change', () => { auditBtn.disabled = !consent.checked; });
 
     auditForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       formErr.textContent = '';
+
+      // Consent gate (belt-and-suspenders alongside the disabled button)
+      if (consent && !consent.checked) { formErr.textContent = 'Please agree to the Terms, Privacy, and Refund policies first.'; return; }
 
       // Honeypot — silently fake-succeed, never tip off the bot
       if (auditForm.querySelector('[name=website]').value) { showAuditSuccess(); return; }
@@ -1688,4 +1706,14 @@
   window.closeLegal = closeLegal;
   // Close on backdrop click
   ['privacyModal','termsModal'].forEach(id => {
-   
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('click', e => { if (e.target === el) closeLegal(id === 'privacyModal' ? 'privacy' : 'terms'); });
+  });
+  // Close on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeLegal('privacy'); closeLegal('terms'); }
+  });
+</script>
+
+</body>
+</html>
